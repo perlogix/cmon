@@ -183,7 +183,7 @@ http://elasticsearch:9200/index/type
 
  Discover terminology:
 
-http://elasticsearch:9200/environment/ipaddress
+http://elasticsearch:9200/servers/environment
 
 Agent Run Time:
 

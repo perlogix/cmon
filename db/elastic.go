@@ -22,7 +22,6 @@ import (
 	"encoding/json"
 	"log"
 	"net/http"
-	"strings"
 	"time"
 
 	"github.com/yeticloud/yeti-discover/config"
@@ -66,10 +65,8 @@ func Elastic(d *data.DiscoverJSON) {
 		buf.WriteString(host)
 		buf.WriteString(":")
 		buf.WriteString(port)
-		buf.WriteString("/")
+		buf.WriteString("/servers/")
 		buf.WriteString(env)
-		buf.WriteString("/")
-		buf.WriteString(strings.Replace(d.Ipaddress, ".", "", 3))
 		url = buf.String()
 	}
 
