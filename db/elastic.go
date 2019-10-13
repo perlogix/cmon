@@ -20,7 +20,6 @@ import (
 	"bytes"
 	"crypto/tls"
 	"encoding/json"
-	"fmt"
 	"log"
 	"net/http"
 	"strings"
@@ -77,7 +76,7 @@ func Elastic(d *data.DiscoverJSON) {
 	body := new(bytes.Buffer)
 	err := json.NewEncoder(body).Encode(d)
 	if err != nil {
-		fmt.Println("Problem encoding to JSON")
+		log.Printf("Error: %s\n", err)
 		return
 	}
 

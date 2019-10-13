@@ -20,6 +20,7 @@ import (
 	"encoding/json"
 	"flag"
 	"fmt"
+	"log"
 	"sync"
 	"time"
 
@@ -156,7 +157,7 @@ func main() {
 		if !*daemonFlag {
 			j, err := json.Marshal(d)
 			if err != nil {
-				fmt.Printf("Error: %s\n", err)
+				log.Printf("Error: %s\n", err)
 			}
 			fmt.Println(string(j))
 			break
