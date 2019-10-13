@@ -1,0 +1,14 @@
+version: 2
+jobs:
+  build:
+    docker:
+      - image: circleci/golang:1.13.1
+    working_directory: /go/src/github.com/yeticloud/yeti-discover
+    steps:
+      - setup_remote_docker
+      - run: git clone https://github.com/yeticloud/yeti-discover.git -b $CIRCLE_BRANCH .
+      - run:
+          shell: /bin/bash
+          command: |
+            make lint
+            make linux
