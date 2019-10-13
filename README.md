@@ -5,12 +5,13 @@
 
 1. [Overview](#overview)
 	* [Example JSON Output](#example-json-output)
-2. [Install Dependencies](#install-dependencies)
+2. [Install](#install)
+3. [Install Dependencies](#install-dependencies)
     * [Server](#server)
     * [Client](#client)
-3. [Command-Line Arguments](#command-line-arguments)
-4. [Configuration](#configuration)
-5. [Platforms Tested On](#platforms-tested-on)
+4. [Command-Line Arguments](#command-line-arguments)
+5. [Configuration](#configuration)
+6. [Platforms Tested On](#platforms-tested-on)
 
 
 ## Overview
@@ -189,6 +190,13 @@ Agent Run Time:
 The agent runs every five minutes, and post real-time data to ElasticSearch.
 
 ** If you were to delete all hosts in the environment nightly.   If the agent is running and the server is up, it will populate the inventory currently with only running hosts and their data.  This works very well in elastic compute environments.
+
+
+## Install
+
+Install the statically linked Linux binary:
+
+    curl -OL https://github.com/yeticloud/yeti-discover/releases/download/0.1/yeti-discover && chmod -f 0755 ./yeti-discover
 
 
 ## Install Dependencies
