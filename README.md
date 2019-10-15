@@ -12,6 +12,7 @@
 4. [Command-Line Arguments](#command-line-arguments)
 5. [Configuration](#configuration)
 6. [Platforms Tested On](#platforms-tested-on)
+7. [Screenshots](#screenshots)
 
 
 ## Overview
@@ -267,3 +268,10 @@ Configurations can be written in YAML, JSON or TOML.
  - Fedora 20-latest
  - Ubuntu 16-latest
  - Mac OS X 16.7.0-latest
+
+## Screenshots
+![First View](https://yeticloud-public.s3.amazonaws.com/yeti-discover-kibana-1.png)
+
+![Second View](https://yeticloud-public.s3.amazonaws.com/yeti-discover-kibana-2.png)
+
+![Third View](https://yeticloud-public.s3.amazonaws.com/yeti-discover-kibana-3.png)
