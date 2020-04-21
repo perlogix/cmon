@@ -1,5 +1,6 @@
 # yeti-discover
 
+[![Go Report Card](https://goreportcard.com/badge/github.com/yeticloud/yeti-discover)](https://goreportcard.com/report/github.com/yeticloud/yeti-discover)
 
 #### Table of Contents
 
