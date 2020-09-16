@@ -49,7 +49,7 @@ func init() {
 func main() {
 
 	flag.Usage = func() {
-		fmt.Println(fmt.Sprintf(` Usage: yeti-discover [options] <args>
+		fmt.Printf(` Usage: yeti-discover [options] <args>
    -d, --daemon    Run in daemon mode
    -c, --config    Set configuration path, defaults are ['./', '/etc/yeticloud', '/opt/yeticloud']
 	
@@ -58,7 +58,7 @@ func main() {
  Example:        yeti-discover -d -c ./conf/yeti-discover.yaml
 	
  Documentation:  https://github.com/yeticloud/yeti-discover/blob/master/README.md
-	`, builtOn))
+`, builtOn)
 	}
 
 	flag.Parse()
