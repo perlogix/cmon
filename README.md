@@ -253,6 +253,7 @@ Resources gathered if applicable:
       "virtualization_system":"xen"
     }
 
+Average payload size: `260k`
 
 ElasticSearch terminology:
 
@@ -264,7 +265,7 @@ http://elasticsearch:9200/servers/environment
 
 Agent Run Time:
 
-The agent runs every five minutes, and post real-time data to ElasticSearch.
+The agent runs every twenty minutes, and post real-time data to ElasticSearch.
 
 ** If you were to delete all hosts in the environment nightly.   If the agent is running and the server is up, it will populate the inventory currently with only running hosts and their data.  This works very well in elastic compute environments.
 
@@ -273,7 +274,7 @@ The agent runs every five minutes, and post real-time data to ElasticSearch.
 
 Install the statically linked Linux binary:
 
-    curl -OL https://github.com/yeticloud/yeti-discover/releases/download/0.1/yeti-discover && chmod -f 0755 ./yeti-discover
+    curl -OL https://github.com/yeticloud/yeti-discover/releases/download/0.2/yeti-discover && chmod -f 0755 ./yeti-discover
 
 
 ## Install Dependencies
