@@ -39,10 +39,12 @@ func DockerContainers(d *data.DiscoverJSON) {
 	if err != nil {
 		return
 	}
+
 	var ctrSlice []string
 	for _, e := range cts {
 		ctrSlice = append(ctrSlice, fmt.Sprintf("name=%s image=%s command=%s ports=%v state=%s status=%s", strings.Split(e.Names[0], "/")[1], e.Image, e.Command, e.Ports, e.State, e.Status))
 	}
+
 	d.DockerContainers = ctrSlice
 }
 
@@ -52,12 +54,14 @@ func DockerServer(d *data.DiscoverJSON) {
 	if err != nil {
 		return
 	}
+
 	ctx, cancel := context.WithTimeout(context.Background(), 20*time.Second)
 	defer cancel()
 	info, err := cli.Info(ctx)
 	if err != nil {
 		return
 	}
+
 	d.DockerRunning = info.ContainersRunning
 	d.DockerPaused = info.ContainersPaused
 	d.DockerStopped = info.ContainersStopped
