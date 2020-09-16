@@ -42,8 +42,8 @@ func Rpm(d *data.DiscoverJSON) {
 		if err != nil {
 			return
 		}
-		rpmStr := string(rpmOut)
-		rpmSlice := strings.Split(strings.TrimSpace(rpmStr), "\n")
+
+		rpmSlice := strings.Split(strings.TrimSpace(string(rpmOut)), "\n")
 
 		if rpmSlice != nil {
 			d.Packages = rpmSlice

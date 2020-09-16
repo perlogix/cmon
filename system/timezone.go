@@ -27,13 +27,12 @@ import (
 // TimeZone runs Linux command date to fetch timezone
 func TimeZone(d *data.DiscoverJSON) {
 	if runtime.GOOS != "windows" {
-		timezone := exec.Command("date", "+%Z")
-		timezoneOut, err := timezone.Output()
+		timezone, err := exec.Command("date", "+%Z").Output()
 		if err != nil {
 			return
 		}
-		timezoneStr := string(timezoneOut)
-		timezoneTrim := strings.TrimSpace(timezoneStr)
+
+		timezoneTrim := strings.TrimSpace(string(timezone))
 
 		if timezoneTrim != "" {
 			d.Timezone = timezoneTrim

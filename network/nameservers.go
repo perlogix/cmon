@@ -41,8 +41,8 @@ func DNS(d *data.DiscoverJSON) {
 	if err != nil {
 		return
 	}
-	dnsStr := string(dnsOut)
-	dnsSlice := strings.Split(strings.TrimSpace(dnsStr), "\n")
+
+	dnsSlice := strings.Split(strings.TrimSpace(string(dnsOut)), "\n")
 	if dnsSlice != nil {
 		d.DNSNameserver = dnsSlice
 	}

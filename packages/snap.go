@@ -42,8 +42,8 @@ func Snaps(d *data.DiscoverJSON) {
 		if err != nil {
 			return
 		}
-		snapStr := string(snapLOut)
-		snapSlice := strings.Split(strings.TrimSpace(snapStr), "\n")
+
+		snapSlice := strings.Split(strings.TrimSpace(string(snapLOut)), "\n")
 
 		if snapSlice != nil {
 			d.Snaps = snapSlice

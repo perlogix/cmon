@@ -42,8 +42,8 @@ func Deb(d *data.DiscoverJSON) {
 		if err != nil {
 			return
 		}
-		dpkgStr := string(dpkgOut)
-		dpkgSlice := strings.Split(strings.TrimSpace(dpkgStr), "\n")
+
+		dpkgSlice := strings.Split(strings.TrimSpace(string(dpkgOut)), "\n")
 
 		if dpkgSlice != nil {
 			d.Packages = dpkgSlice

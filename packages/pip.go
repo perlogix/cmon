@@ -41,8 +41,8 @@ func Pip(d *data.DiscoverJSON) {
 	if err != nil {
 		return
 	}
-	pipStr := string(pipOut)
-	pipReplace := strings.Replace(pipStr, "==", "-", -1)
+
+	pipReplace := strings.Replace(string(pipOut), "==", "-", -1)
 	pipSlice := strings.Split(strings.TrimSpace(pipReplace), "\n")
 
 	if pipSlice != nil {
@@ -69,8 +69,8 @@ func Pip3(d *data.DiscoverJSON) {
 	if err != nil {
 		return
 	}
-	pipStr := string(pipOut)
-	pipReplace := strings.Replace(pipStr, "==", "-", -1)
+
+	pipReplace := strings.Replace(string(pipOut), "==", "-", -1)
 	pipSlice := strings.Split(strings.TrimSpace(pipReplace), "\n")
 
 	if pipSlice != nil {

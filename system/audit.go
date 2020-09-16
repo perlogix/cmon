@@ -27,13 +27,12 @@ import (
 // Audit fetches audit rules from auditctl -l Linux command
 func Audit(d *data.DiscoverJSON) {
 	if runtime.GOOS == "linux" {
-		audit := exec.Command("auditctl", "-l")
-		auditOut, err := audit.Output()
+		audit, err := exec.Command("auditctl", "-l").Output()
 		if err != nil {
 			return
 		}
-		auditStr := string(auditOut)
-		auditSlice := strings.Split(strings.TrimSpace(auditStr), "\n")
+
+		auditSlice := strings.Split(strings.TrimSpace(string(audit)), "\n")
 
 		if auditSlice != nil {
 			d.AuditRules = auditSlice

@@ -43,8 +43,8 @@ func IPTables(d *data.DiscoverJSON) {
 		if err != nil {
 			return
 		}
-		iptableStr := string(iptableOut)
-		iptableSlice := strings.Split(strings.TrimSpace(iptableStr), "\n")
+
+		iptableSlice := strings.Split(strings.TrimSpace(string(iptableOut)), "\n")
 
 		if iptableSlice != nil {
 			d.Iptables = iptableSlice

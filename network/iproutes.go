@@ -28,13 +28,12 @@ import (
 func IPRoutes(d *data.DiscoverJSON) {
 
 	if runtime.GOOS == "linux" {
-		iproute := exec.Command("ip", "route")
-		iprteOut, err := iproute.Output()
+		iproute, err := exec.Command("ip", "route").Output()
 		if err != nil {
 			return
 		}
-		iprteStr := string(iprteOut)
-		iprteSlice := strings.Split(strings.TrimSpace(iprteStr), "\n")
+
+		iprteSlice := strings.Split(strings.TrimSpace(string(iproute)), "\n")
 
 		if iprteSlice != nil {
 			d.IPRoute = iprteSlice
@@ -57,8 +56,8 @@ func IPRoutes(d *data.DiscoverJSON) {
 		if err != nil {
 			return
 		}
-		netsStr := string(netsOut)
-		netsSlice := strings.Split(strings.TrimSpace(netsStr), "\n")
+
+		netsSlice := strings.Split(strings.TrimSpace(string(netsOut)), "\n")
 
 		if netsSlice != nil {
 			d.IPRoute = netsSlice

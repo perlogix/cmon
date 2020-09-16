@@ -42,8 +42,8 @@ func UsersLoggedIn(d *data.DiscoverJSON) {
 		if err != nil {
 			return
 		}
-		whStr := string(wOut)
-		wSlice := strings.Split(strings.TrimSpace(whStr), "\n")
+
+		wSlice := strings.Split(strings.TrimSpace(string(wOut)), "\n")
 
 		if wSlice != nil {
 			d.UsersLoggedin = wSlice
@@ -54,13 +54,12 @@ func UsersLoggedIn(d *data.DiscoverJSON) {
 // Users fetches all users on the system from /etc/passwd on NIX systems
 func Users(d *data.DiscoverJSON) {
 	if runtime.GOOS != "windows" {
-		passGrep := exec.Command("grep", "-v", "^#", "/etc/passwd")
-		passGrepOut, err := passGrep.Output()
+		passGrep, err := exec.Command("grep", "-v", "^#", "/etc/passwd").Output()
 		if err != nil {
 			return
 		}
-		passStr := string(passGrepOut)
-		usersSlice := strings.Split(strings.TrimSpace(passStr), "\n")
+
+		usersSlice := strings.Split(strings.TrimSpace(string(passGrep)), "\n")
 		if usersSlice != nil {
 			d.Users = usersSlice
 		}
