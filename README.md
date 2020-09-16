@@ -48,6 +48,7 @@ Resources gathered if applicable:
 - OS Version
 - TCP 4/6 Listening
 - Timezone
+- Trivy Scan
 - Uptime
 - Users
 - Users Logged In
