@@ -18,7 +18,6 @@ package security
 
 import (
 	"encoding/json"
-	"fmt"
 	"os/exec"
 	"runtime"
 
@@ -28,10 +27,8 @@ import (
 // TrivyScan scans the root filesystem for vulnerabilities
 func TrivyScan(d *data.DiscoverJSON) {
 	if runtime.GOOS == "linux" {
-		// trivy filesystem -f json --exit-code 0 --no-progress -q /
 		trivy, err := exec.Command("trivy", "filesystem", "-f", "json", "--exit-code", "0", "--no-progress", "-q", "/").Output()
 		if err != nil {
-			fmt.Println(err)
 			return
 		}
 
@@ -39,7 +36,6 @@ func TrivyScan(d *data.DiscoverJSON) {
 
 		err = json.Unmarshal(trivy, &data)
 		if err != nil {
-			fmt.Print(err)
 			return
 		}
 

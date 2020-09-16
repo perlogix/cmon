@@ -17,8 +17,6 @@
 package config
 
 import (
-	"fmt"
-
 	"github.com/spf13/viper"
 )
 
@@ -28,10 +26,8 @@ func init() {
 	viper.AddConfigPath("/opt/yeticloud")
 	viper.AddConfigPath("/etc/yeticloud")
 	viper.AddConfigPath(".")
-	err := viper.ReadInConfig()
-	if err != nil {
-		fmt.Println()
-	}
+	// Ignore error
+	viper.ReadInConfig()
 
 	// Default settings if no config file is supplied
 	viper.SetDefault("host", "localhost")

@@ -95,10 +95,10 @@ type OScapResult struct {
 	Result string `json:"result"`
 }
 
-// TrivyResults type
+// TrivyResults type imported from Trivy go project
 type TrivyResults []TrivyResult
 
-// TrivyResult type
+// TrivyResult type imported from Trivy go project
 type TrivyResult struct {
 	Target          string                        `json:"Target"`
 	Type            string                        `json:"Type,omitempty"`
