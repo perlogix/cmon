@@ -37,7 +37,7 @@ func init() {
 	viper.SetDefault("host", "localhost")
 	viper.SetDefault("port", "9200")
 	viper.SetDefault("environment", "dev")
-	viper.SetDefault("interval", "300")
+	viper.SetDefault("interval", "1200")
 	viper.SetDefault("username", "")
 	viper.SetDefault("password", "")
 	viper.SetDefault("secure", "false")

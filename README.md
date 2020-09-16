@@ -58,142 +58,198 @@ Resources gathered if applicable:
 ### Example JSON Output
 
     {
-       "audit_rules": [
-         "-w /var/log/audit/ -p wa -k LOG_audit",
-         "-w /etc/audit/auditd.conf -p wa -k CFG_audit",
-         "-w /etc/rc.d/init.d/auditd -p wa -k CFG_audit",
-         "-w /etc/sysconfig/auditd -p wa -k CFG_audit",
-         "-w /etc/audit/audit.rules -p wa -k CFG_audit",
-         "-w /etc/localtime -p wa -k time-change,CFG_system"
-       ],
-       "cpu_count": 4,
-       "cpu_pct": 76,
-       "diskfree_gb": 6,
-       "disktotal_gb": 8,
-       "diskused_gb": 19,
-       "dns_nameserver": [
-         "8.8.8.8",
-         "8.8.4.4"
-       ],
-       "docker_containers": [
+      "audit_rules":[
+        "-w /var/log/audit/ -p wa -k LOG_audit",
+        "-w /etc/audit/auditd.conf -p wa -k CFG_audit",
+        "-w /etc/rc.d/init.d/auditd -p wa -k CFG_audit",
+        "-w /etc/sysconfig/auditd -p wa -k CFG_audit",
+        "-w /etc/audit/audit.rules -p wa -k CFG_audit",
+        "-w /etc/localtime -p wa -k time-change,CFG_system"
+      ],
+      "cpu_count":4,
+      "cpu_pct":76,
+      "diskfree_gb":6,
+      "disktotal_gb":8,
+      "diskused_gb":19,
+      "dns_nameserver":[
+        "8.8.8.8",
+        "8.8.4.4"
+      ],
+      "docker_containers":[
         "name=kibana image=kibana:7.4.0 command=/usr/local/bin/dumb-init -- /usr/local/bin/kibana-docker ports=[] state=running status=Up About a minute",
         "name=elasticsearch image=elasticsearch:7.4.0 command=/usr/local/bin/docker-entrypoint.sh eswrapper ports=[] state=running status=Up 3 minutes",
         "name=redis image=redis command=docker-entrypoint.sh redis-server ports=[{127.0.0.1 6379 6379 tcp}] state=running status=Up About an hour"
-       ],
-       "docker_running":3,
-       "docker_images_count":3,
-       "docker_images":[
+      ],
+      "docker_running":3,
+      "docker_images_count":3,
+      "docker_images":[
         "name=kibana:7.4.0 size=1.097GB created=2019-09-27T05:25:49-04:00",
         "name=elasticsearch:7.4.0 size=858.7MB created=2019-09-27T04:42:16-04:00",
         "name=redis:latest size=95MB created=2019-03-26T20:49:00-04:00"
-       ],
-       "domain": "ec2.internal",
-       "ec2_ami_id": "ami-bc8131d4",
-       "ec2_availability_zone": "us-east-1b",
-       "ec2_instance_id": "i-1b8cc9cc",
-       "ec2_instance_type": "t1.micro",
-       "ec2_profile": "default-paravirtual",
-       "ec2_public_ip4": "54.145.182.91",
-       "ec2_security_groups": "default",
-       "environment": "dev",
-       "gem": [
-         "arr-pm-0.0.9",
-         "backports-3.6.4",
-         "cabin-0.7.1",
-         "childprocess-0.5.6",
-         "clamp-0.6.4",
-         "ffi-1.9.8",
-         "fpm-1.3.3",
-         "json-1.8.2"
-       ],
-       "hostname": "ip-10-28-229-205",
-       "ipaddress": "10.28.229.205",
-       "iptables": [
-         "ACCEPT     tcp  --  anywhere             anywhere             state RELATED,ESTABLISHED",
-         "DROP       all  -f  anywhere             anywhere            ",
-         "ACCEPT     tcp  --  localhost            anywhere             tcp dpt:webcache",
-         "ACCEPT     tcp  --  localhost            anywhere             tcp dpt:webcache",
-         "DROP       tcp  --  anywhere             anywhere             tcp dpt:webcache",
-         "ACCEPT     tcp  --  anywhere             anywhere             tcp dpt:http state NEW,ESTABLISHED",
-         "ACCEPT     tcp  --  anywhere             anywhere             tcp dpt:http limit: avg 25/min burst 100",
-         "ACCEPT     tcp  --  anywhere             anywhere             tcp spt:http state ESTABLISHED",
-         "ACCEPT     tcp  --  anywhere             anywhere             tcp spt:webcache state ESTABLISHED"
-       ],
-       "ip_route": [
-         "default via 192.168.1.1 dev eth0 ",
-         "172.17.0.0/16 dev docker0  proto kernel  scope link  src 172.17.42.1 ",
-         "192.168.1.0/24 dev eth0  proto kernel  scope link  src 192.168.1.10 "
-       ],
-       "kernel_version": "2.6.32-431.29.2.el6.x86_64",
-       "lastrun": "2015-05-21T23:29:49-04:00",
-       "load15": 0,
-       "load1": 0,
-       "load5": 0,
-       "memoryfree_gb": 2,
-       "memorytotal_gb": 16,
-       "memoryused_gb": 14,
-       "os": "linux",
-       "packages": [
-         "acl-2.2.49-6.el6.x86_64",
-         "acpid-1.0.10-2.1.el6.x86_64",
-         "alsa-lib-1.0.22-3.el6.x86_64",
-         "atk-1.30.0-1.el6.x86_64"
-       ],
-       "pip": [
-         "distribute-0.6.10",
-         "Flask-0.10.1",
-         "Flask-Limiter-0.7.4"
-       ],
-       "pip3":[
+      ],
+      "domain":"ec2.internal",
+      "ec2_ami_id":"ami-bc8131d4",
+      "ec2_availability_zone":"us-east-1b",
+      "ec2_instance_id":"i-1b8cc9cc",
+      "ec2_instance_type":"t1.micro",
+      "ec2_profile":"default-paravirtual",
+      "ec2_public_ip4":"54.145.182.91",
+      "ec2_security_groups":"default",
+      "environment":"dev",
+      "gem":[
+        "arr-pm-0.0.9",
+        "backports-3.6.4",
+        "cabin-0.7.1",
+        "childprocess-0.5.6",
+        "clamp-0.6.4",
+        "ffi-1.9.8",
+        "fpm-1.3.3",
+        "json-1.8.2"
+      ],
+      "hostname":"ip-10-28-229-205",
+      "ipaddress":"10.28.229.205",
+      "iptables":[
+        "ACCEPT     tcp  --  anywhere             anywhere             state RELATED,ESTABLISHED",
+        "DROP       all  -f  anywhere             anywhere            ",
+        "ACCEPT     tcp  --  localhost            anywhere             tcp dpt:webcache",
+        "ACCEPT     tcp  --  localhost            anywhere             tcp dpt:webcache",
+        "DROP       tcp  --  anywhere             anywhere             tcp dpt:webcache",
+        "ACCEPT     tcp  --  anywhere             anywhere             tcp dpt:http state NEW,ESTABLISHED",
+        "ACCEPT     tcp  --  anywhere             anywhere             tcp dpt:http limit: avg 25/min burst 100",
+        "ACCEPT     tcp  --  anywhere             anywhere             tcp spt:http state ESTABLISHED",
+        "ACCEPT     tcp  --  anywhere             anywhere             tcp spt:webcache state ESTABLISHED"
+      ],
+      "ip_route":[
+        "default via 192.168.1.1 dev eth0 ",
+        "172.17.0.0/16 dev docker0  proto kernel  scope link  src 172.17.42.1 ",
+        "192.168.1.0/24 dev eth0  proto kernel  scope link  src 192.168.1.10 "
+      ],
+      "kernel_version":"2.6.32-431.29.2.el6.x86_64",
+      "lastrun":"2015-05-21T23:29:49-04:00",
+      "load15":0,
+      "load1":0,
+      "load5":0,
+      "memoryfree_gb":2,
+      "memorytotal_gb":16,
+      "memoryused_gb":14,
+      "os":"linux",
+      "packages":[
+        "acl-2.2.49-6.el6.x86_64",
+        "acpid-1.0.10-2.1.el6.x86_64",
+        "alsa-lib-1.0.22-3.el6.x86_64",
+        "atk-1.30.0-1.el6.x86_64"
+      ],
+      "pip":[
+        "distribute-0.6.10",
+        "Flask-0.10.1",
+        "Flask-Limiter-0.7.4"
+      ],
+      "pip3":[
         "aiofiles-0.4.0",
         "aiohttp-3.3.2",
         "apturl-0.5.2"
-       ]  
-       "platform": "centos",
-       "platform_family": "rhel",
-       "platform_verison": "6.5",
-       "public": false,
-       "snaps":[
-         "core-16-2.31.1",
-         "slack-3.0.5",
-       ],
-       "open_ports":[
+      ],
+      "platform":"centos",
+      "platform_family":"rhel",
+      "platform_verison":"6.5",
+      "public":false,
+      "snaps":[
+        "core-16-2.31.1",
+        "slack-3.0.5"
+      ],
+      "open_ports":[
         "addr=127.0.0.1 port=58494 name=code proto=tcp",
         "addr=0.0.0.0 port=5601 name=node proto=tcp",
-        "addr=:: port=9200 name=0 proto=tcp",
-       ],
-      "openscap": {
-        "status": false,
-        "checks": 71,
-        "failed": [
+        "addr=:: port=9200 name=0 proto=tcp"
+      ],
+      "openscap":{
+        "status":false,
+        "checks":71,
+        "failed":[
           {
-            "title": "Enable auditd Service",
-            "rule": "xccdf_org.ssgproject.content_rule_service_auditd_enabled",
-            "result": "fail"
+            "title":"Enable auditd Service",
+            "rule":"xccdf_org.ssgproject.content_rule_service_auditd_enabled",
+            "result":"fail"
           },
           {
-            "title": "Ensure auditd Collects System Administrator Actions",
-            "rule": "xccdf_org.ssgproject.content_rule_audit_rules_sysadmin_actions",
-            "result": "fail"
+            "title":"Ensure auditd Collects System Administrator Actions",
+            "rule":"xccdf_org.ssgproject.content_rule_audit_rules_sysadmin_actions",
+            "result":"fail"
           }
         ],
-        "warnings": null
+        "warnings":null
       },
-       "timezone": "UTC",
-       "uptime_days": 9,
-       "users": [
-         "root:x:0:0:root:/root:/bin/bash",
-         "adm:x:3:4:adm:/var/adm:/sbin/nologin",
-         "shutdown:x:6:0:shutdown:/sbin:/sbin/shutdown",
-         "nginx:x:998:997:Nginx web server:/var/lib/nginx:/sbin/nologin",
-         "varnish:x:997:996:Varnish Cache:/var/lib/varnish:/sbin/nologin"
-       ],
-       "users_loggedin": [
-         "root-pts/0",
-         "timski-pts/1"
-       ],
-       "virtualization": true,
-       "virtualization_system": "xen"
+      "timezone":"UTC",
+      "trivy":[
+        {
+          "Target":"k3s (ubuntu 20.04)",
+          "Type":"ubuntu",
+          "Vulnerabilities":[
+            {
+              "VulnerabilityID":"CVE-2012-6655",
+              "PkgName":"accountsservice",
+              "InstalledVersion":"0.6.55-0ubuntu12~20.04.1",
+              "Layer":{
+                "DiffID":"sha256:7a32807fe5359af26e10053cb110e4a7576afa4a63c26d4af5ab763d6784fae7"
+              },
+              "SeveritySource":"ubuntu",
+              "Title":"accountsservice: local encrypted password disclosure when changing password",
+              "Description":"An issue exists AccountService 0.6.37 in the user_change_password_authorized_cb() function in user.c which could let a local users obtain encrypted passwords.",
+              "Severity":"LOW",
+              "CweIDs":[
+                "CWE-732"
+              ],
+              "VendorVectors":{
+                "nvd":{
+                  "v2":"AV:L/AC:L/Au:N/C:P/I:N/A:N",
+                  "v3":"CVSS:3.1/AV:L/AC:L/PR:L/UI:N/S:U/C:L/I:N/A:N"
+                },
+                "redhat":{
+                  "v2":"AV:L/AC:M/Au:N/C:P/I:N/A:N"
+                }
+              },
+              "CVSS":{
+                "nvd":{
+                  "V2Vector":"AV:L/AC:L/Au:N/C:P/I:N/A:N",
+                  "V3Vector":"CVSS:3.1/AV:L/AC:L/PR:L/UI:N/S:U/C:L/I:N/A:N",
+                  "V2Score":2.1,
+                  "V3Score":3.3
+                },
+                "redhat":{
+                  "V2Vector":"AV:L/AC:M/Au:N/C:P/I:N/A:N",
+                  "V2Score":1.9
+                }
+              },
+              "References":[
+                "http://openwall.com/lists/oss-security/2014/08/15/5",
+                "http://www.openwall.com/lists/oss-security/2014/08/16/7",
+                "http://www.securityfocus.com/bid/69245",
+                "https://bugzilla.redhat.com/show_bug.cgi?id=CVE-2012-6655",
+                "https://bugzilla.suse.com/show_bug.cgi?id=CVE-2012-6655",
+                "https://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2012-6655",
+                "https://exchange.xforce.ibmcloud.com/vulnerabilities/95325",
+                "https://security-tracker.debian.org/tracker/CVE-2012-6655"
+              ],
+              "PublishedDate":"2019-11-27T18:15:00Z",
+              "LastModifiedDate":"2019-12-16T19:47:00Z"
+            }
+          ]
+        }
+      ],
+      "uptime_days":9,
+      "users":[
+        "root:x:0:0:root:/root:/bin/bash",
+        "adm:x:3:4:adm:/var/adm:/sbin/nologin",
+        "shutdown:x:6:0:shutdown:/sbin:/sbin/shutdown",
+        "nginx:x:998:997:Nginx web server:/var/lib/nginx:/sbin/nologin",
+        "varnish:x:997:996:Varnish Cache:/var/lib/varnish:/sbin/nologin"
+      ],
+      "users_loggedin":[
+        "root-pts/0",
+        "timski-pts/1"
+      ],
+      "virtualization":true,
+      "virtualization_system":"xen"
     }
 
 
@@ -259,8 +315,8 @@ Configurations can be written in YAML, JSON or TOML.
     environment: dev
 
     # Interval of agent runs in seconds
-    ## Default is every five minutes
-    interval: 300
+    ## Default is every twenty minutes
+    interval: 1200
 
     # Username if http-basic plugin is enabled
     username:

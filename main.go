@@ -68,7 +68,7 @@ func main() {
 			d  data.DiscoverJSON
 			wg sync.WaitGroup
 		)
-		wg.Add(22)
+		wg.Add(23)
 		go func() {
 			defer wg.Done()
 			network.Conns(&d)
@@ -155,6 +155,10 @@ func main() {
 		}()
 		go func() {
 			defer wg.Done()
+			security.TrivyScan(&d)
+		}()
+		go func() {
+			defer wg.Done()
 			d.Lastrun = time.Now().Format(time.RFC3339)
 		}()
 		wg.Wait()
@@ -165,7 +169,7 @@ func main() {
 				log.Printf("Error: %s\n", err)
 			}
 			fmt.Println(string(j))
-			break
+			return
 		}
 
 		db.Elastic(&d)
