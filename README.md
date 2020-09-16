@@ -1,24 +1,24 @@
 # yeti-discover
 
 [![Go Report Card](https://goreportcard.com/badge/github.com/yeticloud/yeti-discover)](https://goreportcard.com/report/github.com/yeticloud/yeti-discover)
+[![CircleCI](https://circleci.com/gh/yeticloud/yeti-discover.svg?style=svg)](https://circleci.com/gh/yeticloud/yeti-discover)
 
 #### Table of Contents
 
 1. [Overview](#overview)
-	* [Example JSON Output](#example-json-output)
+   - [Example JSON Output](#example-json-output)
 2. [Install](#install)
 3. [Install Dependencies](#install-dependencies)
-    * [Server](#server)
-    * [Client](#client)
+   - [Server](#server)
+   - [Client](#client)
 4. [Command-Line Arguments](#command-line-arguments)
 5. [Configuration](#configuration)
 6. [Platforms Tested On](#platforms-tested-on)
 7. [Screenshots](#screenshots)
 
-
 ## Overview
 
-A lightweight system information collector for storing data in ElasticSearch or Stdout.  Great for keeping track of elastic environments and auditing configurations.
+A lightweight system information collector for storing data in ElasticSearch or Stdout. Great for keeping track of elastic environments and auditing configurations.
 
 Resources gathered if applicable:
 
@@ -54,7 +54,6 @@ Resources gathered if applicable:
 - Users Logged In
 - Virtualization
 - Virtualization System
-
 
 ### Example JSON Output
 
@@ -259,7 +258,7 @@ ElasticSearch terminology:
 
 http://elasticsearch:9200/index/type
 
- Discover terminology:
+Discover terminology:
 
 http://elasticsearch:9200/servers/environment
 
@@ -267,8 +266,7 @@ Agent Run Time:
 
 The agent runs every twenty minutes, and post real-time data to ElasticSearch.
 
-** If you were to delete all hosts in the environment nightly.   If the agent is running and the server is up, it will populate the inventory currently with only running hosts and their data.  This works very well in elastic compute environments.
-
+\*\* If you were to delete all hosts in the environment nightly. If the agent is running and the server is up, it will populate the inventory currently with only running hosts and their data. This works very well in elastic compute environments.
 
 ## Install
 
@@ -276,19 +274,18 @@ Install the statically linked Linux binary:
 
     curl -OL https://github.com/yeticloud/yeti-discover/releases/download/0.2/yeti-discover && chmod -f 0755 ./yeti-discover
 
-
 ## Install Dependencies
 
 ### Server
 
- - ElasticSearch 7.x
- - Kibana 7.x
+- ElasticSearch 7.x
+- Kibana 7.x
 
 ### Client (development)
 
- - Go 1.15.x
- - Make
- 
+- Go 1.15.x
+- Make
+
 To build the Linux binary run the following command:
 
     make linux
@@ -300,13 +297,12 @@ No flags / arguments will do a one-time run and produce a JSON file in the curre
     -d, --daemon     Run in daemon mode
     -c, --config     Set configuration path, defaults are ['./','/etc/yeticloud','/opt/yeticloud']
 
-
 ## Configuration
 
 Configurations can be written in YAML, JSON or TOML.
 
-*/opt/yeticloud/yeti-discover.yaml*
-*DEFAULT  values if no config is present*
+_/opt/yeticloud/yeti-discover.yaml_
+_DEFAULT values if no config is present_
 
     # ElasticSearch DB
     host: localhost
@@ -344,15 +340,15 @@ Configurations can be written in YAML, JSON or TOML.
     # OpenSCAP Profile
     oscap_profile: xccdf_org.ssgproject.content_profile_cis
 
-
 ## Platforms Tested On
 
- - CentOS/RHEL 7-latest
- - Fedora 20-latest
- - Ubuntu 16-latest
- - Mac OS X 16.7.0-latest
+- CentOS/RHEL 7-latest
+- Fedora 20-latest
+- Ubuntu 16-latest
+- Mac OS X 16.7.0-latest
 
 ## Screenshots
+
 ![First View](https://yeticloud-public.s3.amazonaws.com/yeti-discover-kibana-1.png)
 
 ![Second View](https://yeticloud-public.s3.amazonaws.com/yeti-discover-kibana-2.png)
