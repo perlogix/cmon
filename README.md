@@ -42,6 +42,7 @@ Resources gathered if applicable:
 - RPM / Deb Packages
 - Python Pip Packages
 - Snap Packages
+- OpenSCAP XCCDF Scan
 - OS Platform
 - OS Family
 - OS Version
@@ -161,6 +162,23 @@ Resources gathered if applicable:
         "addr=0.0.0.0 port=5601 name=node proto=tcp",
         "addr=:: port=9200 name=0 proto=tcp",
        ],
+      "openscap": {
+        "status": false,
+        "checks": 71,
+        "failed": [
+          {
+            "title": "Enable auditd Service",
+            "rule": "xccdf_org.ssgproject.content_rule_service_auditd_enabled",
+            "result": "fail"
+          },
+          {
+            "title": "Ensure auditd Collects System Administrator Actions",
+            "rule": "xccdf_org.ssgproject.content_rule_audit_rules_sysadmin_actions",
+            "result": "fail"
+          }
+        ],
+        "warnings": null
+      },
        "timezone": "UTC",
        "uptime_days": 9,
        "users": [
@@ -210,7 +228,7 @@ Install the statically linked Linux binary:
 
 ### Client (development)
 
- - Go 1.13.x
+ - Go 1.15.x
  - Make
  
 To build the Linux binary run the following command:
@@ -261,6 +279,12 @@ Configurations can be written in YAML, JSON or TOML.
 
     # Asset type
     asset_type:
+
+    # OpenSCAP XCCDF XML file path
+    oscap_xccdf_xml: /usr/share/scap-security-guide/ssg-ubuntu1804-ds.xml
+
+    # OpenSCAP Profile
+    oscap_profile: xccdf_org.ssgproject.content_profile_cis
 
 
 ## Platforms Tested On

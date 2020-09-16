@@ -42,6 +42,8 @@ func init() {
 	viper.SetDefault("password", "")
 	viper.SetDefault("secure", "false")
 	viper.SetDefault("verify_ssl", "true")
+	viper.SetDefault("oscap_profile", "xccdf_org.ssgproject.content_profile_cis")
+	viper.SetDefault("oscap_xccdf_xml", "/usr/share/scap-security-guide/ssg-ubuntu1804-ds.xml")
 }
 
 // Str fetches String value from configuration key

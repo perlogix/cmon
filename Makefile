@@ -15,7 +15,7 @@ clean:
 	rm -f ./$(MAIN_PACKAGE)
 
 lint: 
-	${GOPATH}/bin/golint network data db packages containers cloud config system
+	${GOPATH}/bin/golint network data db packages containers cloud config system security
 	${GOPATH}/bin/golangci-lint run
 
 run:

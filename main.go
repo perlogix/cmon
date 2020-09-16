@@ -31,6 +31,7 @@ import (
 	"github.com/yeticloud/yeti-discover/db"
 	"github.com/yeticloud/yeti-discover/network"
 	"github.com/yeticloud/yeti-discover/packages"
+	"github.com/yeticloud/yeti-discover/security"
 	"github.com/yeticloud/yeti-discover/system"
 )
 
@@ -67,10 +68,14 @@ func main() {
 			d  data.DiscoverJSON
 			wg sync.WaitGroup
 		)
-		wg.Add(21)
+		wg.Add(22)
 		go func() {
 			defer wg.Done()
 			network.Conns(&d)
+		}()
+		go func() {
+			defer wg.Done()
+			security.OScap(&d)
 		}()
 		go func() {
 			defer wg.Done()
