@@ -33,13 +33,13 @@ var (
 		TLSClientConfig: &tls.Config{InsecureSkipVerify: config.Bool("verify_ssl")},
 	}
 	c = &http.Client{
-		Timeout:   10 * time.Second,
+		Timeout:   5 * time.Second,
 		Transport: tr,
 	}
 	host   = config.Str("host")
 	port   = config.Str("port")
 	env    = config.Str("environment")
-	sec    = config.Bool("secure")
+	https  = config.Bool("https")
 	user   = config.Str("username")
 	pass   = config.Str("password")
 	scheme string
@@ -49,7 +49,7 @@ var (
 const ct = "application/json;charset=UTF-8"
 
 func init() {
-	if sec {
+	if https {
 		scheme = "https"
 	} else {
 		scheme = "http"
@@ -81,12 +81,14 @@ func Elastic(d *data.DiscoverJSON) {
 		r, err := http.NewRequest("POST", url, body)
 		if err != nil {
 			log.Printf("Error: %s\n", err)
+			return
 		}
 		r.Header.Add("Content-Type", ct)
 		r.SetBasicAuth(user, pass)
 		_, err = c.Do(r)
 		if err != nil {
 			log.Printf("Error: %s\n", err)
+			return
 		}
 		return
 	}

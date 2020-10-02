@@ -17,6 +17,7 @@
 package main
 
 import (
+	"bytes"
 	"encoding/json"
 	"flag"
 	"fmt"
@@ -36,7 +37,7 @@ import (
 )
 
 var (
-	configFlag = flag.String("config", "", "  Set configuration path, defaults are ['./', '/etc/yeticloud', '/opt/yeticloud']")
+	configFlag = flag.String("config", "", "  Set configuration path, defaults are ['./', '/etc/yeticloud', '/opt/yeticloud', '/usr/lib/yeticloud/yeti-discover']")
 	daemonFlag = flag.Bool("daemon", false, "  Run in daemon mode")
 	builtOn    string
 )
@@ -68,7 +69,7 @@ func main() {
 			d  data.DiscoverJSON
 			wg sync.WaitGroup
 		)
-		wg.Add(23)
+		wg.Add(24)
 		go func() {
 			defer wg.Done()
 			network.Conns(&d)
@@ -159,6 +160,10 @@ func main() {
 		}()
 		go func() {
 			defer wg.Done()
+			system.Cron(&d)
+		}()
+		go func() {
+			defer wg.Done()
 			d.Lastrun = time.Now().Format(time.RFC3339)
 		}()
 		wg.Wait()
@@ -168,6 +173,9 @@ func main() {
 			if err != nil {
 				log.Printf("Error: %s\n", err)
 			}
+			j = bytes.Replace(j, []byte("\\u003c"), []byte("<"), -1)
+			j = bytes.Replace(j, []byte("\\u003e"), []byte(">"), -1)
+			j = bytes.Replace(j, []byte("\\u0026"), []byte("&"), -1)
 			fmt.Println(string(j))
 			return
 		}

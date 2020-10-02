@@ -18,13 +18,14 @@
 
 ## Overview
 
-A lightweight system information collector for storing data in ElasticSearch or Stdout. Great for keeping track of elastic environments and auditing configurations.
+A lightweight system information collector for storing data in ElasticSearch or STDOUT. Great for keeping track of elastic environments and auditing configurations.
 
 Resources gathered if applicable:
 
 - RHEL Audit Rules
 - CPU Count
 - CPU Stats
+- Crontabs
 - Disk Stats
 - Docker Containers
 - Docker Images
@@ -68,6 +69,12 @@ Resources gathered if applicable:
       ],
       "cpu_count":4,
       "cpu_pct":76,
+      "crontabs":[
+        "25 6 * * * root test -x /usr/sbin/anacron || ( cd / && run-parts --report /etc/cron.daily )",
+        "47 6 * * 7 root test -x /usr/sbin/anacron || ( cd / && run-parts --report /etc/cron.weekly )",
+        "52 6 1 * * root test -x /usr/sbin/anacron || ( cd / && run-parts --report /etc/cron.monthly )",
+        "@monthly 15 cron.monthly run-parts --report /etc/cron.monthly"
+      ],
       "diskfree_gb":6,
       "disktotal_gb":8,
       "diskused_gb":19,
@@ -268,6 +275,14 @@ The agent runs every twenty minutes, and post real-time data to ElasticSearch.
 
 \*\* If you were to delete all hosts in the environment nightly. If the agent is running and the server is up, it will populate the inventory currently with only running hosts and their data. This works very well in elastic compute environments.
 
+Example with cURL:
+
+If you want to manually / cron schedule yeti-discover to post to ElasticSearch
+
+    curl -X POST --header "Content-Type: application/json" \
+         --data "$(sudo yeti-discover)" \
+         http://elasticsearch:9200/servers/dev
+
 ## Install
 
 Install the statically linked Linux binary:
@@ -283,19 +298,24 @@ Install the statically linked Linux binary:
 
 ### Client (development)
 
-- Go 1.15.x
+- Go 1.15>=
 - Make
+- Docker (Optional)
 
-To build the Linux binary run the following command:
+To build the binary with Go run the following command:
 
-    make linux
+    make build
+
+To build the binary with Docker run the following command:
+
+    make docker
 
 ## Command-Line Arguments
 
 No flags / arguments will do a one-time run and produce a JSON file in the current path of the binary
 
     -d, --daemon     Run in daemon mode
-    -c, --config     Set configuration path, defaults are ['./','/etc/yeticloud','/opt/yeticloud']
+    -c, --config     Set configuration path, defaults are ['./','/etc/yeticloud','/opt/yeticloud','/usr/lib/yeticloud/yeti-discover']
 
 ## Configuration
 
@@ -322,8 +342,8 @@ _DEFAULT values if no config is present_
     # Password if http-basic plugin is enabled
     password:
 
-    # Secure true enables HTTPS instead of HTTP)
-    secure: false
+    # https true enables HTTPS instead of HTTP)
+    https: false
 
     # Verify SSL for HTTP endpoints
     verify_ssl: true
@@ -342,10 +362,10 @@ _DEFAULT values if no config is present_
 
 ## Platforms Tested On
 
-- CentOS/RHEL 7-latest
-- Fedora 20-latest
-- Ubuntu 16-latest
-- Mac OS X 16.7.0-latest
+- CentOS/RHEL 7 - latest
+- Fedora 20 - latest
+- Ubuntu 16 - latest
+- Mac OS X 16.7.0 - latest
 
 ## Screenshots
 

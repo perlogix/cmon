@@ -25,6 +25,7 @@ func init() {
 	viper.SetConfigName("yeti-discover")
 	viper.AddConfigPath("/opt/yeticloud")
 	viper.AddConfigPath("/etc/yeticloud")
+	viper.AddConfigPath("/usr/lib/yeticloud/yeti-discover")
 	viper.AddConfigPath(".")
 	// Ignore error
 	viper.ReadInConfig()
@@ -36,8 +37,10 @@ func init() {
 	viper.SetDefault("interval", "1200")
 	viper.SetDefault("username", "")
 	viper.SetDefault("password", "")
-	viper.SetDefault("secure", "false")
+	viper.SetDefault("https", "false")
 	viper.SetDefault("verify_ssl", "true")
+	viper.SetDefault("public", "false")
+	viper.SetDefault("asset_type", "")
 	viper.SetDefault("oscap_profile", "xccdf_org.ssgproject.content_profile_cis")
 	viper.SetDefault("oscap_xccdf_xml", "/usr/share/scap-security-guide/ssg-ubuntu1804-ds.xml")
 }

@@ -27,6 +27,7 @@ type DiscoverJSON struct {
 	AuditRules           []string     `json:"audit_rules,omitempty"`
 	CPUCount             int          `json:"cpu_count,omitempty"`
 	CPUPct               int          `json:"cpu_pct,omitempty"`
+	Crontabs             []string     `json:"crontabs,omitempty"`
 	Diskfree             uint64       `json:"diskfree_gb,omitempty"`
 	Disktotal            uint64       `json:"disktotal_gb,omitempty"`
 	Diskused             uint64       `json:"diskused_gb,omitempty"`
