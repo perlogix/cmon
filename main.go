@@ -69,7 +69,7 @@ func main() {
 			d  data.DiscoverJSON
 			wg sync.WaitGroup
 		)
-		wg.Add(24)
+		wg.Add(25)
 		go func() {
 			defer wg.Done()
 			network.Conns(&d)
@@ -165,6 +165,11 @@ func main() {
 		go func() {
 			defer wg.Done()
 			d.Lastrun = time.Now().Format(time.RFC3339)
+		}()
+		//sysctl call
+		go func() {
+			defer wg.Done()
+			system.Sysctl(&d)
 		}()
 		wg.Wait()
 
