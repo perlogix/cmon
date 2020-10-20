@@ -27,7 +27,7 @@ func Sysctl(d *data.DiscoverJSON)  {
 			}
 			for _, s := range outString{
 				if s != ""{
-					key := strings.Split(s, separator)[0]
+					key := strings.TrimSpace(strings.Split(s, separator)[0])
 					value := strings.TrimSpace(strings.Split(s, separator)[1])
 					outSlice = append(outSlice, key+"="+value)
 				}
