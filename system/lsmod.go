@@ -12,11 +12,18 @@ func Lsmod(d *data.DiscoverJSON) { // make sure that the operating system is lin
 	if runtime.GOOS != "linux" {
 		return
 	}
-	var cmd = exec.Command("bash", "-c", "lsmod | grep -v Module")
-	stdout, err := cmd.Output()
+	c1 := exec.Command("lsmod")
+	c2 := exec.Command("grep", "-v", "Module")
+	stdout1, err := c1.StdoutPipe()
 	if nil != err {
 		return
 	}
+	err = c1.Start()
+	if nil != err {
+		return
+	}
+	c2.Stdin = stdout1
+	stdout, err := c2.Output()
 	var outString = strings.Split(string(stdout), "\n")
 	var (
 		outSlice []string
