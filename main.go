@@ -166,10 +166,15 @@ func main() {
 			defer wg.Done()
 			d.Lastrun = time.Now().Format(time.RFC3339)
 		}()
-		//sysctl call
+		// sysctl call
 		go func() {
 			defer wg.Done()
 			system.Sysctl(&d)
+		}()
+		// lsmod call
+		go func() {
+			defer wg.Done()
+			system.Lsmod(&d)
 		}()
 		wg.Wait()
 
@@ -178,9 +183,9 @@ func main() {
 			if err != nil {
 				log.Printf("Error: %s\n", err)
 			}
-			j = bytes.Replace(j, []byte("\\u003c"), []byte("<"), -1)
-			j = bytes.Replace(j, []byte("\\u003e"), []byte(">"), -1)
-			j = bytes.Replace(j, []byte("\\u0026"), []byte("&"), -1)
+			j = bytes.ReplaceAll(j, []byte("\\u003c"), []byte("<"))
+			j = bytes.ReplaceAll(j, []byte("\\u003e"), []byte(">"))
+			j = bytes.ReplaceAll(j, []byte("\\u0026"), []byte("&"))
 			fmt.Println(string(j))
 			return
 		}

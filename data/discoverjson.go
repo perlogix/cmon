@@ -79,7 +79,8 @@ type DiscoverJSON struct {
 	UsersLoggedin        []string     `json:"users_loggedin,omitempty"`
 	Virtualization       bool         `json:"virtualization"`
 	Virtualizationsystem string       `json:"virtualization_system,omitempty"`
-	Sysctl               []string	  `json:"sysctl,omitempty"`
+	Sysctl               []string     `json:"sysctl,omitempty"`
+	Lsmod                []string     `json:"loaded_kernel_modules,omitempty"`
 }
 
 // OScapOutput is the output format for the parsed data
