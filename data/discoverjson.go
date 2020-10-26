@@ -68,6 +68,7 @@ type DiscoverJSON struct {
 	Platform             string       `json:"platform,omitempty"`
 	Platformfamily       string       `json:"platform_family,omitempty"`
 	Platformverison      string       `json:"platform_verison,omitempty"`
+	Processes            []string     `json:"processes,omitempty"`
 	Public               bool         `json:"public"`
 	Snaps                []string     `json:"snaps,omitempty"`
 	OpenPorts            []string     `json:"open_ports,omitempty"`
