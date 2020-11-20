@@ -26,6 +26,7 @@ type DiscoverJSON struct {
 	AssetType            string       `json:"asset_type,omitempty"`
 	AuditRules           []string     `json:"audit_rules,omitempty"`
 	ChassisType          string       `json:"chassis_type,omitempty"`
+	Cloud                string       `json:"cloud,omitempty"`
 	CPUCount             int          `json:"cpu_count,omitempty"`
 	CPUPct               int          `json:"cpu_pct,omitempty"`
 	Crontabs             []string     `json:"crontabs,omitempty"`
