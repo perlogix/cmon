@@ -28,4 +28,4 @@ jobs:
     - name: Upload Trivy Scan Resulte to GitHub SecTab
       uses: github/codeql-action/upload-sarif@v1
       with:
-        sarif_file: 'trivy-results.sarif'
+        sarif_file: trivy-results.sarif
