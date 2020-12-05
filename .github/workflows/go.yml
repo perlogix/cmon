@@ -32,7 +32,10 @@ jobs:
     - name: Build
       run: go build -v ./...
 
-    - name: Scan image for vulnerabilities
-      uses: docker://docker.io/aquasec/trivy:0.2.1
+    - name: Run Trivy vulnerability scanner
+      uses: aquasecurity/trivy-action@master
       with:
-        args: --cache-dir /var/lib/trivy docker.pkg.github.com/22110939/dev-sec-ops- seed/seed:${{ github.ref }}
+          image-ref: 'docker.io/yeticloud/yeti-discover:${{ github.sha }}'
+          format: 'json'
+          exit-code: '0'
+          ignore-unfixed: true
