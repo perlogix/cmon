@@ -32,5 +32,7 @@ jobs:
     - name: Build
       run: go build -v ./...
 
-    - name: Test
-      run: go test -v ./...
+    - name: Scan image for vulnerabilities
+      uses: docker://docker.io/aquasec/trivy:0.2.1
+      with:
+        args: --cache-dir /var/lib/trivy docker.pkg.github.com/22110939/dev-sec-ops- seed/seed:${{ github.ref }}
