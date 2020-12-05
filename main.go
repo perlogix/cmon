@@ -69,7 +69,7 @@ func main() {
 			d  data.DiscoverJSON
 			wg sync.WaitGroup
 		)
-		wg.Add(29)
+		wg.Add(30)
 		go func() {
 			defer wg.Done()
 			network.Conns(&d)
@@ -189,6 +189,11 @@ func main() {
 		go func() {
 			defer wg.Done()
 			cloud.DetectCloud(&d)
+		}()
+
+		go func() {
+			defer wg.Done()
+			system.SystemdTimers(&d)
 		}()
 		wg.Wait()
 
