@@ -17,7 +17,7 @@ jobs:
         
     - name: Build an image from Dockerfile
       run: |
-          docker build -t docker.io/yeticloud/yeti-discover:${{ github.sha }} .
+          docker build --build-arg GOOS=$(GOOS) -t docker.io/yeticloud/yeti-discover:${{ github.sha }} .
 
     - name: Run Trivy vulnerability scanner
       uses: aquasecurity/trivy-action@master
