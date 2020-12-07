@@ -1,0 +1,10 @@
+FROM gcr.io/distroless/base
+COPY ./yeti-discover /app/
+
+WORKDIR /app/
+
+RUN apt-get update && apt-get install -y curl python3.4 python-pip && pip install bandit && bandit -r -f json -o /app/bandit_vulns.json /app \
+&& curl -sfL https://raw.githubusercontent.com/aquasecurity/trivy/master/contrib/install.sh | sh -s -- -b /usr/local/bin \
+&& trivy fs -f json -o /app/container_sec_report.json --exit-code 0 --no-progress /
+
+
