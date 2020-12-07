@@ -25,7 +25,7 @@ clean:
 lint:
 	fmt
 	${GOPATH}/bin/golint network data db packages containers cloud config system security
-	${GOPATH}/bin/golangci-lint run
+	${GOPATH}/bin/golangci-lint --issues-exit-code 0 run
 
 run:
 	go run main.go
