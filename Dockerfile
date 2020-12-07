@@ -1,6 +1,5 @@
 FROM golang
 
-ENV GOPATH /go
 ARG GOOS
 
 RUN mkdir -p /go/src/github.com/yeticloud/yeti-discover
