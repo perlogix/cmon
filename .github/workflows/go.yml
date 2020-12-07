@@ -26,7 +26,7 @@ jobs:
        curl -LO https://downloads.dockerslim.com/releases/1.32.0/dist_linux.tar.gz
        tar -xzf dist_linux.tar.gz
        chmod +x dist_linux 
-       ./dist_linux/docker-slim build --http-probe=false
+       ./dist_linux/docker-slim build --http-probe=false --target docker.io/yeticloud/yeti-discover:${{ github.sha }}
         
         
     - name: Run Trivy vulnerability scanner
