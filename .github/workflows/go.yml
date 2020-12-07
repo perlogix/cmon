@@ -20,7 +20,7 @@ jobs:
       
     - name: Build distroless image
       run: |
-          docker build --build-arg GOOS=$(GOOS) -t docker.io/yeticloud/yeti-discover:${{ github.sha }} ./Dockerfile-Distroless
+          docker build --build-arg GOOS=$(GOOS) -t docker.io/yeticloud/yeti-discover:${{ github.sha }} ./Dockerfile-distroless
 
 #     - name: Run Trivy vulnerability scanner
 #       uses: aquasecurity/trivy-action@master
