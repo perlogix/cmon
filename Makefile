@@ -24,7 +24,8 @@ clean:
 
 lint:
 	fmt
-	${GOPATH}/bin/golint network data db packages containers cloud config system security
+	#${GOPATH}/bin/golint network data db packages containers cloud config system security
+	${GOPATH}/bin/golint -set_exit_status ./...
 	${GOPATH}/bin/golangci-lint run
 
 run:
