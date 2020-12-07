@@ -10,5 +10,7 @@ WORKDIR /go/src/github.com/yeticloud/yeti-discover
 
 COPY ./* ./
 
+RUN ls -la ./
+
 RUN make lint
 RUN make GOOS=${GOOS} build
