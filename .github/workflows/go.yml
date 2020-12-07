@@ -23,10 +23,10 @@ jobs:
           docker build --build-arg GOOS=$(GOOS) -t docker.io/yeticloud/yeti-discover:${{ github.sha }} -f Dockerfile-distroless .
     - name: Minify docker image with docker-slim
       run: |
-       curl -LO https://downloads.dockerslim.com/releases/1.32.0/dist_linux_arm64.tar.gz
-       tar -xzf dist_linux_arm64.tar.gz
-       chmod +x dist_linux_arm64 
-       ./dist_linux_arm64/docker-slim build --http-probe=false
+       curl -LO https://downloads.dockerslim.com/releases/1.32.0/dist_linux.tar.gz
+       tar -xzf dist_linux.tar.gz
+       chmod +x dist_linux 
+       ./dist_linux/docker-slim build --http-probe=false
         
         
     - name: Run Trivy vulnerability scanner
