@@ -1,7 +1,7 @@
 # yeti-discover
 
 [![Go Report Card](https://goreportcard.com/badge/github.com/yeticloud/yeti-discover)](https://goreportcard.com/report/github.com/yeticloud/yeti-discover)
-[![CircleCI](https://circleci.com/gh/yeticloud/yeti-discover.svg?style=svg)](https://circleci.com/gh/yeticloud/yeti-discover)
+![Go](https://github.com/yeticloud/yeti-discover/workflows/Go/badge.svg)
 
 #### Table of Contents
 
@@ -23,6 +23,8 @@ A lightweight system information collector for storing data in ElasticSearch or 
 Resources gathered if applicable:
 
 - RHEL Audit Rules
+- Chassis Type
+- Cloud / Container Detection
 - CPU Count
 - CPU Stats
 - Crontabs
@@ -39,10 +41,14 @@ Resources gathered if applicable:
 - IP Routes
 - Kernel Version
 - Load Averages
+- Loaded Kernel Modules
 - Memory Stats
 - RPM / Deb Packages
 - Python Pip Packages
 - Snap Packages
+- Sysctl Kernel Parameters
+- Systemd Timers
+- Processes
 - OpenSCAP XCCDF Scan
 - OS Platform
 - OS Family
@@ -67,6 +73,8 @@ Resources gathered if applicable:
         "-w /etc/audit/audit.rules -p wa -k CFG_audit",
         "-w /etc/localtime -p wa -k time-change,CFG_system"
       ],
+      "chassis_type":"notebook",
+      "cloud":"k8s container",
       "cpu_count":4,
       "cpu_pct":76,
       "crontabs":[
@@ -136,6 +144,10 @@ Resources gathered if applicable:
       "load15":0,
       "load1":0,
       "load5":0,
+      "loaded_kernel_modules":[
+        "uinput 20480 0",
+        "binfmt_misc 16384 1"
+      ],
       "memoryfree_gb":2,
       "memorytotal_gb":16,
       "memoryused_gb":14,
@@ -159,10 +171,22 @@ Resources gathered if applicable:
       "platform":"centos",
       "platform_family":"rhel",
       "platform_verison":"6.5",
+      "processes":[
+        "pid=1 ppid=0 name=systemd user=root cpu_pct=0 mem_pct=0",
+        "pid=2 ppid=0 name=kthreadd user=root cpu_pct=0 mem_pct=0"
+      ],
       "public":false,
       "snaps":[
         "core-16-2.31.1",
         "slack-3.0.5"
+      ],
+      "sysctl":[
+        "abi.vsyscall32=1",
+        "debug.exception-trace=1"
+      ],
+      "systemd_timers":[
+        "Wed 2020-12-09 17:31:09 EST 30min left Wed 2020-12-09 16:34:56 EST 25min ago anacron.timer anacron.service",
+        "Wed 2020-12-09 19:56:18 EST 2h 56min left Wed 2020-12-09 13:57:56 EST 3h 2min ago fwupd-refresh.timer fwupd-refresh.service"
       ],
       "open_ports":[
         "addr=127.0.0.1 port=58494 name=code proto=tcp",
@@ -259,7 +283,7 @@ Resources gathered if applicable:
       "virtualization_system":"xen"
     }
 
-Average payload size: `260k`
+Average payload size: `200k`
 
 ElasticSearch terminology:
 
@@ -287,7 +311,7 @@ If you want to manually / cron schedule yeti-discover to post to ElasticSearch
 
 Install the statically linked Linux binary:
 
-    curl -OL https://github.com/yeticloud/yeti-discover/releases/download/0.2/yeti-discover && chmod -f 0755 ./yeti-discover
+    curl -OL https://github.com/yeticloud/yeti-discover/releases/download/1.0/yeti-discover && chmod -f 0755 ./yeti-discover
 
 ## Install Dependencies
 
@@ -366,6 +390,7 @@ _DEFAULT values if no config is present_
 - Fedora 20 - latest
 - Ubuntu 16 - latest
 - Mac OS X 16.7.0 - latest
+- Windows 10 - latest
 
 ## Screenshots
 

@@ -78,7 +78,7 @@ func Stats(d *data.DiscoverJSON) {
 	d.Hostname = h.Hostname
 	d.Platform = h.Platform
 	d.Platformfamily = h.PlatformFamily
-	d.Platformverison = h.PlatformVersion
+	d.Platformversion = h.PlatformVersion
 	d.Kernelversion = h.KernelVersion
 	d.Virtualization = isVirt(h.VirtualizationRole)
 	d.Virtualizationsystem = h.VirtualizationSystem

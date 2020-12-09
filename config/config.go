@@ -28,7 +28,7 @@ func init() {
 	viper.AddConfigPath("/usr/lib/yeticloud/yeti-discover")
 	viper.AddConfigPath(".")
 	// Ignore error
-	viper.ReadInConfig()
+	_ = viper.ReadInConfig()
 
 	// Default settings if no config file is supplied
 	viper.SetDefault("host", "localhost")

@@ -21,7 +21,7 @@ import (
 	"github.com/yeticloud/yeti-discover/data"
 )
 
-// AWS grabs meta-data from AWS instance
+// DetectCloud detects if on cloud instance or container
 func DetectCloud(d *data.DiscoverJSON) {
 	d.Cloud = detectCloud.Detect()
 }
