@@ -24,10 +24,12 @@ func SystemdTimers(d *data.DiscoverJSON) { // make sure that the operating syste
 	}
 	c2.Stdin = stdout1
 	stdout, err := c2.Output()
-	var outString = strings.Split(string(stdout), "\n")
+
 	var (
-		outSlice []string
+		outSlice  []string
+		outString = strings.Split(string(stdout), "\n")
 	)
+
 	for _, s := range outString {
 		if s != "" {
 			space := regexp.MustCompile(`\s+`)
