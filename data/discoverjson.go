@@ -83,6 +83,7 @@ type DiscoverJSON struct {
 	Virtualization       bool         `json:"virtualization"`
 	Virtualizationsystem string       `json:"virtualization_system,omitempty"`
 	Sysctl               []string     `json:"sysctl,omitempty"`
+	SystemdTimers        []string     `json:"systemd_timers,omitempty"`
 	Lsmod                []string     `json:"loaded_kernel_modules,omitempty"`
 }
 
