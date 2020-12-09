@@ -1,0 +1,5 @@
+FROM gcr.io/distroless/base
+COPY ./yeti-discover /app/
+
+CMD [ "/app/yeti-discover" ]
+

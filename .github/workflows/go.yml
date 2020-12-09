@@ -1,0 +1,44 @@
+name: Go
+
+on:
+  push:
+    branches: [ master ]
+  pull_request:
+    branches: [ master ]
+
+jobs:
+
+  build:
+    name: Build
+    runs-on: ubuntu-latest
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v2
+        
+    - name: Build yeti-discover binary
+      run: make docker
+      
+    - name: Build distroless image
+      run: |
+          docker build --build-arg GOOS=$(GOOS) -t yeti-discover:${{ github.sha }} -f Dockerfile-distroless .
+          
+    - name: Minify docker image with docker-slim
+      run: |
+       curl -LO https://downloads.dockerslim.com/releases/1.32.0/dist_linux.tar.gz
+       tar -xzf dist_linux.tar.gz
+       chmod +x dist_linux 
+       ./dist_linux/docker-slim build --http-probe=false --target yeti-discover:${{ github.sha }}
+        
+        
+    - name: Run Trivy vulnerability scanner
+      uses: aquasecurity/trivy-action@master
+      with:
+          image-ref: 'yeti-discover:${{ github.sha }}'
+          format: 'template'
+          template: '@/contrib/sarif.tpl'
+          output: 'trivy-results.sarif'
+
+    - name: Upload Trivy Scan Resulte to GitHub SecTab
+      uses: github/codeql-action/upload-sarif@v1
+      with:
+        sarif_file: 'trivy-results.sarif'
