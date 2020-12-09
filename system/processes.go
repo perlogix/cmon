@@ -4,6 +4,7 @@ import (
 	"github.com/shirou/gopsutil/process"
 	"github.com/yeticloud/yeti-discover/data"
 	"strconv"
+	"strings"
 )
 
 func Processes(d *data.DiscoverJSON) {
@@ -42,6 +43,7 @@ func Processes(d *data.DiscoverJSON) {
 			memPct = int(memFloat)
 		}
 		s := " pid=" + strconv.Itoa(int(pid)) + " ppid=" + strconv.Itoa(int(ppid)) + " name=" + name + " user=" + username + " cpu_pct=" + strconv.Itoa(cpuPct) + " mem_pct=" + strconv.Itoa(memPct)
+		s = strings.TrimSpace(s)
 		outSlice = append(outSlice, s)
 	}
 	d.Processes = outSlice
