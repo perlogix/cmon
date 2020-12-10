@@ -1,7 +1,7 @@
 # yeti-discover
 
 [![Go Report Card](https://goreportcard.com/badge/github.com/yeticloud/yeti-discover)](https://goreportcard.com/report/github.com/yeticloud/yeti-discover)
-[![CircleCI](https://circleci.com/gh/yeticloud/yeti-discover.svg?style=svg)](https://circleci.com/gh/yeticloud/yeti-discover)
+![Go](https://github.com/yeticloud/yeti-discover/workflows/Go/badge.svg)
 
 #### Table of Contents
 
@@ -10,7 +10,7 @@
 2. [Install](#install)
 3. [Install Dependencies](#install-dependencies)
    - [Server](#server)
-   - [Client](#client)
+   - [Client](#client-development)
 4. [Command-Line Arguments](#command-line-arguments)
 5. [Configuration](#configuration)
 6. [Platforms Tested On](#platforms-tested-on)
@@ -23,6 +23,8 @@ A lightweight system information collector for storing data in ElasticSearch or 
 Resources gathered if applicable:
 
 - RHEL Audit Rules
+- Chassis Type
+- Cloud / Container Detection
 - CPU Count
 - CPU Stats
 - Crontabs
@@ -39,10 +41,14 @@ Resources gathered if applicable:
 - IP Routes
 - Kernel Version
 - Load Averages
+- Loaded Kernel Modules
 - Memory Stats
 - RPM / Deb Packages
 - Python Pip Packages
 - Snap Packages
+- Sysctl Kernel Parameters
+- Systemd Timers
+- Processes
 - OpenSCAP XCCDF Scan
 - OS Platform
 - OS Family
@@ -279,7 +285,7 @@ Resources gathered if applicable:
 }
 ```
 
-Average payload size: `260k`
+Average payload size: `200k`
 
 ElasticSearch terminology:
 
@@ -307,7 +313,7 @@ If you want to manually / cron schedule yeti-discover to post to ElasticSearch
 
 Install the statically linked Linux binary:
 
-    curl -OL https://github.com/yeticloud/yeti-discover/releases/download/0.2/yeti-discover && chmod -f 0755 ./yeti-discover
+    curl -OL https://github.com/yeticloud/yeti-discover/releases/download/1.0/yeti-discover && chmod -f 0755 ./yeti-discover
 
 ## Install Dependencies
 
@@ -386,6 +392,7 @@ _DEFAULT values if no config is present_
 - Fedora 20 - latest
 - Ubuntu 16 - latest
 - Mac OS X 16.7.0 - latest
+- Windows 10 - latest
 
 ## Screenshots
 
