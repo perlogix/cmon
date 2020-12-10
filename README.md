@@ -299,21 +299,25 @@ Agent Run Time:
 
 The agent runs every twenty minutes, and post real-time data to ElasticSearch.
 
-\*\* If you were to delete all hosts in the environment nightly. If the agent is running and the server is up, it will populate the inventory currently with only running hosts and their data. This works very well in elastic compute environments.
+If you were to delete all hosts in the environment nightly. If the agent is running and the server is up, it will populate the inventory currently with only running hosts and their data. This works very well in elastic compute environments.
 
 Example with cURL:
 
 If you want to manually / cron schedule yeti-discover to post to ElasticSearch
 
-    curl -X POST --header "Content-Type: application/json" \
-         --data "$(sudo yeti-discover)" \
-         http://elasticsearch:9200/servers/dev
+```sh
+curl -X POST --header "Content-Type: application/json" \
+     --data "$(sudo yeti-discover)" \
+     http://elasticsearch:9200/servers/dev
+```
 
 ## Install
 
 Install the statically linked Linux binary:
 
-    curl -OL https://github.com/yeticloud/yeti-discover/releases/download/1.0/yeti-discover && chmod -f 0755 ./yeti-discover
+```sh
+curl -OL https://github.com/yeticloud/yeti-discover/releases/download/1.0/yeti-discover && chmod -f 0755 ./yeti-discover
+```
 
 ## Install Dependencies
 
@@ -330,11 +334,15 @@ Install the statically linked Linux binary:
 
 To build the binary with Go run the following command:
 
-    make build
+```sh
+make build
+```
 
 To build the binary with Docker run the following command:
 
-    make docker
+```sh
+make docker
+```
 
 ## Command-Line Arguments
 
@@ -350,41 +358,43 @@ Configurations can be written in YAML, JSON or TOML.
 _/opt/yeticloud/yeti-discover.yaml_
 _DEFAULT values if no config is present_
 
-    # ElasticSearch DB
-    host: localhost
-    port: 9200
+```yaml
+# ElasticSearch DB
+host: localhost
+port: 9200
 
-    # ElasticSearch Index Name
-    ## This can be anything, it could be aws, softlayer, prod, staging
-    environment: dev
+# ElasticSearch Index Name
+# This can be anything, it could be aws, softlayer, prod, staging
+environment: dev
 
-    # Interval of agent runs in seconds
-    ## Default is every twenty minutes
-    interval: 1200
+# Interval of agent runs in seconds
+# Default is every twenty minutes
+interval: 1200
 
-    # Username if http-basic plugin is enabled
-    username:
+# Username if http-basic plugin is enabled
+username:
 
-    # Password if http-basic plugin is enabled
-    password:
+# Password if http-basic plugin is enabled
+password:
 
-    # https true enables HTTPS instead of HTTP)
-    https: false
+# https true enables HTTPS instead of HTTP)
+https: false
 
-    # Verify SSL for HTTP endpoints
-    verify_ssl: true
+# Verify SSL for HTTP endpoints
+verify_ssl: true
 
-    # Public facing asset
-    public: false
+# Public facing asset
+public: false
 
-    # Asset type
-    asset_type:
+# Asset type
+asset_type:
 
-    # OpenSCAP XCCDF XML file path
-    oscap_xccdf_xml: /usr/share/scap-security-guide/ssg-ubuntu1804-ds.xml
+# OpenSCAP XCCDF XML file path
+oscap_xccdf_xml: /usr/share/scap-security-guide/ssg-ubuntu1804-ds.xml
 
-    # OpenSCAP Profile
-    oscap_profile: xccdf_org.ssgproject.content_profile_cis
+# OpenSCAP Profile
+oscap_profile: xccdf_org.ssgproject.content_profile_cis
+```
 
 ## Platforms Tested On
 
