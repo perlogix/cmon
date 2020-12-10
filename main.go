@@ -166,22 +166,18 @@ func main() {
 			defer wg.Done()
 			d.Lastrun = time.Now().Format(time.RFC3339)
 		}()
-		// sysctl call
 		go func() {
 			defer wg.Done()
 			system.Sysctl(&d)
 		}()
-		// lsmod call
 		go func() {
 			defer wg.Done()
 			system.Lsmod(&d)
 		}()
-		// Processes call
 		go func() {
 			defer wg.Done()
 			system.Processes(&d)
 		}()
-		// ChassisType call
 		go func() {
 			defer wg.Done()
 			system.ChassisType(&d)

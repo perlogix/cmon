@@ -60,21 +60,24 @@ type DiscoverJSON struct {
 	Load1                float64      `json:"load1,omitempty"`
 	Load15               float64      `json:"load15,omitempty"`
 	Load5                float64      `json:"load5,omitempty"`
+	Lsmod                []string     `json:"loaded_kernel_modules,omitempty"`
 	Memoryfree           uint64       `json:"memoryfree_gb,omitempty"`
 	Memorytotal          uint64       `json:"memorytotal_gb,omitempty"`
 	Memoryused           uint64       `json:"memoryused_gb,omitempty"`
+	OpenPorts            []string     `json:"open_ports,omitempty"`
+	OpenScap             OScapOutput  `json:"openscap,omitempty"`
 	Os                   string       `json:"os,omitempty"`
 	Packages             []string     `json:"packages,omitempty"`
 	Pip                  []string     `json:"pip,omitempty"`
 	Pip3                 []string     `json:"pip3,omitempty"`
 	Platform             string       `json:"platform,omitempty"`
 	Platformfamily       string       `json:"platform_family,omitempty"`
-	Platformverison      string       `json:"platform_verison,omitempty"`
+	Platformversion      string       `json:"platform_version,omitempty"`
 	Processes            []string     `json:"processes,omitempty"`
 	Public               bool         `json:"public"`
 	Snaps                []string     `json:"snaps,omitempty"`
-	OpenPorts            []string     `json:"open_ports,omitempty"`
-	OpenScap             OScapOutput  `json:"openscap,omitempty"`
+	Sysctl               []string     `json:"sysctl,omitempty"`
+	SystemdTimers        []string     `json:"systemd_timers,omitempty"`
 	Timezone             string       `json:"timezone,omitempty"`
 	Trivy                TrivyResults `json:"trivy,omitempty"`
 	Uptime               uint64       `json:"uptime_days,omitempty"`
@@ -82,9 +85,6 @@ type DiscoverJSON struct {
 	UsersLoggedin        []string     `json:"users_loggedin,omitempty"`
 	Virtualization       bool         `json:"virtualization"`
 	Virtualizationsystem string       `json:"virtualization_system,omitempty"`
-	Sysctl               []string     `json:"sysctl,omitempty"`
-	SystemdTimers        []string     `json:"systemd_timers,omitempty"`
-	Lsmod                []string     `json:"loaded_kernel_modules,omitempty"`
 }
 
 // OScapOutput is the output format for the parsed data
