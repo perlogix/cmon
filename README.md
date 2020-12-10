@@ -10,7 +10,7 @@
 2. [Install](#install)
 3. [Install Dependencies](#install-dependencies)
    - [Server](#server)
-   - [Client](#client)
+   - [Client](#client-development)
 4. [Command-Line Arguments](#command-line-arguments)
 5. [Configuration](#configuration)
 6. [Platforms Tested On](#platforms-tested-on)
