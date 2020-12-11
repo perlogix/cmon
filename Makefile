@@ -34,6 +34,9 @@ run:
 fmt:
 	go fmt ./...
 
+update-deps:
+	go get -u ./...
+
 docker:
 	sudo docker build --build-arg GOOS=$(GOOS) -t yeti-discover-build .
 	sudo docker create --name yeti-discover-build yeti-discover-build
