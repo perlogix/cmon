@@ -344,6 +344,12 @@ To build the binary with Docker run the following command:
 make docker
 ```
 
+To build the RPM and Deb packages with Docker run the following command:
+
+```sh
+make VER=1.0 pkgs
+```
+
 ## Command-Line Arguments
 
 No flags / arguments will do a one-time run and produce a JSON file in the current path of the binary
