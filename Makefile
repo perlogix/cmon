@@ -4,6 +4,7 @@ GOOS := $(shell uname -s | tr '[:upper:]' '[:lower:]')
 GO_LINUX := GOOS=linux GOARCH=amd64
 GO_OSX := GOOS=darwin GOARCH=amd64
 GO_WIN := GOOS=darwin GOARCH=amd64
+VER := 1.0
 LDFLAGS := '-s -w -X "main.builtOn=$(BUILT_ON)"'
 
 build:
@@ -38,3 +39,10 @@ docker:
 	sudo docker create --name yeti-discover-build yeti-discover-build
 	sudo docker cp yeti-discover-build:/go/src/github.com/yeticloud/yeti-discover/yeti-discover ./
 	sudo docker rm -f yeti-discover-build
+
+pkgs:
+	sudo docker build --build-arg VER=$(VER) -t yeti-discover-pkgs -f Dockerfile-pkgs .
+	sudo docker create --name yeti-discover-pkgs yeti-discover-pkgs
+	sudo docker cp yeti-discover-pkgs:/packaging/yeti-discover-$(VER)-amd64.rpm ./
+	sudo docker cp yeti-discover-pkgs:/packaging/yeti-discover-$(VER)-amd64.deb ./
+	sudo docker rm -f yeti-discover-pkgs
