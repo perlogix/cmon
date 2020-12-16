@@ -18,7 +18,9 @@
 
 ## Overview
 
-A lightweight system information collector for storing data in ElasticSearch or STDOUT. Great for keeping track of elastic environments and auditing configurations.
+NIST Information Security Continuous Monitoring (ISCM) and configuration baseline data collector.
+
+Great for keeping track of elastic environments, auditing or migrating servers by storing data in ElasticSearch or outputting to STDOUT.
 
 Resources gathered if applicable:
 
