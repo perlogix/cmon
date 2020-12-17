@@ -50,11 +50,14 @@ type DiscoverJSON struct {
 	Ec2PublicIP4         string       `json:"ec2_public_ip4,omitempty"`
 	Ec2SecurityGroups    []string     `json:"ec2_security_groups,omitempty"`
 	Environment          string       `json:"environment,omitempty"`
+	ExpiredCerts         []string     `json:"expired_certs,omitempty"`
+	FailedLogins         []string     `json:"failed_logins,omitempty"`
 	Gem                  []string     `json:"gem,omitempty"`
 	Hostname             string       `json:"hostname,omitempty"`
 	IPRoute              []string     `json:"ip_route,omitempty"`
 	Ipaddress            string       `json:"ipaddress,omitempty"`
 	Iptables             []string     `json:"iptables,omitempty"`
+	Interfaces           []IfaceData  `json:"network_interfaces,omitempty"`
 	Kernelversion        string       `json:"kernel_version,omitempty"`
 	Lastrun              string       `json:"lastrun,omitempty"`
 	Load1                float64      `json:"load1,omitempty"`
@@ -64,6 +67,7 @@ type DiscoverJSON struct {
 	Memoryfree           uint64       `json:"memoryfree_gb,omitempty"`
 	Memorytotal          uint64       `json:"memorytotal_gb,omitempty"`
 	Memoryused           uint64       `json:"memoryused_gb,omitempty"`
+	NTPServers           []string     `json:"ntp_servers,omitempty"`
 	OpenPorts            []string     `json:"open_ports,omitempty"`
 	OpenScap             OScapOutput  `json:"openscap,omitempty"`
 	Os                   string       `json:"os,omitempty"`
@@ -111,4 +115,19 @@ type TrivyResult struct {
 	Type            string                        `json:"Type,omitempty"`
 	Packages        []ftypes.Package              `json:"Packages,omitempty"`
 	Vulnerabilities []types.DetectedVulnerability `json:"Vulnerabilities"`
+}
+
+// IfaceData type is the Kernel Network Interface table
+type IfaceData struct {
+	Interface string `json:"interface"`
+	MTU       int    `json:"mtu"`
+	RXok      int    `json:"rx_ok"`
+	RXerr     int    `json:"rx_err"`
+	RXdrp     int    `json:"rx_drop"`
+	RXovr     int    `json:"rx_overrun"`
+	TXok      int    `json:"tx_ok"`
+	TXerr     int    `json:"tx_err"`
+	TXdrp     int    `json:"tx_drop"`
+	TXovr     int    `json:"tx_overrun"`
+	Flag      string `json:"flag"`
 }

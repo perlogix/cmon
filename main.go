@@ -69,7 +69,7 @@ func main() {
 			d  data.DiscoverJSON
 			wg sync.WaitGroup
 		)
-		wg.Add(30)
+		wg.Add(34)
 		go func() {
 			defer wg.Done()
 			network.Conns(&d)
@@ -77,6 +77,22 @@ func main() {
 		go func() {
 			defer wg.Done()
 			security.OScap(&d)
+		}()
+		go func() {
+			defer wg.Done()
+			network.IfaceStats(&d)
+		}()
+		go func() {
+			defer wg.Done()
+			security.ExpiredCerts(&d)
+		}()
+		go func() {
+			defer wg.Done()
+			security.FailedLogins(&d)
+		}()
+		go func() {
+			defer wg.Done()
+			network.NTPServers(&d)
 		}()
 		go func() {
 			defer wg.Done()
