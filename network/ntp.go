@@ -10,8 +10,7 @@ import (
 
 // NTPServers gets NTP servers listed in /etc/ntp.conf
 func NTPServers(d *data.DiscoverJSON) {
-
-	if runtime.GOOS != "windows" {
+	if runtime.GOOS == "linux" {
 		ntpGrep := exec.Command("grep", "^server", "/etc/ntp.conf")
 		ntpAwk := exec.Command("awk", "{print$2}")
 		ntpGrepOut, err := ntpGrep.StdoutPipe()
@@ -30,10 +29,31 @@ func NTPServers(d *data.DiscoverJSON) {
 			return
 		}
 
-		ntpSlice := strings.Split(strings.TrimSpace(string(ntpOut)), "\n")
-		if ntpSlice != nil {
-			d.NTPServers = ntpSlice
+		var ntpSlice []string
+
+		for _, line := range strings.Split(strings.TrimSuffix(string(ntpOut), "\n"), "\n") {
+			s := strings.TrimSpace(line)
+			if s != "" {
+				ntpSlice = append(ntpSlice, s)
+			}
 		}
+
+		d.NTPServers = ntpSlice
 	}
 
+}
+
+// NTPRunning detects if NTPD is running
+func NTPRunning(d *data.DiscoverJSON) {
+	if runtime.GOOS == "linx" {
+		out, err := exec.Command("pidof", "ntpd").Output()
+		if err != nil {
+			return
+		}
+
+		if string(out) != "" {
+			d.NTPRunning = true
+			return
+		}
+	}
 }

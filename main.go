@@ -64,12 +64,22 @@ func main() {
 
 	flag.Parse()
 
+	defer func() {
+		if r := recover(); r != nil {
+			main()
+		}
+	}()
+
 	for {
 		var (
 			d  data.DiscoverJSON
 			wg sync.WaitGroup
 		)
 		wg.Add(34)
+		go func() {
+			defer wg.Done()
+			system.Stats(&d)
+		}()
 		go func() {
 			defer wg.Done()
 			network.Conns(&d)
@@ -157,10 +167,6 @@ func main() {
 		go func() {
 			defer wg.Done()
 			system.Audit(&d)
-		}()
-		go func() {
-			defer wg.Done()
-			system.Stats(&d)
 		}()
 		go func() {
 			defer wg.Done()

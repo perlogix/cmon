@@ -8,6 +8,7 @@ import (
 	"github.com/yeticloud/yeti-discover/data"
 )
 
+// FailedLogins runs lastb on NIX systems
 func FailedLogins(d *data.DiscoverJSON) {
 	if runtime.GOOS != "windows" {
 		lastb := exec.Command("lastb")
@@ -28,8 +29,11 @@ func FailedLogins(d *data.DiscoverJSON) {
 
 		var lastbSlice []string
 
-		for _, line := range strings.Split(strings.TrimSpace(string(lastbOutput)), "\n") {
-			lastbSlice = append(lastbSlice, strings.TrimSpace(line))
+		for _, line := range strings.Split(strings.TrimSuffix(string(lastbOutput), "\n"), "\n") {
+			s := strings.TrimSpace(line)
+			if s != "" {
+				lastbSlice = append(lastbSlice, s)
+			}
 		}
 
 		d.FailedLogins = lastbSlice

@@ -29,11 +29,13 @@ type DiscoverJSON struct {
 	Cloud                string       `json:"cloud,omitempty"`
 	CPUCount             int          `json:"cpu_count,omitempty"`
 	CPUPct               int          `json:"cpu_pct,omitempty"`
+	CPUvulns             []string     `json:"cpu_vulns,omitempty"`
 	Crontabs             []string     `json:"crontabs,omitempty"`
 	Diskfree             uint64       `json:"diskfree_gb,omitempty"`
 	Disktotal            uint64       `json:"disktotal_gb,omitempty"`
 	Diskused             uint64       `json:"diskused_gb,omitempty"`
 	DNSNameserver        []string     `json:"dns_nameserver,omitempty"`
+	DmesgErrors          string       `json:"dmesg_errors,omitempty"`
 	DockerContainers     []string     `json:"docker_containers,omitempty"`
 	DockerRunning        int          `json:"docker_running,omitempty"`
 	DockerPaused         int          `json:"docker_paused,omitempty"`
@@ -68,6 +70,7 @@ type DiscoverJSON struct {
 	Memorytotal          uint64       `json:"memorytotal_gb,omitempty"`
 	Memoryused           uint64       `json:"memoryused_gb,omitempty"`
 	NTPServers           []string     `json:"ntp_servers,omitempty"`
+	NTPRunning           bool         `json:"ntp_running,omitempty"`
 	OpenPorts            []string     `json:"open_ports,omitempty"`
 	OpenScap             OScapOutput  `json:"openscap,omitempty"`
 	Os                   string       `json:"os,omitempty"`
@@ -81,6 +84,7 @@ type DiscoverJSON struct {
 	Public               bool         `json:"public"`
 	Snaps                []string     `json:"snaps,omitempty"`
 	Sysctl               []string     `json:"sysctl,omitempty"`
+	SystemctlFailed      string       `json:"systemctl_failed,omitempty"`
 	SystemdTimers        []string     `json:"systemd_timers,omitempty"`
 	Timezone             string       `json:"timezone,omitempty"`
 	Trivy                TrivyResults `json:"trivy,omitempty"`
