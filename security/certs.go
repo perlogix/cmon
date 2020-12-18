@@ -18,9 +18,7 @@ func ExpiredCerts(d *data.DiscoverJSON) {
 				return
 			}
 
-			var certs = strings.Split(strings.TrimSuffix(string(out), "\n"), "\n")
-
-			d.ExpiredCerts = certs
+			d.ExpiredCerts = strings.Split(strings.TrimSuffix(string(out), "\n"), "\n")
 		}
 	}
 }

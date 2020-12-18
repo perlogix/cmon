@@ -16,8 +16,6 @@ func CPUvulns(d *data.DiscoverJSON) {
 			return
 		}
 
-		var vulns = strings.Split(strings.TrimSuffix(string(out), "\n"), "\n")
-
-		d.CPUvulns = vulns
+		d.CPUvulns = strings.Split(strings.TrimSuffix(string(out), "\n"), "\n")
 	}
 }
