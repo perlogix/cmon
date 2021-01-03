@@ -22,6 +22,8 @@ windows:
 clean:
 	find . -name *_gen.go -type f -exec rm {} \;
 	rm -f ./$(MAIN_PACKAGE)
+	rm -f ./*.rpm
+	rm -f ./*.deb
 
 lint:
 	fmt
