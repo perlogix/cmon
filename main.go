@@ -75,7 +75,7 @@ func main() {
 			d  data.DiscoverJSON
 			wg sync.WaitGroup
 		)
-		wg.Add(34)
+		wg.Add(35)
 		go func() {
 			defer wg.Done()
 			system.Stats(&d)
@@ -155,6 +155,10 @@ func main() {
 		go func() {
 			defer wg.Done()
 			containers.DockerContainers(&d)
+		}()
+		go func() {
+			defer wg.Done()
+			security.ClamAVDefs(&d)
 		}()
 		go func() {
 			defer wg.Done()
