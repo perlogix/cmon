@@ -80,6 +80,11 @@ Resources gathered if applicable:
   "cloud":"k8s container",
   "cpu_count":4,
   "cpu_pct":76,
+  "cpu_vulns":[
+    "/sys/devices/system/cpu/vulnerabilities/spectre_v2:Vulnerable, IBPB: disabled, STIBP: disabled",
+    "/sys/devices/system/cpu/vulnerabilities/itlb_multihit:KVM: Vulnerable"
+  ],
+  "clamav_defs": "ClamAV 0.102.4/26037/Sun Jan  3 12:37:28 2021",
   "crontabs":[
     "25 6 * * * root test -x /usr/sbin/anacron || ( cd / && run-parts --report /etc/cron.daily )",
     "47 6 * * 7 root test -x /usr/sbin/anacron || ( cd / && run-parts --report /etc/cron.weekly )",
@@ -93,6 +98,7 @@ Resources gathered if applicable:
     "8.8.8.8",
     "8.8.4.4"
   ],
+  "dmesg_errors":"ACPI BIOS Error (bug): Failure creating named object [B.PCI0.RP17.PXSX.TBDU], AE_ALREADY_EXISTS (20200717/dswload2-326) ACPI Error: AE_ALREADY_EXISTS, During name lookup/catalog (20200717/psobject-220)",
   "docker_containers":[
     "name=kibana image=kibana:7.4.0 command=/usr/local/bin/dumb-init -- /usr/local/bin/kibana-docker ports=[] state=running status=Up About a minute",
     "name=elasticsearch image=elasticsearch:7.4.0 command=/usr/local/bin/docker-entrypoint.sh eswrapper ports=[] state=running status=Up 3 minutes",
@@ -114,6 +120,14 @@ Resources gathered if applicable:
   "ec2_public_ip4":"54.145.182.91",
   "ec2_security_groups":"default",
   "environment":"dev",
+  "expired_certs":[
+    "/etc/ssl/server.crt Certificate will expire",
+    "/etc/nginx/server.crt Certificate will expire",
+    "/etc/httpd/server.crt Certificate will expire"
+  ],
+  "failed_logins":[
+    "root pts/1 Sun Jan  3 17:30 - 17:30  (00:00)"
+  ],
   "gem":[
     "arr-pm-0.0.9",
     "backports-3.6.4",
@@ -142,6 +156,21 @@ Resources gathered if applicable:
     "172.17.0.0/16 dev docker0  proto kernel  scope link  src 172.17.42.1 ",
     "192.168.1.0/24 dev eth0  proto kernel  scope link  src 192.168.1.10 "
   ],
+  "network_interfaces":[
+    {
+      "interface":"enp60s0",
+      "mtu":1500,
+      "rx_ok":0,
+      "rx_err":0,
+      "rx_drop":0,
+      "rx_overrun":0,
+      "tx_ok":0,
+      "tx_err":0,
+      "tx_drop":0,
+      "tx_overrun":0,
+      "flag":"BMU"
+    }
+  ],
   "kernel_version":"2.6.32-431.29.2.el6.x86_64",
   "lastrun":"2015-05-21T23:29:49-04:00",
   "load15":0,
@@ -154,6 +183,10 @@ Resources gathered if applicable:
   "memoryfree_gb":2,
   "memorytotal_gb":16,
   "memoryused_gb":14,
+  "ntp_servers":[
+    "server ntp.server.com"
+  ],
+  "ntp_running": true,
   "os":"linux",
   "packages":[
     "acl-2.2.49-6.el6.x86_64",
@@ -186,6 +219,9 @@ Resources gathered if applicable:
   "sysctl":[
     "abi.vsyscall32=1",
     "debug.exception-trace=1"
+  ],
+  "systemctl_failed":[
+    "0 loaded units listed."
   ],
   "systemd_timers":[
     "Wed 2020-12-09 17:31:09 EST 30min left Wed 2020-12-09 16:34:56 EST 25min ago anacron.timer anacron.service",
@@ -318,7 +354,7 @@ curl -X POST --header "Content-Type: application/json" \
 Install the statically linked Linux binary:
 
 ```sh
-curl -OL https://github.com/yeticloud/yeti-discover/releases/download/1.0/yeti-discover && chmod -f 0755 ./yeti-discover
+curl -OL https://github.com/yeticloud/yeti-discover/releases/download/1.1/yeti-discover && chmod -f 0755 ./yeti-discover
 ```
 
 ## Install Dependencies
@@ -349,7 +385,7 @@ make docker
 To build the RPM and Deb packages with Docker run the following command:
 
 ```sh
-make VER=1.0 pkgs
+make VER=1.1 pkgs
 ```
 
 ## Command-Line Arguments
