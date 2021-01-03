@@ -1,0 +1,13 @@
+[Unit]
+Description=yeti-discover Daemon
+After=network.target
+
+[Service]
+Type=simple
+User=root
+Group=root
+ExecStart=/usr/lib/yeticloud/yeti-discover/yeti-discover -d
+Restart=on-failure
+
+[Install]
+WantedBy=default.target

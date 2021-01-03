@@ -43,7 +43,7 @@ var (
 )
 
 func init() {
-	flag.StringVar(configFlag, "c", "", "  Set configuration path, defaults are ['./', '/etc/yeticloud', '/opt/yeticloud']")
+	flag.StringVar(configFlag, "c", "", "  Set configuration path, defaults are ['./', '/etc/yeticloud', '/opt/yeticloud', '/usr/lib/yeticloud/yeti-discover']")
 	flag.BoolVar(daemonFlag, "d", false, "  Run in daemon mode")
 }
 
@@ -52,7 +52,7 @@ func main() {
 	flag.Usage = func() {
 		fmt.Printf(` Usage: yeti-discover [options] <args>
    -d, --daemon    Run in daemon mode
-   -c, --config    Set configuration path, defaults are ['./', '/etc/yeticloud', '/opt/yeticloud']
+   -c, --config    Set configuration path, defaults are ['./', '/etc/yeticloud', '/opt/yeticloud', '/usr/lib/yeticloud/yeti-discover']
 	
  Built On:       %s
 

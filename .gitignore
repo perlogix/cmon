@@ -22,7 +22,8 @@ _testmain.go
 *.exe
 *.test
 *.prof
-yeti*
+yeti-discover
+yeti-discover-*
 vendor
 *.rpm
 *.deb
