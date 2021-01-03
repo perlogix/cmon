@@ -24,18 +24,25 @@ Great for keeping track of elastic environments, auditing or migrating servers b
 
 Resources gathered if applicable:
 
-- RHEL Audit Rules
+- Asset Type
+- Auditd Rules
 - Chassis Type
 - Cloud / Container Detection
 - CPU Count
 - CPU Stats
+- CPU Vulnerabilities
+- ClamAV Definitions
 - Crontabs
 - Disk Stats
+- DMesg Errors
 - Docker Containers
 - Docker Images
 - Docker Stats
 - Domain Name
 - EC2 Instance Metadata
+- Environment
+- Expired SSL Certs
+- Failed Logins
 - Ruby Gems
 - Hostname
 - IP Address
@@ -45,17 +52,22 @@ Resources gathered if applicable:
 - Load Averages
 - Loaded Kernel Modules
 - Memory Stats
+- Network Interface Stats
+- NTP Servers
+- NTP Running
 - RPM / Deb Packages
 - Python Pip Packages
+- Public
 - Snap Packages
 - Sysctl Kernel Parameters
+- Systemd Failed Services
 - Systemd Timers
 - Processes
 - OpenSCAP XCCDF Scan
 - OS Platform
 - OS Family
 - OS Version
-- TCP 4/6 Listening
+- TCP 4/6 Listening Open Ports
 - Timezone
 - Trivy Scan
 - Uptime
