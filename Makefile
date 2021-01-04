@@ -20,7 +20,7 @@ windows:
 	CGO_ENABLED=0 $(GO_WIN) go build -a -installsuffix cgo -o $(MAIN_PACKAGE).exe -ldflags $(LDFLAGS) .
 
 clean:
-	find . -name *_gen.go -type f -exec rm {} \;
+	find . -name *_gen.go -type f -delete
 	rm -f ./$(MAIN_PACKAGE)
 	rm -f ./*.rpm
 	rm -f ./*.deb
