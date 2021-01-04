@@ -25,16 +25,15 @@ clean:
 	rm -f ./*.rpm
 	rm -f ./*.deb
 
-lint:
-	fmt
-	${GOPATH}/bin/golint network data db packages containers cloud config system security
-	${GOPATH}/bin/golangci-lint --issues-exit-code 0 run
+gofmt:
+	go fmt ./...
+
+lint: gofmt
+	$(GOPATH)/bin/golint network data db packages containers cloud config system security
+	$(GOPATH)/bin/golangci-lint run
 
 run:
 	go run main.go
-
-fmt:
-	go fmt ./...
 
 update-deps:
 	go get -u ./...
