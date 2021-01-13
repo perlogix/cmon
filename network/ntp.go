@@ -31,6 +31,9 @@ func NTPServers(d *data.DiscoverJSON) {
 
 		var ntpSlice []string
 
+		// timedatectl show-timesync -p ServerName --value
+		// timedatectl show-timesync -p FallbackNTPServers --value
+
 		for _, line := range strings.Split(strings.TrimSuffix(string(ntpOut), "\n"), "\n") {
 			s := strings.TrimSpace(line)
 			if s != "" {
@@ -50,6 +53,8 @@ func NTPRunning(d *data.DiscoverJSON) {
 		if err != nil {
 			return
 		}
+
+		// timedatectl show -p NTP --value | grep yes
 
 		if string(out) != "" {
 			d.NTPRunning = true

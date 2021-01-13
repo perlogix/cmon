@@ -26,7 +26,7 @@ import (
 
 // IP fetches the local IP address used for outbound connections
 func IP(d *data.DiscoverJSON) {
-	conn, _ := net.DialTimeout("udp", "1.1.1.1:80", 10*time.Millisecond)
+	conn, _ := net.DialTimeout("udp", "1.1.1.1:80", 20*time.Millisecond)
 	if conn != nil {
 		defer conn.Close()
 	}

@@ -19,7 +19,6 @@ package main
 import (
 	"bytes"
 	"encoding/json"
-	"flag"
 	"fmt"
 	"log"
 	"sync"
@@ -36,33 +35,7 @@ import (
 	"github.com/yeticloud/yeti-discover/system"
 )
 
-var (
-	configFlag = flag.String("config", "", "  Set configuration path, defaults are ['./', '/etc/yeticloud', '/opt/yeticloud', '/usr/lib/yeticloud/yeti-discover']")
-	daemonFlag = flag.Bool("daemon", false, "  Run in daemon mode")
-	builtOn    string
-)
-
-func init() {
-	flag.StringVar(configFlag, "c", "", "  Set configuration path, defaults are ['./', '/etc/yeticloud', '/opt/yeticloud', '/usr/lib/yeticloud/yeti-discover']")
-	flag.BoolVar(daemonFlag, "d", false, "  Run in daemon mode")
-}
-
 func main() {
-
-	flag.Usage = func() {
-		fmt.Printf(` Usage: yeti-discover [options] <args>
-   -d, --daemon    Run in daemon mode
-   -c, --config    Set configuration path, defaults are ['./', '/etc/yeticloud', '/opt/yeticloud', '/usr/lib/yeticloud/yeti-discover']
-	
- Built On:       %s
-
- Example:        yeti-discover -d -c ./conf/yeti-discover.yaml
-	
- Documentation:  https://github.com/yeticloud/yeti-discover/blob/master/README.md
-`, builtOn)
-	}
-
-	flag.Parse()
 
 	defer func() {
 		if r := recover(); r != nil {
@@ -219,7 +192,7 @@ func main() {
 		}()
 		wg.Wait()
 
-		if !*daemonFlag {
+		if !config.Bool("daemon") {
 			j, err := json.Marshal(d)
 			if err != nil {
 				log.Printf("Error: %s\n", err)

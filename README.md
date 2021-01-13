@@ -11,10 +11,11 @@
 3. [Install Dependencies](#install-dependencies)
    - [Server](#server)
    - [Client](#client-development)
-4. [Command-Line Arguments](#command-line-arguments)
-5. [Configuration](#configuration)
-6. [Platforms Tested On](#platforms-tested-on)
-7. [Screenshots](#screenshots)
+4. [Getting Started Vagrant](#getting-started-vagrant)
+5. [Command-Line Arguments](#command-line-arguments)
+6. [Configuration](#configuration)
+7. [Platforms Tested On](#platforms-tested-on)
+8. [Screenshots](#screenshots)
 
 ## Overview
 
@@ -356,9 +357,12 @@ Example with cURL:
 If you want to manually / cron schedule yeti-discover to post to ElasticSearch
 
 ```sh
-curl -X POST --header "Content-Type: application/json" \
-     --data "$(sudo yeti-discover)" \
-     http://elasticsearch:9200/servers/dev
+# HTTP unauth
+sudo ./yeti-discover | curl -XPOST -H "Content-Type: application/json" -d @- "http://localhost:9200/servers/_doc/$(hostid)"
+
+
+# Insecure SSL and basic auth
+sudo ./yeti-discover | curl -XPOST -k -u admin:admin -H "Content-Type: application/json" -d @- "https://localhost:9200/servers/_doc/$(hostid)"
 ```
 
 ## Install
@@ -366,7 +370,313 @@ curl -X POST --header "Content-Type: application/json" \
 Install the statically linked Linux binary:
 
 ```sh
-curl -OL https://github.com/yeticloud/yeti-discover/releases/download/1.1/yeti-discover && chmod -f 0755 ./yeti-discover
+curl -OL "https://github.com/yeticloud/yeti-discover/releases/download/1.2/yeti-discover" && chmod -f 0755 ./yeti-discover
+```
+
+**ElasticSearch Mappings Needed**
+
+```sh
+# Create index
+curl -XPUT "http://localhost:9200/servers"
+
+# Put mappings to existing index
+curl -XPUT "http://localhost:9200/servers/_mapping" -H 'Content-Type: application/json' -d'
+{
+  "properties": {
+    "asset_type": {
+      "type": "keyword"
+    },
+    "chassis_type": {
+      "type": "keyword"
+    },
+    "cpu_count": {
+      "type": "long"
+    },
+    "cpu_pct": {
+      "type": "long"
+    },
+    "clamav_defs": {
+      "type": "keyword"
+    },
+    "crontabs": {
+      "type": "keyword"
+    },
+    "diskfree_gb": {
+      "type": "long"
+    },
+    "disktotal_gb": {
+      "type": "long"
+    },
+    "diskused_gb": {
+      "type": "long"
+    },
+    "dns_nameserver": {
+      "type": "keyword"
+    },
+    "docker_containers": {
+      "type": "keyword"
+    },
+    "docker_running": {
+      "type": "long"
+    },
+    "docker_stopped": {
+      "type": "long"
+    },
+    "docker_images_count": {
+      "type": "long"
+    },
+    "docker_images": {
+      "type": "keyword"
+    },
+    "environment": {
+      "type": "keyword"
+    },
+    "expired_certs": {
+      "type": "keyword"
+    },
+    "hostname": {
+      "type": "keyword"
+    },
+    "ip_route": {
+      "type": "keyword"
+    },
+    "ipaddress": {
+      "type": "keyword"
+    },
+    "iptables": {
+      "type": "keyword"
+    },
+    "network_interfaces": {
+      "type": "nested",
+      "properties": {
+        "interface": {
+          "type": "keyword"
+        },
+        "mtu": {
+          "type": "long"
+        },
+        "rx_ok": {
+          "type": "long"
+        },
+        "rx_err": {
+          "type": "long"
+        },
+        "rx_drop": {
+          "type": "long"
+        },
+        "rx_overrun": {
+          "type": "long"
+        },
+        "tx_ok": {
+          "type": "long"
+        },
+        "tx_err": {
+          "type": "long"
+        },
+        "tx_drop": {
+          "type": "long"
+        },
+        "tx_overrun": {
+          "type": "long"
+        },
+        "flag": {
+          "type": "keyword"
+        }
+      }
+    },
+    "kernel_version": {
+      "type": "keyword"
+    },
+    "lastrun": {
+      "type": "date"
+    },
+    "load1": {
+      "type": "float"
+    },
+    "load15": {
+      "type": "float"
+    },
+    "load5": {
+      "type": "float"
+    },
+    "loaded_kernel_modules": {
+      "type": "keyword"
+    },
+    "memoryfree_gb": {
+      "type": "long"
+    },
+    "memorytotal_gb": {
+      "type": "long"
+    },
+    "open_ports": {
+      "type": "keyword"
+    },
+    "openscap": {
+      "type": "object",
+      "properties": {
+        "status": {
+          "type": "boolean"
+        },
+        "checks": {
+          "type": "long"
+        },
+        "failed": {
+          "type": "nested",
+          "properties": {
+            "title": {
+              "type": "keyword"
+            },
+            "rule": {
+              "type": "keyword"
+            },
+            "result": {
+              "type": "keyword"
+            }
+          }
+        },
+        "warnings": {
+          "type": "keyword"
+        }
+      }
+    },
+    "os": {
+      "type": "keyword"
+    },
+    "packages": {
+      "type": "keyword"
+    },
+    "platform": {
+      "type": "keyword"
+    },
+    "platform_family": {
+      "type": "keyword"
+    },
+    "platform_version": {
+      "type": "float"
+    },
+    "processes": {
+      "type": "keyword"
+    },
+    "public": {
+      "type": "boolean"
+    },
+    "snaps": {
+      "type": "keyword"
+    },
+    "sysctl": {
+      "type": "keyword"
+    },
+    "systemd_timers": {
+      "type": "keyword"
+    },
+    "trivy": {
+      "type": "nested",
+      "properties": {
+        "Target": {
+          "type": "keyword"
+        },
+        "Type": {
+          "type": "keyword"
+        },
+        "Vulnerabilities": {
+          "type": "nested",
+          "properties": {
+            "VulnerabilityID": {
+              "type": "keyword"
+            },
+            "PkgName": {
+              "type": "keyword"
+            },
+            "InstalledVersion": {
+              "type": "keyword"
+            },
+            "Layer": {
+              "type": "object",
+              "properties": {
+                "DiffID": {
+                  "type": "keyword"
+                }
+              }
+            },
+            "SeveritySource": {
+              "type": "keyword"
+            },
+            "PrimaryURL": {
+              "type": "keyword"
+            },
+            "Title": {
+              "type": "keyword"
+            },
+            "Description": {
+              "type": "keyword"
+            },
+            "Severity": {
+              "type": "keyword"
+            },
+            "CweIDs": {
+              "type": "keyword"
+            },
+            "CVSS": {
+              "type": "object",
+              "properties": {
+                "nvd": {
+                  "type": "object",
+                  "properties": {
+                    "V2Vector": {
+                      "type": "keyword"
+                    },
+                    "V3Vector": {
+                      "type": "keyword"
+                    },
+                    "V2Score": {
+                      "type": "float"
+                    },
+                    "V3Score": {
+                      "type": "float"
+                    }
+                  }
+                },
+                "redhat": {
+                  "type": "object",
+                  "properties": {
+                    "V3Vector": {
+                      "type": "keyword"
+                    },
+                    "V3Score": {
+                      "type": "float"
+                    }
+                  }
+                }
+              }
+            },
+            "References": {
+              "type": "keyword"
+            },
+            "PublishedDate": {
+              "type": "date"
+            },
+            "LastModifiedDate": {
+              "type": "date"
+            }
+          }
+        }
+      }
+    },
+    "users": {
+      "type": "keyword"
+    },
+    "users_loggedin": {
+      "type": "keyword"
+    },
+    "virtualization": {
+      "type": "boolean"
+    },
+    "virtualization_system": {
+      "type": "keyword"
+    }
+  }
+}
+'
 ```
 
 ## Install Dependencies
@@ -397,7 +707,19 @@ make docker
 To build the RPM and Deb packages with Docker run the following command:
 
 ```sh
-make VER=1.1 pkgs
+make VER=1.2 pkgs
+```
+
+## Getting Started Vagrant
+
+```sh
+git clone https://github.com/yeticloud/yeti-discover.git
+
+cd yeti-discover
+
+curl -LO "https://github.com/yeticloud/yeti-discover/releases/download/1.2/yeti-discover"
+
+vagrant up
 ```
 
 ## Command-Line Arguments
@@ -436,8 +758,8 @@ password:
 # https true enables HTTPS instead of HTTP)
 https: false
 
-# Verify SSL for HTTP endpoints
-verify_ssl: true
+# Verify SSL for HTTPS endpoints
+insecure_ssl: false
 
 # Public facing asset
 public: false

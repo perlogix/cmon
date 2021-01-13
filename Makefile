@@ -1,11 +1,15 @@
 MAIN_PACKAGE := yeti-discover
 BUILT_ON := $(shell date)
 GOOS := $(shell uname -s | tr '[:upper:]' '[:lower:]')
+COMMIT_HASH:=$(shell git log -n 1 --pretty=format:"%H")
+PACKAGES:=$(shell go list ./... | grep -v /vendor/)
 GO_LINUX := GOOS=linux GOARCH=amd64
 GO_OSX := GOOS=darwin GOARCH=amd64
 GO_WIN := GOOS=darwin GOARCH=amd64
 VER := 1.1
-LDFLAGS := '-s -w -X "main.builtOn=$(BUILT_ON)"'
+LDFLAGS := '-s -w -X "github.com/yeticloud/yeti-discover/config.builtOn=$(BUILT_ON)"  -X "github.com/yeticloud/yeti-discover/config.commitHash=$(COMMIT_HASH)"'
+
+default: build
 
 build:
 	GOOS=$(GOOS) CGO_ENABLED=0 go build -a -installsuffix cgo -o $(MAIN_PACKAGE) -ldflags $(LDFLAGS) .
@@ -29,7 +33,7 @@ gofmt:
 	go fmt ./...
 
 lint: gofmt
-	$(GOPATH)/bin/golint network data db packages containers cloud config system security
+	$(GOPATH)/bin/golint $(PACKAGES)
 	$(GOPATH)/bin/golangci-lint run
 
 run:
@@ -37,6 +41,7 @@ run:
 
 update-deps:
 	go get -u ./...
+	go mod tidy
 
 docker:
 	sudo docker build --build-arg GOOS=$(GOOS) -t $(MAIN_PACKAGE)-build .

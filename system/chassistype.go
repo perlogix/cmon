@@ -21,6 +21,7 @@ import (
 	"runtime"
 	"strings"
 
+	"github.com/yeticloud/yeti-discover/config"
 	"github.com/yeticloud/yeti-discover/data"
 )
 
@@ -42,5 +43,13 @@ func ChassisType(d *data.DiscoverJSON) {
 			outString = strings.ToLower(strings.TrimSpace(s))
 		}
 	}
+
+	assetType := config.Str("asset_type")
+	if assetType == "" {
+		d.AssetType = outString
+	} else {
+		d.AssetType = assetType
+	}
+
 	d.ChassisType = outString
 }

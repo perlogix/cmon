@@ -44,7 +44,6 @@ func parse(s io.Reader) data.OScapOutput {
 
 		if strings.HasPrefix(line, "WARNING") {
 			processedOutput.Warnings = append(processedOutput.Warnings, line)
-			continue
 		}
 
 		if strings.HasPrefix(line, "Title") {
@@ -58,6 +57,27 @@ func parse(s io.Reader) data.OScapOutput {
 
 		if strings.HasPrefix(line, "Result") {
 			res.Result = strings.TrimSpace(strings.TrimPrefix(line, "Result"))
+
+			switch res.Result {
+			case "pass":
+				processedOutput.PassTotal++
+			case "fixed":
+				processedOutput.FixedTotal++
+			case "informational":
+				processedOutput.InfoTotal++
+			case "fail":
+				processedOutput.FailTotal++
+			case "error":
+				processedOutput.ErrorTotal++
+			case "unknown":
+				processedOutput.UnknownTotal++
+			case "notchecked":
+				processedOutput.NotCheckTotal++
+			case "notselected":
+				processedOutput.NotSelectTotal++
+			case "notapplicable":
+				processedOutput.NotAppTotal++
+			}
 
 			if isFailed(res.Result) {
 				processedOutput.Status = false

@@ -32,13 +32,31 @@ func TrivyScan(d *data.DiscoverJSON) {
 			return
 		}
 
-		var data data.TrivyResults
+		var trivData data.Trivy
 
-		err = json.Unmarshal(trivy, &data)
+		err = json.Unmarshal(trivy, &trivData.TrivyResults)
 		if err != nil {
 			return
 		}
 
-		d.Trivy = data
+		for _, e := range trivData.TrivyResults {
+			trivData.VulnToal += len(e.Vulnerabilities)
+			for _, s := range e.Vulnerabilities {
+				switch s.Severity {
+				case "LOW":
+					trivData.VulnLow++
+				case "MEDIUM":
+					trivData.VulnMed++
+				case "HIGH":
+					trivData.VulnHigh++
+				case "CRITICAL":
+					trivData.VulnCrit++
+				case "UNKNOWN":
+					trivData.VulnUnknown++
+				}
+			}
+		}
+
+		d.Trivy = trivData
 	}
 }
