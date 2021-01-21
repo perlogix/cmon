@@ -82,7 +82,7 @@ type DiscoverJSON struct {
 	Platformfamily       string      `json:"platform_family,omitempty"`
 	Platformversion      string      `json:"platform_version,omitempty"`
 	Processes            []string    `json:"processes,omitempty"`
-	Public               bool        `json:"public"`
+	Public               bool        `json:"public,omitempty"`
 	Snaps                []string    `json:"snaps,omitempty"`
 	Sysctl               []string    `json:"sysctl,omitempty"`
 	SystemctlFailed      string      `json:"systemctl_failed,omitempty"`
@@ -92,64 +92,64 @@ type DiscoverJSON struct {
 	Uptime               uint64      `json:"uptime_days,omitempty"`
 	Users                []string    `json:"users,omitempty"`
 	UsersLoggedin        []string    `json:"users_loggedin,omitempty"`
-	Virtualization       bool        `json:"virtualization"`
+	Virtualization       bool        `json:"virtualization,omitempty"`
 	Virtualizationsystem string      `json:"virtualization_system,omitempty"`
 }
 
 // OScapOutput is the output format for the parsed data
 type OScapOutput struct {
-	Status         bool          `json:"status"`
-	Checks         int           `json:"checks"`
-	PassTotal      int           `json:"pass_total"`
-	FixedTotal     int           `json:"fixed_total"`
-	InfoTotal      int           `json:"informational_total"`
-	FailTotal      int           `json:"fail_total"`
-	ErrorTotal     int           `json:"error_total"`
-	UnknownTotal   int           `json:"unknown_total"`
-	NotCheckTotal  int           `json:"notchecked_total"`
-	NotSelectTotal int           `json:"notselected_total"`
-	NotAppTotal    int           `json:"notapplicable_total"`
-	Failed         []OScapResult `json:"failed"`
-	Warnings       []string      `json:"warnings"`
+	Status         bool          `json:"status,omitempty"`
+	Checks         int           `json:"checks,omitempty"`
+	PassTotal      int           `json:"pass_total,omitempty"`
+	FixedTotal     int           `json:"fixed_total,omitempty"`
+	InfoTotal      int           `json:"informational_total,omitempty"`
+	FailTotal      int           `json:"fail_total,omitempty"`
+	ErrorTotal     int           `json:"error_total,omitempty"`
+	UnknownTotal   int           `json:"unknown_total,omitempty"`
+	NotCheckTotal  int           `json:"notchecked_total,omitempty"`
+	NotSelectTotal int           `json:"notselected_total,omitempty"`
+	NotAppTotal    int           `json:"notapplicable_total,omitempty"`
+	Failed         []OScapResult `json:"failed,omitempty"`
+	Warnings       []string      `json:"warnings,omitempty"`
 }
 
 // OScapResult holds the information about an individual check
 type OScapResult struct {
-	Title  string `json:"title"`
-	Rule   string `json:"rule"`
-	Result string `json:"result"`
+	Title  string `json:"title,omitempty"`
+	Rule   string `json:"rule,omitempty"`
+	Result string `json:"result,omitempty"`
 }
 
 // Trivy contains Trivy results
 type Trivy struct {
-	VulnToal     int `json:"vulnerabilities_total"`
-	VulnLow      int `json:"vulnerabilities_low"`
-	VulnMed      int `json:"vulnerabilities_medium"`
-	VulnHigh     int `json:"vulnerabilities_high"`
-	VulnCrit     int `json:"vulnerabilities_critical"`
-	VulnUnknown  int `json:"vulnerabilities_unknown"`
+	VulnToal     int `json:"vulnerabilities_total,omitempty"`
+	VulnLow      int `json:"vulnerabilities_low,omitempty"`
+	VulnMed      int `json:"vulnerabilities_medium,omitempty"`
+	VulnHigh     int `json:"vulnerabilities_high,omitempty"`
+	VulnCrit     int `json:"vulnerabilities_critical,omitempty"`
+	VulnUnknown  int `json:"vulnerabilities_unknown,omitempty"`
 	TrivyResults []TrivyResult
 }
 
 // TrivyResult type imported from Trivy go project
 type TrivyResult struct {
-	Target          string                        `json:"target"`
-	Type            string                        `json:"type,omitempty"`
-	Packages        []ftypes.Package              `json:"packages,omitempty"`
-	Vulnerabilities []types.DetectedVulnerability `json:"vulnerabilities"`
+	Target          string                        `json:"Target,omitempty"`
+	Type            string                        `json:"Type,omitempty"`
+	Packages        []ftypes.Package              `json:"Packages,omitempty"`
+	Vulnerabilities []types.DetectedVulnerability `json:"Vulnerabilities,omitempty"`
 }
 
 // IfaceData type is the Kernel Network Interface table
 type IfaceData struct {
-	Interface string `json:"interface"`
-	MTU       int    `json:"mtu"`
-	RXok      int    `json:"rx_ok"`
-	RXerr     int    `json:"rx_err"`
-	RXdrp     int    `json:"rx_drop"`
-	RXovr     int    `json:"rx_overrun"`
-	TXok      int    `json:"tx_ok"`
-	TXerr     int    `json:"tx_err"`
-	TXdrp     int    `json:"tx_drop"`
-	TXovr     int    `json:"tx_overrun"`
-	Flag      string `json:"flag"`
+	Interface string `json:"interface,omitempty"`
+	MTU       int    `json:"mtu,omitempty"`
+	RXok      int    `json:"rx_ok,omitempty"`
+	RXerr     int    `json:"rx_err,omitempty"`
+	RXdrp     int    `json:"rx_drop,omitempty"`
+	RXovr     int    `json:"rx_overrun,omitempty"`
+	TXok      int    `json:"tx_ok,omitempty"`
+	TXerr     int    `json:"tx_err,omitempty"`
+	TXdrp     int    `json:"tx_drop,omitempty"`
+	TXovr     int    `json:"tx_overrun,omitempty"`
+	Flag      string `json:"flag,omitempty"`
 }

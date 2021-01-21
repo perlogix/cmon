@@ -60,297 +60,422 @@ curl -XPUT -k -u admin:admin https://localhost:9200/servers
 # Create ES Mapping for servers Index
 curl -XPUT -k -u admin:admin "https://localhost:9200/servers/_mapping" -H 'Content-Type: application/json' -d'
 {
-  "properties": {
-    "asset_type": {
-      "type": "keyword"
+  "properties":{
+    "asset_type":{
+      "type":"keyword"
     },
-    "chassis_type": {
-      "type": "keyword"
+    "audit_rules":{
+      "type":"keyword"
     },
-    "cpu_count": {
-      "type": "long"
+    "chassis_type":{
+      "type":"keyword"
     },
-    "cpu_pct": {
-      "type": "long"
+    "cloud":{
+      "type":"keyword"
     },
-    "clamav_defs": {
-      "type": "keyword"
+    "cpu_count":{
+      "type":"long"
     },
-    "crontabs": {
-      "type": "keyword"
+    "cpu_pct":{
+      "type":"long"
     },
-    "diskfree_gb": {
-      "type": "long"
+    "cpu_vulns":{
+      "type":"keyword"
     },
-    "disktotal_gb": {
-      "type": "long"
+    "clamav_defs":{
+      "type":"keyword"
     },
-    "diskused_gb": {
-      "type": "long"
+    "crontabs":{
+      "type":"keyword"
     },
-    "dns_nameserver": {
-      "type": "keyword"
+    "diskfree_gb":{
+      "type":"long"
     },
-    "docker_containers": {
-      "type": "keyword"
+    "disktotal_gb":{
+      "type":"long"
     },
-    "docker_running": {
-      "type": "long"
+    "diskused_gb":{
+      "type":"long"
     },
-    "docker_stopped": {
-      "type": "long"
+    "dns_nameserver":{
+      "type":"keyword"
     },
-    "docker_images_count": {
-      "type": "long"
+    "dmesg_errors":{
+      "type":"keyword"
     },
-    "docker_images": {
-      "type": "keyword"
+    "docker_containers":{
+      "type":"keyword"
     },
-    "environment": {
-      "type": "keyword"
+    "docker_running":{
+      "type":"long"
     },
-    "expired_certs": {
-      "type": "keyword"
+    "docker_paused":{
+      "type":"long"
     },
-    "hostname": {
-      "type": "keyword"
+    "docker_stopped":{
+      "type":"long"
     },
-    "ip_route": {
-      "type": "keyword"
+    "docker_images_count":{
+      "type":"long"
     },
-    "ipaddress": {
-      "type": "keyword"
+    "docker_images":{
+      "type":"keyword"
     },
-    "iptables": {
-      "type": "keyword"
+    "docker_labels":{
+      "type":"nested"
     },
-    "network_interfaces": {
-      "type": "nested",
-      "properties": {
-        "interface": {
-          "type": "keyword"
+    "domain":{
+      "type":"keyword"
+    },
+    "ec2_ami_id":{
+      "type":"keyword"
+    },
+    "ec2_availability_zone":{
+      "type":"keyword"
+    },
+    "ec2_instance_id":{
+      "type":"keyword"
+    },
+    "ec2_instance_type":{
+      "type":"keyword"
+    },
+    "ec2_profile":{
+      "type":"keyword"
+    },
+    "ec2_public_ip4":{
+      "type":"keyword"
+    },
+    "ec2_security_groups":{
+      "type":"keyword"
+    },
+    "environment":{
+      "type":"keyword"
+    },
+    "expired_certs":{
+      "type":"keyword"
+    },
+    "failed_logins":{
+      "type":"keyword"
+    },
+    "gem":{
+      "type":"keyword"
+    },
+    "hostname":{
+      "type":"keyword"
+    },
+    "ip_route":{
+      "type":"keyword"
+    },
+    "ipaddress":{
+      "type":"keyword"
+    },
+    "iptables":{
+      "type":"keyword"
+    },
+    "network_interfaces":{
+      "type":"nested",
+      "properties":{
+        "interface":{
+          "type":"keyword"
         },
-        "mtu": {
-          "type": "long"
+        "mtu":{
+          "type":"long"
         },
-        "rx_ok": {
-          "type": "long"
+        "rx_ok":{
+          "type":"long"
         },
-        "rx_err": {
-          "type": "long"
+        "rx_err":{
+          "type":"long"
         },
-        "rx_drop": {
-          "type": "long"
+        "rx_drop":{
+          "type":"long"
         },
-        "rx_overrun": {
-          "type": "long"
+        "rx_overrun":{
+          "type":"long"
         },
-        "tx_ok": {
-          "type": "long"
+        "tx_ok":{
+          "type":"long"
         },
-        "tx_err": {
-          "type": "long"
+        "tx_err":{
+          "type":"long"
         },
-        "tx_drop": {
-          "type": "long"
+        "tx_drop":{
+          "type":"long"
         },
-        "tx_overrun": {
-          "type": "long"
+        "tx_overrun":{
+          "type":"long"
         },
-        "flag": {
-          "type": "keyword"
+        "flag":{
+          "type":"keyword"
         }
       }
     },
-    "kernel_version": {
-      "type": "keyword"
+    "kernel_version":{
+      "type":"keyword"
     },
-    "lastrun": {
-      "type": "date"
+    "lastrun":{
+      "type":"date"
     },
-    "load1": {
-      "type": "float"
+    "load1":{
+      "type":"long"
     },
-    "load15": {
-      "type": "float"
+    "load15":{
+      "type":"float"
     },
-    "load5": {
-      "type": "float"
+    "load5":{
+      "type":"float"
     },
-    "loaded_kernel_modules": {
-      "type": "keyword"
+    "loaded_kernel_modules":{
+      "type":"keyword"
     },
-    "memoryfree_gb": {
-      "type": "long"
+    "memoryfree_gb":{
+      "type":"long"
     },
-    "memorytotal_gb": {
-      "type": "long"
+    "memorytotal_gb":{
+      "type":"long"
     },
-    "open_ports": {
-      "type": "keyword"
+    "memoryused_gb":{
+      "type":"long"
     },
-    "openscap": {
-      "type": "object",
-      "properties": {
-        "status": {
-          "type": "boolean"
+    "ntp_servers":{
+      "type":"keyword"
+    },
+    "ntp_running":{
+      "type":"boolean"
+    },
+    "open_ports":{
+      "type":"keyword"
+    },
+    "openscap":{
+      "type":"object",
+      "properties":{
+        "status":{
+          "type":"boolean"
         },
-        "checks": {
-          "type": "long"
+        "checks":{
+          "type":"long"
         },
-        "failed": {
-          "type": "nested",
-          "properties": {
-            "title": {
-              "type": "keyword"
+        "pass_total":{
+          "type":"long"
+        },
+        "fixed_total":{
+          "type":"long"
+        },
+        "informational_total":{
+          "type":"long"
+        },
+        "fail_total":{
+          "type":"long"
+        },
+        "error_total":{
+          "type":"long"
+        },
+        "unknown_total":{
+          "type":"long"
+        },
+        "notchecked_total":{
+          "type":"long"
+        },
+        "notselected_total":{
+          "type":"long"
+        },
+        "notapplicable_total":{
+          "type":"long"
+        },
+        "failed":{
+          "type":"nested",
+          "properties":{
+            "title":{
+              "type":"keyword"
             },
-            "rule": {
-              "type": "keyword"
+            "rule":{
+              "type":"keyword"
             },
-            "result": {
-              "type": "keyword"
+            "result":{
+              "type":"keyword"
             }
           }
         },
-        "warnings": {
-          "type": "keyword"
+        "warnings":{
+          "type":"keyword"
         }
       }
     },
-    "os": {
-      "type": "keyword"
+    "os":{
+      "type":"keyword"
     },
-    "packages": {
-      "type": "keyword"
+    "packages":{
+      "type":"keyword"
     },
-    "platform": {
-      "type": "keyword"
+    "pip":{
+      "type":"keyword"
     },
-    "platform_family": {
-      "type": "keyword"
+    "pip3":{
+      "type":"keyword"
     },
-    "platform_version": {
-      "type": "float"
+    "platform":{
+      "type":"keyword"
     },
-    "processes": {
-      "type": "keyword"
+    "platform_family":{
+      "type":"keyword"
     },
-    "public": {
-      "type": "boolean"
+    "platform_version":{
+      "type":"float"
     },
-    "snaps": {
-      "type": "keyword"
+    "processes":{
+      "type":"keyword"
     },
-    "sysctl": {
-      "type": "keyword"
+    "public":{
+      "type":"boolean"
     },
-    "systemd_timers": {
-      "type": "keyword"
+    "snaps":{
+      "type":"keyword"
     },
-    "trivy": {
-      "type": "nested",
-      "properties": {
-        "Target": {
-          "type": "keyword"
+    "sysctl":{
+      "type":"keyword"
+    },
+    "systemctl_failed":{
+      "type":"keyword"
+    },
+    "systemd_timers":{
+      "type":"keyword"
+    },
+    "timezone":{
+      "type":"keyword"
+    },
+    "trivy":{
+      "type":"object",
+      "properties":{
+        "vulnerabilities_total":{
+          "type":"long"
         },
-        "Type": {
-          "type": "keyword"
+        "vulnerabilities_low":{
+          "type":"long"
         },
-        "Vulnerabilities": {
-          "type": "nested",
-          "properties": {
-            "VulnerabilityID": {
-              "type": "keyword"
+        "vulnerabilities_medium":{
+          "type":"long"
+        },
+        "vulnerabilities_high":{
+          "type":"long"
+        },
+        "vulnerabilities_critical":{
+          "type":"long"
+        },
+        "vulnerabilities_unknown":{
+          "type":"long"
+        },
+        "TrivyResults":{
+          "type":"nested",
+          "properties":{
+            "Target":{
+              "type":"keyword"
             },
-            "PkgName": {
-              "type": "keyword"
+            "Type":{
+              "type":"keyword"
             },
-            "InstalledVersion": {
-              "type": "keyword"
+            "Packages":{
+              "type":"keyword"
             },
-            "Layer": {
-              "type": "object",
-              "properties": {
-                "DiffID": {
-                  "type": "keyword"
-                }
-              }
-            },
-            "SeveritySource": {
-              "type": "keyword"
-            },
-            "PrimaryURL": {
-              "type": "keyword"
-            },
-            "Title": {
-              "type": "keyword"
-            },
-            "Description": {
-              "type": "keyword"
-            },
-            "Severity": {
-              "type": "keyword"
-            },
-            "CweIDs": {
-              "type": "keyword"
-            },
-            "CVSS": {
-              "type": "object",
-              "properties": {
-                "nvd": {
-                  "type": "object",
-                  "properties": {
-                    "V2Vector": {
-                      "type": "keyword"
-                    },
-                    "V3Vector": {
-                      "type": "keyword"
-                    },
-                    "V2Score": {
-                      "type": "float"
-                    },
-                    "V3Score": {
-                      "type": "float"
+            "Vulnerabilities":{
+              "type":"nested",
+              "properties":{
+                "VulnerabilityID":{
+                  "type":"keyword"
+                },
+                "PkgName":{
+                  "type":"keyword"
+                },
+                "InstalledVersion":{
+                  "type":"keyword"
+                },
+                "Layer":{
+                  "type":"object",
+                  "properties":{
+                    "DiffID":{
+                      "type":"keyword"
                     }
                   }
                 },
-                "redhat": {
-                  "type": "object",
-                  "properties": {
-                    "V3Vector": {
-                      "type": "keyword"
+                "SeveritySource":{
+                  "type":"keyword"
+                },
+                "PrimaryURL":{
+                  "type":"keyword"
+                },
+                "Title":{
+                  "type":"keyword"
+                },
+                "Description":{
+                  "type":"keyword"
+                },
+                "Severity":{
+                  "type":"keyword"
+                },
+                "CweIDs":{
+                  "type":"keyword"
+                },
+                "CVSS":{
+                  "type":"object",
+                  "properties":{
+                    "nvd":{
+                      "type":"object",
+                      "properties":{
+                        "V2Vector":{
+                          "type":"keyword"
+                        },
+                        "V3Vector":{
+                          "type":"keyword"
+                        },
+                        "V2Score":{
+                          "type":"float"
+                        },
+                        "V3Score":{
+                          "type":"float"
+                        }
+                      }
                     },
-                    "V3Score": {
-                      "type": "float"
+                    "redhat":{
+                      "type":"object",
+                      "properties":{
+                        "V3Vector":{
+                          "type":"keyword"
+                        },
+                        "V3Score":{
+                          "type":"float"
+                        }
+                      }
                     }
                   }
+                },
+                "References":{
+                  "type":"keyword"
+                },
+                "PublishedDate":{
+                  "type":"date"
+                },
+                "LastModifiedDate":{
+                  "type":"date"
                 }
               }
-            },
-            "References": {
-              "type": "keyword"
-            },
-            "PublishedDate": {
-              "type": "date"
-            },
-            "LastModifiedDate": {
-              "type": "date"
             }
           }
         }
       }
     },
-    "users": {
-      "type": "keyword"
+    "uptime_days":{
+      "type":"long"
     },
-    "users_loggedin": {
-      "type": "keyword"
+    "users":{
+      "type":"keyword"
     },
-    "virtualization": {
-      "type": "boolean"
+    "users_loggedin":{
+      "type":"keyword"
     },
-    "virtualization_system": {
-      "type": "keyword"
+    "virtualization":{
+      "type":"boolean"
+    },
+    "virtualization_system":{
+      "type":"keyword"
     }
   }
 }
