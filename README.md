@@ -11,10 +11,12 @@
 3. [Install Dependencies](#install-dependencies)
    - [Server](#server)
    - [Client](#client-development)
-4. [Command-Line Arguments](#command-line-arguments)
-5. [Configuration](#configuration)
-6. [Platforms Tested On](#platforms-tested-on)
-7. [Screenshots](#screenshots)
+4. [Getting Started Vagrant](#getting-started-vagrant)
+5. [Command-Line Arguments](#command-line-arguments)
+6. [Configuration](#configuration)
+7. [Vagrant](#vagrant)
+8. [Platforms Tested On](#platforms-tested-on)
+9. [Screenshots](#screenshots)
 
 ## Overview
 
@@ -356,9 +358,12 @@ Example with cURL:
 If you want to manually / cron schedule yeti-discover to post to ElasticSearch
 
 ```sh
-curl -X POST --header "Content-Type: application/json" \
-     --data "$(sudo yeti-discover)" \
-     http://elasticsearch:9200/servers/dev
+# HTTP unauth
+sudo ./yeti-discover | curl -XPOST -H "Content-Type: application/json" -d @- "http://localhost:9200/servers/_doc/$(hostid)"
+
+
+# Insecure SSL and basic auth
+sudo ./yeti-discover | curl -XPOST -k -u admin:admin -H "Content-Type: application/json" -d @- "https://localhost:9200/servers/_doc/$(hostid)"
 ```
 
 ## Install
@@ -366,7 +371,17 @@ curl -X POST --header "Content-Type: application/json" \
 Install the statically linked Linux binary:
 
 ```sh
-curl -OL https://github.com/yeticloud/yeti-discover/releases/download/1.1/yeti-discover && chmod -f 0755 ./yeti-discover
+curl -OL "https://github.com/yeticloud/yeti-discover/releases/download/1.2/yeti-discover" && chmod -f 0755 ./yeti-discover
+```
+
+**ElasticSearch Mappings Needed**
+
+```sh
+# Create index
+curl -XPUT "http://localhost:9200/servers"
+
+# Put mappings to existing index
+curl -XPUT "http://localhost:9200/servers/_mapping" -H 'Content-Type: application/json' -d@mapping.json
 ```
 
 ## Install Dependencies
@@ -397,7 +412,19 @@ make docker
 To build the RPM and Deb packages with Docker run the following command:
 
 ```sh
-make VER=1.1 pkgs
+make VER=1.2 pkgs
+```
+
+## Getting Started Vagrant
+
+```sh
+git clone https://github.com/yeticloud/yeti-discover.git
+
+cd yeti-discover
+
+curl -LO "https://github.com/yeticloud/yeti-discover/releases/download/1.2/yeti-discover"
+
+vagrant up
 ```
 
 ## Command-Line Arguments
@@ -436,8 +463,8 @@ password:
 # https true enables HTTPS instead of HTTP)
 https: false
 
-# Verify SSL for HTTP endpoints
-verify_ssl: true
+# Verify SSL for HTTPS endpoints
+insecure_ssl: false
 
 # Public facing asset
 public: false
@@ -450,6 +477,18 @@ oscap_xccdf_xml: /usr/share/scap-security-guide/ssg-ubuntu1804-ds.xml
 
 # OpenSCAP Profile
 oscap_profile: xccdf_org.ssgproject.content_profile_cis
+```
+
+## Vagrant
+
+Docker is a dependency for running the following commands to run the yeti-discover stack in Vagrant.
+
+```sh
+git clone https://github.com/yeticloud/yeti-discover.git
+cd yeti-discover
+make docker
+vagrant up
+vagrant ssh
 ```
 
 ## Platforms Tested On

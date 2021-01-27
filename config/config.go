@@ -17,45 +17,82 @@
 package config
 
 import (
+	"flag"
+	"fmt"
+
+	"github.com/denisbrodbeck/machineid"
 	"github.com/spf13/viper"
 )
 
+var (
+	v          = viper.New()
+	configFlag = flag.String("config", "", "  Set configuration path, defaults are ['./', '/etc/yeticloud', '/opt/yeticloud', '/usr/lib/yeticloud/yeti-discover']")
+	daemonFlag = flag.Bool("daemon", false, "  Run in daemon mode")
+	builtOn    string
+	commitHash string
+	id, _      = machineid.ProtectedID("yetidiscover")
+)
+
 func init() {
-	// Configuration file settings using key-value
-	viper.SetConfigName("yeti-discover")
-	viper.AddConfigPath("/opt/yeticloud")
-	viper.AddConfigPath("/etc/yeticloud")
-	viper.AddConfigPath("/usr/lib/yeticloud/yeti-discover")
-	viper.AddConfigPath(".")
-	// Ignore error
-	_ = viper.ReadInConfig()
+
+	flag.StringVar(configFlag, "c", "", "  Set configuration path, defaults are ['./', '/etc/yeticloud', '/opt/yeticloud', '/usr/lib/yeticloud/yeti-discover']")
+	flag.BoolVar(daemonFlag, "d", false, "  Run in daemon mode")
+
+	flag.Usage = func() {
+		fmt.Printf(` Usage: yeti-discover [options] <args>
+   -d, --daemon    Run in daemon mode
+   -c, --config    Set configuration path, defaults are ['./', '/etc/yeticloud', '/opt/yeticloud', '/usr/lib/yeticloud/yeti-discover']
+	
+ Built On:       %s
+ Commit Hash:    %s
+
+ Example:        yeti-discover -d -c ./conf/yeti-discover.yaml
+	
+ Documentation:  https://github.com/yeticloud/yeti-discover/blob/master/README.md
+`, builtOn, commitHash)
+	}
+
+	flag.Parse()
 
 	// Default settings if no config file is supplied
-	viper.SetDefault("host", "localhost")
-	viper.SetDefault("port", "9200")
-	viper.SetDefault("environment", "dev")
-	viper.SetDefault("interval", "1200")
-	viper.SetDefault("username", "")
-	viper.SetDefault("password", "")
-	viper.SetDefault("https", "false")
-	viper.SetDefault("verify_ssl", "true")
-	viper.SetDefault("public", "false")
-	viper.SetDefault("asset_type", "")
-	viper.SetDefault("oscap_profile", "xccdf_org.ssgproject.content_profile_cis")
-	viper.SetDefault("oscap_xccdf_xml", "/usr/share/scap-security-guide/ssg-ubuntu1804-ds.xml")
+	v.SetDefault("daemon", *daemonFlag)
+	v.SetDefault("host", "localhost")
+	v.SetDefault("port", "9200")
+	v.SetDefault("environment", "dev")
+	v.SetDefault("interval", "1200")
+	v.SetDefault("username", "")
+	v.SetDefault("password", "")
+	v.SetDefault("https", "false")
+	v.SetDefault("insecure_ssl", "false")
+	v.SetDefault("public", "false")
+	v.SetDefault("asset_type", "")
+	v.SetDefault("scheme", "http")
+	v.SetDefault("hostid", id)
+	v.SetDefault("oscap_profile", "xccdf_org.ssgproject.content_profile_cis")
+	v.SetDefault("oscap_xccdf_xml", "/usr/share/scap-security-guide/ssg-ubuntu1804-ds.xml")
+
+	v.SetConfigName("yeti-discover")
+	v.AddConfigPath("/opt/yeticloud")
+	v.AddConfigPath("/etc/yeticloud")
+	v.AddConfigPath("/usr/lib/yeticloud/yeti-discover")
+	v.AddConfigPath(".")
+	v.SetConfigFile(*configFlag)
+
+	// Ignore error
+	_ = v.ReadInConfig()
 }
 
 // Str fetches String value from configuration key
 func Str(key string) string {
-	return viper.GetString(key)
+	return v.GetString(key)
 }
 
 // Int fetches Int value from configuration key
 func Int(key string) int {
-	return viper.GetInt(key)
+	return v.GetInt(key)
 }
 
 // Bool fetches Boolean value from configuration key
 func Bool(key string) bool {
-	return viper.GetBool(key)
+	return v.GetBool(key)
 }

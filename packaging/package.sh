@@ -32,8 +32,8 @@ cat <<'EOF' >/usr/lib/yeticloud/yeti-discover/yeti-discover.yaml
 # https true enables HTTPS instead of HTTP)
 #https: false
 
-# Verify SSL for HTTP endpoints
-#verify_ssl: true
+# Verify SSL for HTTPS endpoints
+#insecure_ssl: false
 
 # Public facing asset
 #public: false

@@ -86,5 +86,4 @@ func Stats(d *data.DiscoverJSON) {
 	d.Uptime = h.Uptime / days
 	d.Environment = config.Str("environment")
 	d.Public = config.Bool("public")
-	d.AssetType = config.Str("asset_type")
 }

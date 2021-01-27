@@ -23,85 +23,94 @@ import (
 
 // DiscoverJSON is the main struct for JSON Marshal
 type DiscoverJSON struct {
-	AssetType            string       `json:"asset_type,omitempty"`
-	AuditRules           []string     `json:"audit_rules,omitempty"`
-	ChassisType          string       `json:"chassis_type,omitempty"`
-	Cloud                string       `json:"cloud,omitempty"`
-	CPUCount             int          `json:"cpu_count,omitempty"`
-	CPUPct               int          `json:"cpu_pct,omitempty"`
-	CPUvulns             []string     `json:"cpu_vulns,omitempty"`
-	ClamAVDefs           string       `json:"clamav_defs,omitempty"`
-	Crontabs             []string     `json:"crontabs,omitempty"`
-	Diskfree             uint64       `json:"diskfree_gb,omitempty"`
-	Disktotal            uint64       `json:"disktotal_gb,omitempty"`
-	Diskused             uint64       `json:"diskused_gb,omitempty"`
-	DNSNameserver        []string     `json:"dns_nameserver,omitempty"`
-	DmesgErrors          string       `json:"dmesg_errors,omitempty"`
-	DockerContainers     []string     `json:"docker_containers,omitempty"`
-	DockerRunning        int          `json:"docker_running,omitempty"`
-	DockerPaused         int          `json:"docker_paused,omitempty"`
-	DockerStopped        int          `json:"docker_stopped,omitempty"`
-	DockerImagesCount    int          `json:"docker_images_count,omitempty"`
-	DockerImages         []string     `json:"docker_images,omitempty"`
-	DockerLabels         []string     `json:"docker_labels,omitempty"`
-	Domain               string       `json:"domain,omitempty"`
-	Ec2AmiID             string       `json:"ec2_ami_id,omitempty"`
-	Ec2AvailabilityZone  string       `json:"ec2_availability_zone,omitempty"`
-	Ec2InstanceID        string       `json:"ec2_instance_id,omitempty"`
-	Ec2InstanceType      string       `json:"ec2_instance_type,omitempty"`
-	Ec2Profile           string       `json:"ec2_profile,omitempty"`
-	Ec2PublicIP4         string       `json:"ec2_public_ip4,omitempty"`
-	Ec2SecurityGroups    []string     `json:"ec2_security_groups,omitempty"`
-	Environment          string       `json:"environment,omitempty"`
-	ExpiredCerts         []string     `json:"expired_certs,omitempty"`
-	FailedLogins         []string     `json:"failed_logins,omitempty"`
-	Gem                  []string     `json:"gem,omitempty"`
-	Hostname             string       `json:"hostname,omitempty"`
-	IPRoute              []string     `json:"ip_route,omitempty"`
-	Ipaddress            string       `json:"ipaddress,omitempty"`
-	Iptables             []string     `json:"iptables,omitempty"`
-	Interfaces           []IfaceData  `json:"network_interfaces,omitempty"`
-	Kernelversion        string       `json:"kernel_version,omitempty"`
-	Lastrun              string       `json:"lastrun,omitempty"`
-	Load1                float64      `json:"load1,omitempty"`
-	Load15               float64      `json:"load15,omitempty"`
-	Load5                float64      `json:"load5,omitempty"`
-	Lsmod                []string     `json:"loaded_kernel_modules,omitempty"`
-	Memoryfree           uint64       `json:"memoryfree_gb,omitempty"`
-	Memorytotal          uint64       `json:"memorytotal_gb,omitempty"`
-	Memoryused           uint64       `json:"memoryused_gb,omitempty"`
-	NTPServers           []string     `json:"ntp_servers,omitempty"`
-	NTPRunning           bool         `json:"ntp_running,omitempty"`
-	OpenPorts            []string     `json:"open_ports,omitempty"`
-	OpenScap             OScapOutput  `json:"openscap,omitempty"`
-	Os                   string       `json:"os,omitempty"`
-	Packages             []string     `json:"packages,omitempty"`
-	Pip                  []string     `json:"pip,omitempty"`
-	Pip3                 []string     `json:"pip3,omitempty"`
-	Platform             string       `json:"platform,omitempty"`
-	Platformfamily       string       `json:"platform_family,omitempty"`
-	Platformversion      string       `json:"platform_version,omitempty"`
-	Processes            []string     `json:"processes,omitempty"`
-	Public               bool         `json:"public"`
-	Snaps                []string     `json:"snaps,omitempty"`
-	Sysctl               []string     `json:"sysctl,omitempty"`
-	SystemctlFailed      string       `json:"systemctl_failed,omitempty"`
-	SystemdTimers        []string     `json:"systemd_timers,omitempty"`
-	Timezone             string       `json:"timezone,omitempty"`
-	Trivy                TrivyResults `json:"trivy,omitempty"`
-	Uptime               uint64       `json:"uptime_days,omitempty"`
-	Users                []string     `json:"users,omitempty"`
-	UsersLoggedin        []string     `json:"users_loggedin,omitempty"`
-	Virtualization       bool         `json:"virtualization"`
-	Virtualizationsystem string       `json:"virtualization_system,omitempty"`
+	AssetType            string      `json:"asset_type"`
+	AuditRules           []string    `json:"audit_rules"`
+	ChassisType          string      `json:"chassis_type"`
+	Cloud                string      `json:"cloud"`
+	CPUCount             int         `json:"cpu_count"`
+	CPUPct               int         `json:"cpu_pct"`
+	CPUvulns             []string    `json:"cpu_vulns"`
+	ClamAVDefs           string      `json:"clamav_defs"`
+	Crontabs             []string    `json:"crontabs"`
+	Diskfree             uint64      `json:"diskfree_gb"`
+	Disktotal            uint64      `json:"disktotal_gb"`
+	Diskused             uint64      `json:"diskused_gb"`
+	DNSNameserver        []string    `json:"dns_nameserver"`
+	DmesgErrors          string      `json:"dmesg_errors"`
+	DockerContainers     []string    `json:"docker_containers"`
+	DockerRunning        int         `json:"docker_running"`
+	DockerPaused         int         `json:"docker_paused"`
+	DockerStopped        int         `json:"docker_stopped"`
+	DockerImagesCount    int         `json:"docker_images_count"`
+	DockerImages         []string    `json:"docker_images"`
+	DockerLabels         []string    `json:"docker_labels"`
+	Domain               string      `json:"domain"`
+	Ec2AmiID             string      `json:"ec2_ami_id"`
+	Ec2AvailabilityZone  string      `json:"ec2_availability_zone"`
+	Ec2InstanceID        string      `json:"ec2_instance_id"`
+	Ec2InstanceType      string      `json:"ec2_instance_type"`
+	Ec2Profile           string      `json:"ec2_profile"`
+	Ec2PublicIP4         string      `json:"ec2_public_ip4"`
+	Ec2SecurityGroups    []string    `json:"ec2_security_groups"`
+	Environment          string      `json:"environment"`
+	ExpiredCerts         []string    `json:"expired_certs"`
+	FailedLogins         []string    `json:"failed_logins"`
+	Gem                  []string    `json:"gem"`
+	Hostname             string      `json:"hostname"`
+	IPRoute              []string    `json:"ip_route"`
+	Ipaddress            string      `json:"ipaddress"`
+	Iptables             []string    `json:"iptables"`
+	Interfaces           []IfaceData `json:"network_interfaces"`
+	Kernelversion        string      `json:"kernel_version"`
+	Lastrun              string      `json:"lastrun"`
+	Load1                float64     `json:"load1"`
+	Load15               float64     `json:"load15"`
+	Load5                float64     `json:"load5"`
+	Lsmod                []string    `json:"loaded_kernel_modules"`
+	Memoryfree           uint64      `json:"memoryfree_gb"`
+	Memorytotal          uint64      `json:"memorytotal_gb"`
+	Memoryused           uint64      `json:"memoryused_gb"`
+	NTPServers           []string    `json:"ntp_servers"`
+	NTPRunning           bool        `json:"ntp_running"`
+	OpenPorts            []string    `json:"open_ports"`
+	OpenScap             OScapOutput `json:"openscap"`
+	Os                   string      `json:"os"`
+	Packages             []string    `json:"packages"`
+	Pip                  []string    `json:"pip"`
+	Pip3                 []string    `json:"pip3"`
+	Platform             string      `json:"platform"`
+	Platformfamily       string      `json:"platform_family"`
+	Platformversion      string      `json:"platform_version"`
+	Processes            []string    `json:"processes"`
+	Public               bool        `json:"public"`
+	Snaps                []string    `json:"snaps"`
+	Sysctl               []string    `json:"sysctl"`
+	SystemctlFailed      string      `json:"systemctl_failed"`
+	SystemdTimers        []string    `json:"systemd_timers"`
+	Timezone             string      `json:"timezone"`
+	Trivy                Trivy       `json:"trivy"`
+	Uptime               uint64      `json:"uptime_days"`
+	Users                []string    `json:"users"`
+	UsersLoggedin        []string    `json:"users_loggedin"`
+	Virtualization       bool        `json:"virtualization"`
+	Virtualizationsystem string      `json:"virtualization_system"`
 }
 
 // OScapOutput is the output format for the parsed data
 type OScapOutput struct {
-	Status   bool          `json:"status"`
-	Checks   int           `json:"checks"`
-	Failed   []OScapResult `json:"failed"`
-	Warnings []string      `json:"warnings"`
+	Status         bool          `json:"status"`
+	Checks         int           `json:"checks"`
+	PassTotal      int           `json:"pass_total"`
+	FixedTotal     int           `json:"fixed_total"`
+	InfoTotal      int           `json:"informational_total"`
+	FailTotal      int           `json:"fail_total"`
+	ErrorTotal     int           `json:"error_total"`
+	UnknownTotal   int           `json:"unknown_total"`
+	NotCheckTotal  int           `json:"notchecked_total"`
+	NotSelectTotal int           `json:"notselected_total"`
+	NotAppTotal    int           `json:"notapplicable_total"`
+	Failed         []OScapResult `json:"failed"`
+	Warnings       []string      `json:"warnings"`
 }
 
 // OScapResult holds the information about an individual check
@@ -111,14 +120,22 @@ type OScapResult struct {
 	Result string `json:"result"`
 }
 
-// TrivyResults type imported from Trivy go project
-type TrivyResults []TrivyResult
+// Trivy contains Trivy results
+type Trivy struct {
+	VulnToal     int `json:"vulnerabilities_total"`
+	VulnLow      int `json:"vulnerabilities_low"`
+	VulnMed      int `json:"vulnerabilities_medium"`
+	VulnHigh     int `json:"vulnerabilities_high"`
+	VulnCrit     int `json:"vulnerabilities_critical"`
+	VulnUnknown  int `json:"vulnerabilities_unknown"`
+	TrivyResults []TrivyResult
+}
 
 // TrivyResult type imported from Trivy go project
 type TrivyResult struct {
 	Target          string                        `json:"Target"`
-	Type            string                        `json:"Type,omitempty"`
-	Packages        []ftypes.Package              `json:"Packages,omitempty"`
+	Type            string                        `json:"Type"`
+	Packages        []ftypes.Package              `json:"Packages"`
 	Vulnerabilities []types.DetectedVulnerability `json:"Vulnerabilities"`
 }
 

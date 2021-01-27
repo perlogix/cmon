@@ -27,6 +27,10 @@ yeti-discover-*
 vendor
 *.rpm
 *.deb
+*.log
+.vagrant*
+*.box
+
 
 # Created by https://www.toptal.com/developers/gitignore/api/macos,jetbrains+all,go
 # Edit at https://www.toptal.com/developers/gitignore?templates=macos,jetbrains+all,go

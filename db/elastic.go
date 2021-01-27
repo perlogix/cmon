@@ -30,7 +30,7 @@ import (
 
 var (
 	tr = &http.Transport{
-		TLSClientConfig: &tls.Config{InsecureSkipVerify: config.Bool("verify_ssl")},
+		TLSClientConfig: &tls.Config{InsecureSkipVerify: config.Bool("insecure_ssl")},
 	}
 	c = &http.Client{
 		Timeout:   5 * time.Second,
@@ -38,40 +38,52 @@ var (
 	}
 	host   = config.Str("host")
 	port   = config.Str("port")
-	env    = config.Str("environment")
 	https  = config.Bool("https")
 	user   = config.Str("username")
 	pass   = config.Str("password")
-	scheme string
-	url    string
+	scheme = "http"
 )
 
 const ct = "application/json;charset=UTF-8"
 
-func init() {
-	if https {
-		scheme = "https"
-	} else {
-		scheme = "http"
-	}
-}
-
 // Elastic makes POST HTTP call to ElasticSearch DB
 func Elastic(d *data.DiscoverJSON) {
-	if url == "" {
-		buf := new(bytes.Buffer)
-		buf.WriteString(scheme)
-		buf.WriteString("://")
-		buf.WriteString(host)
-		buf.WriteString(":")
-		buf.WriteString(port)
-		buf.WriteString("/servers/")
-		buf.WriteString(env)
-		url = buf.String()
+	if https {
+		scheme = "https"
 	}
+	buf := new(bytes.Buffer)
+	_, err := buf.WriteString(scheme)
+	if err != nil {
+		log.Printf("Error: %s\n", err)
+	}
+	_, err = buf.WriteString("://")
+	if err != nil {
+		log.Printf("Error: %s\n", err)
+	}
+	_, err = buf.WriteString(host)
+	if err != nil {
+		log.Printf("Error: %s\n", err)
+	}
+	_, err = buf.WriteString(":")
+	if err != nil {
+		log.Printf("Error: %s\n", err)
+	}
+	_, err = buf.WriteString(port)
+	if err != nil {
+		log.Printf("Error: %s\n", err)
+	}
+	_, err = buf.WriteString("/servers/_doc/")
+	if err != nil {
+		log.Printf("Error: %s\n", err)
+	}
+	_, err = buf.WriteString(config.Str("hostid"))
+	if err != nil {
+		log.Printf("Error: %s\n", err)
+	}
+	url := buf.String()
 
 	body := new(bytes.Buffer)
-	err := json.NewEncoder(body).Encode(d)
+	err = json.NewEncoder(body).Encode(d)
 	if err != nil {
 		log.Printf("Error: %s\n", err)
 		return
