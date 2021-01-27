@@ -6,7 +6,7 @@ PACKAGES:=$(shell go list ./... | grep -v /vendor/)
 GO_LINUX := GOOS=linux GOARCH=amd64
 GO_OSX := GOOS=darwin GOARCH=amd64
 GO_WIN := GOOS=darwin GOARCH=amd64
-VER := 1.1
+VER := 1.2
 LDFLAGS := '-s -w -X "github.com/yeticloud/yeti-discover/config.builtOn=$(BUILT_ON)"  -X "github.com/yeticloud/yeti-discover/config.commitHash=$(COMMIT_HASH)"'
 
 default: build
@@ -35,7 +35,7 @@ gofmt:
 lint: gofmt
 	$(GOPATH)/bin/golint $(PACKAGES)
 	$(GOPATH)/bin/golangci-lint run
-	$(GOPATH)/bin/gosec -quiet ./...
+	$(GOPATH)/bin/gosec -quiet -no-fail ./...
 
 run:
 	go run main.go
