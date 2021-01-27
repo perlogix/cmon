@@ -35,6 +35,7 @@ gofmt:
 lint: gofmt
 	$(GOPATH)/bin/golint $(PACKAGES)
 	$(GOPATH)/bin/golangci-lint run
+	$(GOPATH)/bin/gosec -quiet ./...
 
 run:
 	go run main.go

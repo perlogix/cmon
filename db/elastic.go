@@ -52,17 +52,38 @@ func Elastic(d *data.DiscoverJSON) {
 		scheme = "https"
 	}
 	buf := new(bytes.Buffer)
-	buf.WriteString(scheme)
-	buf.WriteString("://")
-	buf.WriteString(host)
-	buf.WriteString(":")
-	buf.WriteString(port)
-	buf.WriteString("/servers/_doc/")
-	buf.WriteString(config.Str("hostid"))
+	_, err := buf.WriteString(scheme)
+	if err != nil {
+		log.Printf("Error: %s\n", err)
+	}
+	_, err = buf.WriteString("://")
+	if err != nil {
+		log.Printf("Error: %s\n", err)
+	}
+	_, err = buf.WriteString(host)
+	if err != nil {
+		log.Printf("Error: %s\n", err)
+	}
+	_, err = buf.WriteString(":")
+	if err != nil {
+		log.Printf("Error: %s\n", err)
+	}
+	_, err = buf.WriteString(port)
+	if err != nil {
+		log.Printf("Error: %s\n", err)
+	}
+	_, err = buf.WriteString("/servers/_doc/")
+	if err != nil {
+		log.Printf("Error: %s\n", err)
+	}
+	_, err = buf.WriteString(config.Str("hostid"))
+	if err != nil {
+		log.Printf("Error: %s\n", err)
+	}
 	url := buf.String()
 
 	body := new(bytes.Buffer)
-	err := json.NewEncoder(body).Encode(d)
+	err = json.NewEncoder(body).Encode(d)
 	if err != nil {
 		log.Printf("Error: %s\n", err)
 		return
