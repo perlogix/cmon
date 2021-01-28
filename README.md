@@ -374,6 +374,22 @@ Install the statically linked Linux binary:
 curl -OL "https://github.com/yeticloud/yeti-discover/releases/download/1.2/yeti-discover" && chmod -f 0755 ./yeti-discover
 ```
 
+Install DEB file:
+
+```sh
+curl -LO $(curl -s https://api.github.com/repos/yeticloud/yeti-discover/releases/latest | grep browser_download_url | grep deb | cut -d '"' -f 4)
+
+dpkg -i ./yeti-discover*.deb
+```
+
+Install RPM file:
+
+```sh
+curl -LO $(curl -s https://api.github.com/repos/yeticloud/yeti-discover/releases/latest | grep browser_download_url | grep rpm | cut -d '"' -f 4)
+
+rpm -i ./yeti-discover*.rpm
+```
+
 **ElasticSearch Mappings Needed**
 
 ```sh
