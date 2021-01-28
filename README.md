@@ -481,12 +481,9 @@ oscap_profile: xccdf_org.ssgproject.content_profile_cis
 
 ## Vagrant
 
-Docker is a dependency for running the following commands to run the yeti-discover stack in Vagrant.
-
 ```sh
 git clone https://github.com/yeticloud/yeti-discover.git
 cd yeti-discover
-make docker
 vagrant up
 vagrant ssh
 ```

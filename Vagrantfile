@@ -61,7 +61,8 @@ curl -XPUT -k -u admin:admin https://localhost:9200/servers
 curl -XPUT -k -u admin:admin "https://localhost:9200/servers/_mapping" -H 'Content-Type: application/json' -d@/vagrant/mapping.json
 
 # Setup yeti-discover
-mkdir -p /usr/lib/yeticloud/yeti-discover
+if [[ -f "/vagrant/yeti-discover" ]]; then
+  mkdir -p /usr/lib/yeticloud/yeti-discover
 
 cat <<'EOF'>/usr/lib/yeticloud/yeti-discover/yeti-discover.yml
 host: 127.0.0.1
@@ -71,6 +72,12 @@ password: admin
 https: true
 insecure_ssl: true
 EOF
+
+  cp -f /vagrant/yeti-discover /usr/bin/
+else
+  curl -LO $(curl -s https://api.github.com/repos/yeticloud/yeti-discover/releases/latest | grep browser_download_url | grep deb | cut -d '"' -f 4)
+  dpkg -i ./yeti-discover*.deb
+fi
 
 cp -f /vagrant/yeti-discover /usr/bin/
 
