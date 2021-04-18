@@ -21,14 +21,10 @@ jobs:
     - name: Build distroless image
       run: |
           docker build --build-arg GOOS=linux -t yeti-discover:${{ github.sha }} -f Dockerfile-distroless .
+          curl -LO https://downloads.dockerslim.com/releases/1.32.0/dist_linux.tar.gz
+          tar -xzf dist_linux.tar.gz
+          ./dist_linux/docker-slim build --http-probe=false --target yeti-discover:${{ github.sha }}
           
-    - name: Minify docker image with docker-slim
-      run: |
-       curl -LO https://downloads.dockerslim.com/releases/1.32.0/dist_linux.tar.gz
-       tar -xzf dist_linux.tar.gz
-       chmod +x dist_linux 
-       ./dist_linux/docker-slim build --http-probe=false --target yeti-discover:${{ github.sha }}
-
     - name: Run Trivy vulnerability scanner
       uses: aquasecurity/trivy-action@master
       with:
