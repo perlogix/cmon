@@ -6,8 +6,8 @@ PACKAGES:=$(shell go list ./... | grep -v /vendor/)
 GO_LINUX := GOOS=linux GOARCH=amd64
 GO_OSX := GOOS=darwin GOARCH=amd64
 GO_WIN := GOOS=darwin GOARCH=amd64
-VER := 1.2
-LDFLAGS := '-s -w -X "github.com/yeticloud/yeti-discover/config.builtOn=$(BUILT_ON)"  -X "github.com/yeticloud/yeti-discover/config.commitHash=$(COMMIT_HASH)"'
+VER := 1.3
+LDFLAGS := '-s -w -X "github.com/yeticloud/yeti-discover/config.builtOn=$(BUILT_ON)" -X "github.com/yeticloud/yeti-discover/config.commitHash=$(COMMIT_HASH)" -X "github.com/yeticloud/yeti-discover/config.version=$(VER)"'
 
 default: build
 

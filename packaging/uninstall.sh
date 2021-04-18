@@ -8,7 +8,7 @@ fi
 
 if [ "$INIT" = "systemd" ]; then
   systemctl stop yeti-discover
-  rm -rf /etc/systemd/system/yeti-discover.service /usr/lib/yeticloud/yeti-discover /etc/yeticloud/yeti-discover.yaml
+  rm -rf /etc/systemd/system/yeti-discover.service /usr/lib/yeticloud/yeti-discover /etc/yeticloud/yeti-discover.yaml /usr/bin/yeti-discover
   systemctl daemon-reload
 fi
 

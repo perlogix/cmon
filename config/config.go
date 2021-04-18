@@ -30,6 +30,7 @@ var (
 	daemonFlag = flag.Bool("daemon", false, "  Run in daemon mode")
 	builtOn    string
 	commitHash string
+	version    string
 	id, _      = machineid.ProtectedID("yetidiscover")
 )
 
@@ -42,14 +43,15 @@ func init() {
 		fmt.Printf(` Usage: yeti-discover [options] <args>
    -d, --daemon    Run in daemon mode
    -c, --config    Set configuration path, defaults are ['./', '/etc/yeticloud', '/opt/yeticloud', '/usr/lib/yeticloud/yeti-discover']
-	
+
+ Version:        %s
  Built On:       %s
  Commit Hash:    %s
 
  Example:        yeti-discover -d -c ./conf/yeti-discover.yaml
 	
  Documentation:  https://github.com/yeticloud/yeti-discover/blob/master/README.md
-`, builtOn, commitHash)
+`, version, builtOn, commitHash)
 	}
 
 	flag.Parse()

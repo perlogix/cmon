@@ -27,7 +27,7 @@ import (
 // TrivyScan scans the root filesystem for vulnerabilities
 func TrivyScan(d *data.DiscoverJSON) {
 	if runtime.GOOS == "linux" {
-		trivy, err := exec.Command("trivy", "filesystem", "-f", "json", "--exit-code", "0", "--no-progress", "-q", "/").Output()
+		trivy, err := exec.Command("trivy", "-q", "filesystem", "-f", "json", "--exit-code", "0", "--no-progress", "/").Output()
 		if err != nil {
 			return
 		}
