@@ -1,6 +1,6 @@
 #!/bin/sh
 
-if [ "$1" == "" ]; then
+if [ "$1" = "" ]; then
   echo "First argument empty, need version"
   exit 1
 fi
