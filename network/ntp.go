@@ -5,7 +5,7 @@ import (
 	"runtime"
 	"strings"
 
-	"github.com/yeticloud/yeti-discover/data"
+	"github.com/perlogix/cmon/data"
 )
 
 // NTPServers gets NTP servers listed in /etc/ntp.conf

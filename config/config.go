@@ -1,18 +1,18 @@
-// Copyright (C) YetiCloud
-// This file is part of yeti-discover <https://github.com/yeticloud/yeti-discover>.
+// Copyright (C) Perlogix
+// This file is part of cmon <https://github.com/perlogix/cmon>.
 //
-// yeti-discover is free software: you can redistribute it and/or modify
+// cmon is free software: you can redistribute it and/or modify
 // it under the terms of the GNU General Public License as published by
 // the Free Software Foundation, either version 3 of the License, or
 // (at your option) any later version.
 //
-// yeti-discover is distributed in the hope that it will be useful,
+// cmon is distributed in the hope that it will be useful,
 // but WITHOUT ANY WARRANTY; without even the implied warranty of
 // MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
 // GNU General Public License for more details.
 //
 // You should have received a copy of the GNU General Public License
-// along with yeti-discover.  If not, see <http://www.gnu.org/licenses/>.
+// along with cmon.  If not, see <http://www.gnu.org/licenses/>.
 
 package config
 
@@ -26,31 +26,31 @@ import (
 
 var (
 	v          = viper.New()
-	configFlag = flag.String("config", "", "  Set configuration path, defaults are ['./', '/etc/yeticloud', '/opt/yeticloud', '/usr/lib/yeticloud/yeti-discover']")
+	configFlag = flag.String("config", "", "  Set configuration path, defaults are ['./', '/opt/perlogix/cmon', '/etc/perlogix/cmon']")
 	daemonFlag = flag.Bool("daemon", false, "  Run in daemon mode")
 	builtOn    string
 	commitHash string
 	version    string
-	id, _      = machineid.ProtectedID("yetidiscover")
+	id, _      = machineid.ProtectedID("cmon")
 )
 
 func init() {
 
-	flag.StringVar(configFlag, "c", "", "  Set configuration path, defaults are ['./', '/etc/yeticloud', '/opt/yeticloud', '/usr/lib/yeticloud/yeti-discover']")
+	flag.StringVar(configFlag, "c", "", "  Set configuration path, defaults are ['./', '/opt/perlogix/cmon', '/etc/perlogix/cmon']")
 	flag.BoolVar(daemonFlag, "d", false, "  Run in daemon mode")
 
 	flag.Usage = func() {
-		fmt.Printf(` Usage: yeti-discover [options] <args>
+		fmt.Printf(` Usage: cmon [options] <args>
    -d, --daemon    Run in daemon mode
-   -c, --config    Set configuration path, defaults are ['./', '/etc/yeticloud', '/opt/yeticloud', '/usr/lib/yeticloud/yeti-discover']
+   -c, --config    Set configuration path, defaults are ['./', '/opt/perlogix/cmon', '/etc/perlogix/cmon']
 
  Version:        %s
  Built On:       %s
  Commit Hash:    %s
 
- Example:        yeti-discover -d -c ./conf/yeti-discover.yaml
+ Example:        cmon -d -c ./cmon.yaml
 	
- Documentation:  https://github.com/yeticloud/yeti-discover/blob/master/README.md
+ Documentation:  https://github.com/perlogix/cmon/blob/master/README.md
 `, version, builtOn, commitHash)
 	}
 
@@ -73,10 +73,9 @@ func init() {
 	v.SetDefault("oscap_profile", "xccdf_org.ssgproject.content_profile_cis")
 	v.SetDefault("oscap_xccdf_xml", "/usr/share/scap-security-guide/ssg-ubuntu1804-ds.xml")
 
-	v.SetConfigName("yeti-discover")
-	v.AddConfigPath("/opt/yeticloud")
-	v.AddConfigPath("/etc/yeticloud")
-	v.AddConfigPath("/usr/lib/yeticloud/yeti-discover")
+	v.SetConfigName("cmon")
+	v.AddConfigPath("/etc/perlogix/cmon")
+	v.AddConfigPath("/opt/perlogix/cmon")
 	v.AddConfigPath(".")
 	v.SetConfigFile(*configFlag)
 

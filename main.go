@@ -1,18 +1,18 @@
-// Copyright (C) YetiCloud
-// This file is part of yeti-discover <https://github.com/yeticloud/yeti-discover>.
+// Copyright (C) Perlogix
+// This file is part of cmon <https://github.com/perlogix/cmon>.
 //
-// yeti-discover is free software: you can redistribute it and/or modify
+// cmon is free software: you can redistribute it and/or modify
 // it under the terms of the GNU General Public License as published by
 // the Free Software Foundation, either version 3 of the License, or
 // (at your option) any later version.
 //
-// yeti-discover is distributed in the hope that it will be useful,
+// cmon is distributed in the hope that it will be useful,
 // but WITHOUT ANY WARRANTY; without even the implied warranty of
 // MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
 // GNU General Public License for more details.
 //
 // You should have received a copy of the GNU General Public License
-// along with yeti-discover.  If not, see <http://www.gnu.org/licenses/>.
+// along with cmon.  If not, see <http://www.gnu.org/licenses/>.
 
 package main
 
@@ -24,15 +24,15 @@ import (
 	"sync"
 	"time"
 
-	"github.com/yeticloud/yeti-discover/cloud"
-	"github.com/yeticloud/yeti-discover/config"
-	"github.com/yeticloud/yeti-discover/containers"
-	"github.com/yeticloud/yeti-discover/data"
-	"github.com/yeticloud/yeti-discover/db"
-	"github.com/yeticloud/yeti-discover/network"
-	"github.com/yeticloud/yeti-discover/packages"
-	"github.com/yeticloud/yeti-discover/security"
-	"github.com/yeticloud/yeti-discover/system"
+	"github.com/perlogix/cmon/cloud"
+	"github.com/perlogix/cmon/config"
+	"github.com/perlogix/cmon/containers"
+	"github.com/perlogix/cmon/data"
+	"github.com/perlogix/cmon/db"
+	"github.com/perlogix/cmon/network"
+	"github.com/perlogix/cmon/packages"
+	"github.com/perlogix/cmon/security"
+	"github.com/perlogix/cmon/system"
 )
 
 func main() {

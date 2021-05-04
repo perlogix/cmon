@@ -5,7 +5,7 @@ import (
 	"runtime"
 	"strings"
 
-	"github.com/yeticloud/yeti-discover/data"
+	"github.com/perlogix/cmon/data"
 )
 
 // ExpiredCerts detects if certs are expiring within 30 days

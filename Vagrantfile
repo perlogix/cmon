@@ -3,13 +3,13 @@
 
 Vagrant.configure(2) do |config|
     config.vm.box = "ubuntu/focal64"
-    config.vm.hostname = "yeti-discover-stack"
+    config.vm.hostname = "cmon-stack"
     config.vm.network :private_network, ip: "10.20.1.32"
     config.vm.network "forwarded_port", guest: 5601, host: 5601, auto_correct: true
     config.vm.network "forwarded_port", guest: 9200, host: 9200, auto_correct: true
     config.vm.network "forwarded_port", guest: 9600, host: 9600, auto_correct: true
     config.vm.provider "virtualbox" do |v|
-        v.name = "yeti-discover-stack"
+        v.name = "cmon-stack"
         v.memory = 4096
         v.cpus = 2
         v.customize ["modifyvm", :id, "--natdnsproxy1", "on"]
@@ -60,11 +60,11 @@ curl -XPUT -k -u admin:admin https://localhost:9200/servers
 # Create ES Mapping for servers Index
 curl -XPUT -k -u admin:admin "https://localhost:9200/servers/_mapping" -H 'Content-Type: application/json' -d@/vagrant/mapping.json
 
-# Setup yeti-discover
-if [[ -f "/vagrant/yeti-discover" ]]; then
-  mkdir -p /usr/lib/yeticloud/yeti-discover
+# Setup cmon
+if [[ -f "/vagrant/cmon" ]]; then
+  mkdir -p /etc/perlogix/cmon
 
-cat <<'EOF'>/usr/lib/yeticloud/yeti-discover/yeti-discover.yml
+cat <<'EOF'>/etc/perlogix/cmon/cmon.yaml
 host: 127.0.0.1
 port: 9200
 username: admin
@@ -73,15 +73,15 @@ https: true
 insecure_ssl: true
 EOF
 
-  cp -f /vagrant/yeti-discover /usr/bin/
+  cp -f /vagrant/cmon /usr/bin/
 else
-  curl -LO $(curl -s https://api.github.com/repos/yeticloud/yeti-discover/releases/latest | grep browser_download_url | grep deb | cut -d '"' -f 4)
-  dpkg -i ./yeti-discover*.deb
+  curl -LO $(curl -s https://api.github.com/repos/perlogix/cmon/releases/latest | grep browser_download_url | grep deb | cut -d '"' -f 4)
+  dpkg -i ./cmon*.deb
 fi
 
-cp -f /vagrant/yeti-discover /usr/bin/
+cp -f /vagrant/cmon /usr/bin/
 
-timeout 15 yeti-discover -d
+timeout 15 cmon -d
 
 # Test stack works, should return 2 
 curl -sk -u admin:admin https://localhost:9200/servers/_search | jq -r '.hits.hits[0]._source.cpu_count'

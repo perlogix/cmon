@@ -6,6 +6,6 @@ RUN apt-get update
 RUN apt-get install -y ruby ruby-dev rubygems build-essential rpm git
 RUN gem install --no-document fpm
 COPY ./packaging /packaging
-COPY ./yeti-discover /
+COPY ./cmon /
 WORKDIR /packaging
 RUN /packaging/package.sh ${VER}

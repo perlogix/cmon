@@ -15,17 +15,17 @@ jobs:
     - name: Checkout code
       uses: actions/checkout@v2
         
-    - name: Build yeti-discover binary
+    - name: Build cmon binary
       run: make docker
       
     - name: Build distroless image
       run: |
-          docker build --build-arg GOOS=linux -t yeti-discover:${{ github.sha }} -f Dockerfile-distroless .
+          docker build --build-arg GOOS=linux -t cmon:${{ github.sha }} -f Dockerfile-distroless .
           
     - name: Run Trivy vulnerability scanner
       uses: aquasecurity/trivy-action@master
       with:
-          image-ref: 'yeti-discover:${{ github.sha }}'
+          image-ref: 'cmon:${{ github.sha }}'
           format: 'template'
           template: '@/contrib/sarif.tpl'
           output: 'trivy-results.sarif'

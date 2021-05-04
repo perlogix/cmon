@@ -5,7 +5,7 @@ import (
 	"runtime"
 	"strings"
 
-	"github.com/yeticloud/yeti-discover/data"
+	"github.com/perlogix/cmon/data"
 )
 
 // DmesgErrors detects err, emerg, crit, alert messages

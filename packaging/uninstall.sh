@@ -7,13 +7,13 @@ else
 fi
 
 if [ "$INIT" = "systemd" ]; then
-  systemctl stop yeti-discover
-  rm -rf /etc/systemd/system/yeti-discover.service /usr/lib/yeticloud/yeti-discover /etc/yeticloud/yeti-discover.yaml /usr/bin/yeti-discover
+  systemctl stop cmon
+  rm -rf /etc/systemd/system/cmon.service /etc/perlogix/cmon /usr/bin/cmon
   systemctl daemon-reload
 fi
 
 if [ "$INIT" = "other" ]; then
-  /etc/init.d/yeti-discover stop
-  chkconfig yeti-discover off
-  rm -rf /etc/init.d/yeti-discover /usr/lib/yeticloud/yeti-discover
+  /etc/init.d/cmon stop
+  chkconfig cmon off
+  rm -rf /etc/init.d/cmon /etc/perlogix/cmon /usr/bin/cmon
 fi

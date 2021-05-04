@@ -1,12 +1,12 @@
 [Unit]
-Description=yeti-discover Daemon
+Description=cmon Daemon
 After=network.target
 
 [Service]
 Type=simple
 User=root
 Group=root
-ExecStart=/usr/lib/yeticloud/yeti-discover/yeti-discover -d
+ExecStart=/usr/bin/cmon -d
 Restart=on-failure
 
 [Install]

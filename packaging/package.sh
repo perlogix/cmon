@@ -5,12 +5,12 @@ if [ "$1" = "" ]; then
   exit 1
 fi
 
-mkdir -p /usr/lib/yeticloud/yeti-discover
+mkdir -p /etc/perlogix/cmon
 
-cp -f ./yeti-discover.service /usr/lib/yeticloud/yeti-discover/
-cp -f ../yeti-discover /usr/lib/yeticloud/yeti-discover/
+cp -f ./cmon.service /etc/perlogix/cmon/
+cp -f ../cmon /etc/perlogix/cmon/
 
-cat <<'EOF' >/usr/lib/yeticloud/yeti-discover/yeti-discover.yaml
+cat <<'EOF' >/etc/perlogix/cmon/cmon.yaml.orig
 # ElasticSearch DB
 #host: localhost
 #port: 9200
@@ -48,5 +48,5 @@ cat <<'EOF' >/usr/lib/yeticloud/yeti-discover/yeti-discover.yaml
 #oscap_profile: xccdf_org.ssgproject.content_profile_cis
 EOF
 
-fpm -t deb -s dir -n yeti-discover -v "$1" -a amd64 -p "yeti-discover-$1-amd64.deb" --license GPLv3 --vendor YetiCloud -m hello@yeticloud.com --url "https://github.com/yeticloud/yeti-discover" --description "YetiCloud yeti-discover binary distribution" --after-install ./install.sh --after-remove ./uninstall.sh --deb-no-default-config-files /usr/lib/yeticloud/yeti-discover
-fpm -t rpm -s dir -n yeti-discover -v "$1" -a amd64 -p "yeti-discover-$1-amd64.rpm" --license GPLv3 --vendor YetiCloud -m hello@yeticloud.com --url "https://github.com/yeticloud/yeti-discover" --description "YetiCloud yeti-discover binary distribution" --after-install ./install.sh --after-remove ./uninstall.sh /usr/lib/yeticloud/yeti-discover
+fpm -t deb -s dir -n cmon -v "$1" -a amd64 -p "cmon-$1-amd64.deb" --license GPLv3 --vendor Perlogix -m hello@perlogix.com --url "https://github.com/perlogix/cmon" --description "Perlogix cmon binary distribution" --after-install ./install.sh --after-remove ./uninstall.sh --deb-no-default-config-files /etc/perlogix/cmon
+fpm -t rpm -s dir -n cmon -v "$1" -a amd64 -p "cmon-$1-amd64.rpm" --license GPLv3 --vendor Perlogix -m hello@perlogix.com --url "https://github.com/perlogix/cmon" --description "Perlogix cmon binary distribution" --after-install ./install.sh --after-remove ./uninstall.sh /etc/perlogix/cmon

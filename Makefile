@@ -1,4 +1,4 @@
-MAIN_PACKAGE := yeti-discover
+MAIN_PACKAGE := cmon
 BUILT_ON := $(shell date)
 GOOS := $(shell uname -s | tr '[:upper:]' '[:lower:]')
 COMMIT_HASH:=$(shell git log -n 1 --pretty=format:"%H")
@@ -6,8 +6,8 @@ PACKAGES:=$(shell go list ./... | grep -v /vendor/)
 GO_LINUX := GOOS=linux GOARCH=amd64
 GO_OSX := GOOS=darwin GOARCH=amd64
 GO_WIN := GOOS=darwin GOARCH=amd64
-VER := 1.3
-LDFLAGS := '-s -w -X "github.com/yeticloud/yeti-discover/config.builtOn=$(BUILT_ON)" -X "github.com/yeticloud/yeti-discover/config.commitHash=$(COMMIT_HASH)" -X "github.com/yeticloud/yeti-discover/config.version=$(VER)"'
+VER := 1.0
+LDFLAGS := '-s -w -X "github.com/perlogix/cmon/config.builtOn=$(BUILT_ON)" -X "github.com/perlogix/cmon/config.commitHash=$(COMMIT_HASH)" -X "github.com/perlogix/cmon/config.version=$(VER)"'
 
 default: build
 
@@ -47,7 +47,7 @@ update-deps:
 docker:
 	sudo docker build --build-arg GOOS=$(GOOS) -t $(MAIN_PACKAGE)-build .
 	sudo docker create --name $(MAIN_PACKAGE)-build $(MAIN_PACKAGE)-build
-	sudo docker cp $(MAIN_PACKAGE)-build:/go/src/github.com/yeticloud/$(MAIN_PACKAGE)/$(MAIN_PACKAGE) ./
+	sudo docker cp $(MAIN_PACKAGE)-build:/go/src/github.com/perlogix/$(MAIN_PACKAGE)/$(MAIN_PACKAGE) ./
 	sudo docker rm -f $(MAIN_PACKAGE)-build
 
 pkgs:

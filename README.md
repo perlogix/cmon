@@ -1,7 +1,7 @@
-# yeti-discover
+# cmon
 
-[![Go Report Card](https://goreportcard.com/badge/github.com/yeticloud/yeti-discover)](https://goreportcard.com/report/github.com/yeticloud/yeti-discover)
-![Go](https://github.com/yeticloud/yeti-discover/workflows/Go/badge.svg)
+[![Go Report Card](https://goreportcard.com/badge/github.com/perlogix/cmon)](https://goreportcard.com/report/github.com/perlogix/cmon)
+![Go](https://github.com/perlogix/cmon/workflows/Go/badge.svg)
 
 #### Table of Contents
 
@@ -16,7 +16,6 @@
 6. [Configuration](#configuration)
 7. [Vagrant](#vagrant)
 8. [Platforms Tested On](#platforms-tested-on)
-9. [Screenshots](#screenshots)
 
 ## Overview
 
@@ -355,15 +354,15 @@ If you were to delete all hosts in the environment nightly. If the agent is runn
 
 Example with cURL:
 
-If you want to manually / cron schedule yeti-discover to post to ElasticSearch
+If you want to manually / cron schedule cmon to post to ElasticSearch
 
 ```sh
 # HTTP unauth
-sudo ./yeti-discover | curl -XPOST -H "Content-Type: application/json" -d @- "http://localhost:9200/servers/_doc/$(hostid)"
+sudo ./cmon | curl -XPOST -H "Content-Type: application/json" -d @- "http://localhost:9200/servers/_doc/$(hostid)"
 
 
 # Insecure SSL and basic auth
-sudo ./yeti-discover | curl -XPOST -k -u admin:admin -H "Content-Type: application/json" -d @- "https://localhost:9200/servers/_doc/$(hostid)"
+sudo ./cmon | curl -XPOST -k -u admin:admin -H "Content-Type: application/json" -d @- "https://localhost:9200/servers/_doc/$(hostid)"
 ```
 
 ## Install
@@ -371,23 +370,23 @@ sudo ./yeti-discover | curl -XPOST -k -u admin:admin -H "Content-Type: applicati
 Install the statically linked Linux binary:
 
 ```sh
-curl -OL "https://github.com/yeticloud/yeti-discover/releases/download/1.2/yeti-discover" && chmod -f 0755 ./yeti-discover
+curl -OL "https://github.com/perlogix/cmon/releases/download/1.0/cmon" && chmod -f 0755 ./cmon
 ```
 
 Install DEB file:
 
 ```sh
-curl -LO $(curl -s https://api.github.com/repos/yeticloud/yeti-discover/releases/latest | grep browser_download_url | grep deb | cut -d '"' -f 4)
+curl -LO $(curl -s https://api.github.com/repos/perlogix/cmon/releases/latest | grep browser_download_url | grep deb | cut -d '"' -f 4)
 
-dpkg -i ./yeti-discover*.deb
+dpkg -i ./cmon*.deb
 ```
 
 Install RPM file:
 
 ```sh
-curl -LO $(curl -s https://api.github.com/repos/yeticloud/yeti-discover/releases/latest | grep browser_download_url | grep rpm | cut -d '"' -f 4)
+curl -LO $(curl -s https://api.github.com/repos/perlogix/cmon/releases/latest | grep browser_download_url | grep rpm | cut -d '"' -f 4)
 
-rpm -i ./yeti-discover*.rpm
+rpm -i ./cmon*.rpm
 ```
 
 **ElasticSearch Mappings Needed**
@@ -428,17 +427,17 @@ make docker
 To build the RPM and Deb packages with Docker run the following command:
 
 ```sh
-make VER=1.2 pkgs
+make VER=1.0 pkgs
 ```
 
 ## Getting Started Vagrant
 
 ```sh
-git clone https://github.com/yeticloud/yeti-discover.git
+git clone https://github.com/perlogix/cmon.git
 
-cd yeti-discover
+cd cmon
 
-curl -LO "https://github.com/yeticloud/yeti-discover/releases/download/1.2/yeti-discover"
+curl -LO "https://github.com/perlogix/cmon/releases/download/1.0/cmon"
 
 vagrant up
 ```
@@ -448,13 +447,13 @@ vagrant up
 No flags / arguments will do a one-time run and produce a JSON file in the current path of the binary
 
     -d, --daemon     Run in daemon mode
-    -c, --config     Set configuration path, defaults are ['./','/etc/yeticloud','/opt/yeticloud','/usr/lib/yeticloud/yeti-discover']
+    -c, --config     Set configuration path, defaults are ['./', '/opt/perlogix/cmon', '/etc/perlogix/cmon']
 
 ## Configuration
 
 Configurations can be written in YAML, JSON or TOML.
 
-_/opt/yeticloud/yeti-discover.yaml_
+_/etc/perlogix/cmon/cmon.yaml_
 _DEFAULT values if no config is present_
 
 ```yaml
@@ -498,8 +497,8 @@ oscap_profile: xccdf_org.ssgproject.content_profile_cis
 ## Vagrant
 
 ```sh
-git clone https://github.com/yeticloud/yeti-discover.git
-cd yeti-discover
+git clone https://github.com/perlogix/cmon.git
+cd cmon
 vagrant up
 vagrant ssh
 ```
@@ -511,11 +510,3 @@ vagrant ssh
 - Ubuntu 16 - latest
 - Mac OS X 16.7.0 - latest
 - Windows 10 - latest
-
-## Screenshots
-
-![First View](https://yeticloud-public.s3.amazonaws.com/yeti-discover-kibana-1.png)
-
-![Second View](https://yeticloud-public.s3.amazonaws.com/yeti-discover-kibana-2.png)
-
-![Third View](https://yeticloud-public.s3.amazonaws.com/yeti-discover-kibana-3.png)
