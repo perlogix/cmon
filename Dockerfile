@@ -1,14 +1,40 @@
-FROM golang
+# Build
+FROM golang:latest as build
 
 ARG GOOS
 
-RUN mkdir -p /go/src/github.com/perlogix/cmon
-RUN go install honnef.co/go/tools/cmd/staticcheck@latest
-RUN go get -u github.com/securego/gosec/v2/cmd/gosec
-RUN curl -sSfL https://raw.githubusercontent.com/golangci/golangci-lint/master/install.sh | sh -s -- -b $(go env GOPATH)/bin v1.41.1
-WORKDIR /go/src/github.com/perlogix/cmon
-
+RUN apt-get update && apt-get install \
+    -y --no-install-recommends \
+    upx && \
+    apt-get clean && rm -rf /var/lib/apt/lists/*
+RUN mkdir -p /go/src/build
+WORKDIR /go/src/build
 COPY ./ ./
 
-RUN make lint
-RUN make GOOS=${GOOS} build
+RUN make GOOS=${GOOS}
+
+# Linter
+FROM github/super-linter:latest as linter
+COPY --from=build /go/src/build/ /app/
+WORKDIR /app
+ENV RUN_LOCAL="true"
+ENV VALIDATE_ALL_CODEBASE="true"
+ENV LOG_FILE="super-linter.log"
+ENV OUTPUT_FOLDER="/app"
+ENV DISABLE_ERRORS="true"
+ENV SUPPRESS_POSSUM="true"
+ENV DEFAULT_WORKSPACE="/app"
+ENV GITLEAKS_CONFIG_FILE="gitleaks.toml"
+RUN cp -f /app/gitleaks.toml /action/lib/.automation/
+RUN /action/lib/linter.sh
+
+# Security
+FROM aquasec/trivy:latest as security
+COPY --from=linter /app/ /app/
+WORKDIR /app
+RUN trivy fs -f table --exit-code 0 --no-progress /app/
+
+# App Container
+FROM gcr.io/distroless/base
+COPY --from=security /app/ /app/
+CMD ["/app/cmon", "-d"]

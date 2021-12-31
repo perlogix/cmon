@@ -1,99 +1,86 @@
-// Copyright (C) Perlogix
-// This file is part of cmon <https://github.com/perlogix/cmon>.
-//
-// cmon is free software: you can redistribute it and/or modify
-// it under the terms of the GNU General Public License as published by
-// the Free Software Foundation, either version 3 of the License, or
-// (at your option) any later version.
-//
-// cmon is distributed in the hope that it will be useful,
-// but WITHOUT ANY WARRANTY; without even the implied warranty of
-// MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-// GNU General Public License for more details.
-//
-// You should have received a copy of the GNU General Public License
-// along with cmon.  If not, see <http://www.gnu.org/licenses/>.
-
 package data
 
 import (
+	"time"
+
 	ftypes "github.com/aquasecurity/fanal/types"
 	"github.com/aquasecurity/trivy/pkg/types"
 )
 
 // DiscoverJSON is the main struct for JSON Marshal
 type DiscoverJSON struct {
-	AssetType            string      `json:"asset_type"`
-	AuditRules           []string    `json:"audit_rules"`
-	ChassisType          string      `json:"chassis_type"`
-	Cloud                string      `json:"cloud"`
-	CPUCount             int         `json:"cpu_count"`
-	CPUPct               int         `json:"cpu_pct"`
-	CPUvulns             []string    `json:"cpu_vulns"`
-	ClamAVDefs           string      `json:"clamav_defs"`
-	Crontabs             []string    `json:"crontabs"`
-	Diskfree             uint64      `json:"diskfree_gb"`
-	Disktotal            uint64      `json:"disktotal_gb"`
-	Diskused             uint64      `json:"diskused_gb"`
-	DNSNameserver        []string    `json:"dns_nameserver"`
-	DmesgErrors          string      `json:"dmesg_errors"`
-	DockerContainers     []string    `json:"docker_containers"`
-	DockerRunning        int         `json:"docker_running"`
-	DockerPaused         int         `json:"docker_paused"`
-	DockerStopped        int         `json:"docker_stopped"`
-	DockerImagesCount    int         `json:"docker_images_count"`
-	DockerImages         []string    `json:"docker_images"`
-	DockerLabels         []string    `json:"docker_labels"`
-	Domain               string      `json:"domain"`
-	Ec2AmiID             string      `json:"ec2_ami_id"`
-	Ec2AvailabilityZone  string      `json:"ec2_availability_zone"`
-	Ec2InstanceID        string      `json:"ec2_instance_id"`
-	Ec2InstanceType      string      `json:"ec2_instance_type"`
-	Ec2Profile           string      `json:"ec2_profile"`
-	Ec2PublicIP4         string      `json:"ec2_public_ip4"`
-	Ec2SecurityGroups    []string    `json:"ec2_security_groups"`
-	Environment          string      `json:"environment"`
-	ExpiredCerts         []string    `json:"expired_certs"`
-	FailedLogins         []string    `json:"failed_logins"`
-	Gem                  []string    `json:"gem"`
-	Hostname             string      `json:"hostname"`
-	IPRoute              []string    `json:"ip_route"`
-	Ipaddress            string      `json:"ipaddress"`
-	Iptables             []string    `json:"iptables"`
-	Interfaces           []IfaceData `json:"network_interfaces"`
-	Kernelversion        string      `json:"kernel_version"`
-	Lastrun              string      `json:"lastrun"`
-	Load1                float64     `json:"load1"`
-	Load15               float64     `json:"load15"`
-	Load5                float64     `json:"load5"`
-	Lsmod                []string    `json:"loaded_kernel_modules"`
-	Memoryfree           uint64      `json:"memoryfree_gb"`
-	Memorytotal          uint64      `json:"memorytotal_gb"`
-	Memoryused           uint64      `json:"memoryused_gb"`
-	NTPServers           []string    `json:"ntp_servers"`
-	NTPRunning           bool        `json:"ntp_running"`
-	OpenPorts            []string    `json:"open_ports"`
-	OpenScap             OScapOutput `json:"openscap"`
-	Os                   string      `json:"os"`
-	Packages             []string    `json:"packages"`
-	Pip                  []string    `json:"pip"`
-	Pip3                 []string    `json:"pip3"`
-	Platform             string      `json:"platform"`
-	Platformfamily       string      `json:"platform_family"`
-	Platformversion      string      `json:"platform_version"`
-	Processes            []string    `json:"processes"`
-	Public               bool        `json:"public"`
-	Snaps                []string    `json:"snaps"`
-	Sysctl               []string    `json:"sysctl"`
-	SystemctlFailed      string      `json:"systemctl_failed"`
-	SystemdTimers        []string    `json:"systemd_timers"`
-	Timezone             string      `json:"timezone"`
-	Trivy                Trivy       `json:"trivy"`
-	Uptime               uint64      `json:"uptime_days"`
-	Users                []string    `json:"users"`
-	UsersLoggedin        []string    `json:"users_loggedin"`
-	Virtualization       bool        `json:"virtualization"`
-	Virtualizationsystem string      `json:"virtualization_system"`
+	AssetType            string            `json:"asset_type"`
+	AuditRules           []string          `json:"audit_rules"`
+	ChassisType          string            `json:"chassis_type"`
+	Cloud                string            `json:"cloud"`
+	CPUCount             int               `json:"cpu_count"`
+	CPUPct               int               `json:"cpu_pct"`
+	CPUvulns             []string          `json:"cpu_vulns"`
+	ClamAVDefs           string            `json:"clamav_defs"`
+	Crontabs             []string          `json:"crontabs"`
+	Diskfree             uint64            `json:"diskfree_gb"`
+	Disktotal            uint64            `json:"disktotal_gb"`
+	Diskused             uint64            `json:"diskused_gb"`
+	DNSNameserver        []string          `json:"dns_nameserver"`
+	DmesgErrors          string            `json:"dmesg_errors"`
+	DockerContainers     []string          `json:"docker_containers"`
+	DockerRunning        int               `json:"docker_running"`
+	DockerPaused         int               `json:"docker_paused"`
+	DockerStopped        int               `json:"docker_stopped"`
+	DockerImagesCount    int               `json:"docker_images_count"`
+	DockerImages         []string          `json:"docker_images"`
+	DockerLabels         []string          `json:"docker_labels"`
+	Domain               string            `json:"domain"`
+	Ec2AmiID             string            `json:"ec2_ami_id"`
+	Ec2AvailabilityZone  string            `json:"ec2_availability_zone"`
+	Ec2InstanceID        string            `json:"ec2_instance_id"`
+	Ec2InstanceType      string            `json:"ec2_instance_type"`
+	Ec2Profile           string            `json:"ec2_profile"`
+	Ec2PublicIP4         string            `json:"ec2_public_ip4"`
+	Ec2SecurityGroups    []string          `json:"ec2_security_groups"`
+	Environment          string            `json:"environment"`
+	ExpiredCerts         []string          `json:"expired_certs"`
+	FailedLogins         []string          `json:"failed_logins"`
+	Gem                  []string          `json:"gem"`
+	Hostname             string            `json:"hostname"`
+	IPRoute              []string          `json:"ip_route"`
+	Ipaddress            string            `json:"ipaddress"`
+	Iptables             []string          `json:"iptables"`
+	Interfaces           []IfaceData       `json:"network_interfaces"`
+	Kernelversion        string            `json:"kernel_version"`
+	Lastrun              string            `json:"lastrun"`
+	Load1                float64           `json:"load1"`
+	Load15               float64           `json:"load15"`
+	Load5                float64           `json:"load5"`
+	Lsmod                []string          `json:"loaded_kernel_modules"`
+	Memoryfree           uint64            `json:"memoryfree_gb"`
+	Memorytotal          uint64            `json:"memorytotal_gb"`
+	Memoryused           uint64            `json:"memoryused_gb"`
+	NTPServers           []string          `json:"ntp_servers"`
+	NTPRunning           bool              `json:"ntp_running"`
+	OpenPorts            []string          `json:"open_ports"`
+	OpenScap             OScapOutput       `json:"openscap"`
+	Os                   string            `json:"os"`
+	Packages             []string          `json:"packages"`
+	Pip                  []string          `json:"pip"`
+	Pip3                 []string          `json:"pip3"`
+	Platform             string            `json:"platform"`
+	Platformfamily       string            `json:"platform_family"`
+	Platformversion      string            `json:"platform_version"`
+	Processes            []Processes       `json:"processes"`
+	Public               bool              `json:"public"`
+	Snaps                []string          `json:"snaps"`
+	Sysctl               []string          `json:"sysctl"`
+	SystemctlFailed      string            `json:"systemctl_failed"`
+	SystemdTimers        []string          `json:"systemd_timers"`
+	Timezone             string            `json:"timezone"`
+	Trivy                Trivy             `json:"trivy"`
+	Uptime               uint64            `json:"uptime_days"`
+	Users                []string          `json:"users"`
+	UsersLoggedin        []string          `json:"users_loggedin"`
+	WindowsPackages      []WindowsPackages `json:"windows_software"`
+	Virtualization       bool              `json:"virtualization"`
+	Virtualizationsystem string            `json:"virtualization_system"`
 }
 
 // OScapOutput is the output format for the parsed data
@@ -152,4 +139,18 @@ type IfaceData struct {
 	TXdrp     int    `json:"tx_drop"`
 	TXovr     int    `json:"tx_overrun"`
 	Flag      string `json:"flag"`
+}
+
+type Processes struct {
+	Pid  int    `json:"pid"`
+	Ppid int    `json:"ppid"`
+	Name string `json:"name"`
+	User string `json:"user"`
+}
+
+type WindowsPackages struct {
+	DisplayName    string    `json:"display_name"`
+	DisplayVersion string    `json:"display_version"`
+	InstallDate    time.Time `json:"install_date"`
+	Publisher      string    `json:"publisher"`
 }

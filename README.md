@@ -370,7 +370,7 @@ sudo ./cmon | curl -XPOST -k -u admin:admin -H "Content-Type: application/json" 
 Install the statically linked Linux binary:
 
 ```sh
-curl -OL "https://github.com/perlogix/cmon/releases/download/1.0/cmon" && chmod -f 0755 ./cmon
+curl -OL "https://github.com/perlogix/cmon/releases/download/1.1/cmon" && chmod -f 0755 ./cmon
 ```
 
 Install DEB file:
@@ -427,7 +427,7 @@ make docker
 To build the RPM and Deb packages with Docker run the following command:
 
 ```sh
-make VER=1.0 pkgs
+make VER=1.1 pkgs
 ```
 
 ## Getting Started Vagrant
@@ -437,7 +437,7 @@ git clone https://github.com/perlogix/cmon.git
 
 cd cmon
 
-curl -LO "https://github.com/perlogix/cmon/releases/download/1.0/cmon"
+curl -LO "https://github.com/perlogix/cmon/releases/download/1.1/cmon"
 
 vagrant up
 ```

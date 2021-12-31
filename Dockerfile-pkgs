@@ -2,8 +2,10 @@ FROM debian
 
 ARG VER
 
-RUN apt-get update
-RUN apt-get install -y ruby ruby-dev rubygems build-essential rpm git
+RUN apt-get update && apt-get install \
+    -y --no-install-recommends \
+    ruby ruby-dev rubygems build-essential rpm git && \
+    apt-get clean && rm -rf /var/lib/apt/lists/*
 RUN gem install --no-document fpm
 COPY ./packaging /packaging
 COPY ./cmon /

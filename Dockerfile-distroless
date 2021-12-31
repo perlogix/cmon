@@ -1,4 +1,0 @@
-FROM gcr.io/distroless/base
-COPY ./cmon /app/
-
-CMD [ "/app/cmon" ]
