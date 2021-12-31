@@ -18,11 +18,13 @@ Vagrant.configure(2) do |config|
     end
     config.vm.provision "shell", inline: <<-SHELL
 # Setup
-sysctl -w vm.max_map_count=262144
-sysctl -p
+apt-get update -y
+apt-get install -y curl
+curl -LO https://raw.githubusercontent.com/perlogix/opsy/main/linux-ops/install.sh
+chmod 0755 ./install.sh
+./install.sh
 
-apt-get update
-apt-get install -y curl net-tools jq make ssg-debderived unzip wget apt-transport-https gnupg lsb-release clamav clamav-daemon
+apt-get install -y make ssg-debderived unzip wget apt-transport-https gnupg lsb-release clamav clamav-daemon
 
 # Install Docker
 curl -sSL https://get.docker.com/ |  sh
@@ -50,8 +52,8 @@ systemctl start clamav-freshclam
 systemctl enable clamav-daemon clamav-freshclam
 
 # Run OpenDistro ELK 
-docker run -d --name es --net=host -e "discovery.type=single-node" -e "network.host=0.0.0.0" amazon/opendistro-for-elasticsearch:latest
-docker run -d --name kibana --net=host amazon/opendistro-for-elasticsearch-kibana:latest
+docker run -d --restart=always --name es --net=host -e "discovery.type=single-node" -e "network.host=0.0.0.0" amazon/opendistro-for-elasticsearch:latest
+docker run -d --restart=always --name kibana --net=host amazon/opendistro-for-elasticsearch-kibana:latest
 sleep 60
 
 # Create Index servers
