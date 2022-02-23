@@ -2,7 +2,6 @@ package containers
 
 import (
 	"context"
-	"fmt"
 	"strings"
 	"time"
 
@@ -24,12 +23,17 @@ func DockerContainers(d *data.DiscoverJSON) {
 		return
 	}
 
-	var ctrSlice []string
 	for _, e := range cts {
-		ctrSlice = append(ctrSlice, fmt.Sprintf("name=%s image=%s command=%s ports=%v state=%s status=%s", strings.Split(e.Names[0], "/")[1], e.Image, e.Command, e.Ports, e.State, e.Status))
+		ctr := data.DockerContainersInfo{
+			Name:    strings.Split(e.Names[0], "/")[1],
+			Image:   e.Image,
+			Command: e.Command,
+			Ports:   e.Ports,
+			State:   e.State,
+			Status:  e.Status,
+		}
+		d.DockerContainers = append(d.DockerContainers, ctr)
 	}
-
-	d.DockerContainers = ctrSlice
 }
 
 // DockerServer grabs docker server information
@@ -63,9 +67,12 @@ func DockerImages(d *data.DiscoverJSON) {
 	if err != nil {
 		return
 	}
-	var imgs []string
 	for _, v := range images {
-		imgs = append(imgs, fmt.Sprintf("name=%s size=%s created=%s", strings.Join(v.RepoTags, " "), units.HumanSize(float64(v.Size)), time.Unix(v.Created, 0).Format(time.RFC3339)))
+		imgs := data.DockerImagesInfo{
+			Name:    strings.Join(v.RepoTags, " "),
+			Size:    units.HumanSize(float64(v.Size)),
+			Created: time.Unix(v.Created, 0).Format(time.RFC3339),
+		}
+		d.DockerImages = append(d.DockerImages, imgs)
 	}
-	d.DockerImages = imgs
 }

@@ -1,7 +1,6 @@
 package network
 
 import (
-	"fmt"
 	"strconv"
 
 	ps "github.com/mitchellh/go-ps"
@@ -15,7 +14,7 @@ func Conns(d *data.DiscoverJSON) {
 		1: "tcp",
 		2: "udp",
 	}
-	var p []string
+	var p []data.OpenPorts
 	c, err := net.Connections("inet")
 	if err != nil {
 		return
@@ -29,7 +28,13 @@ func Conns(d *data.DiscoverJSON) {
 			} else {
 				psName = proc.Executable()
 			}
-			p = append(p, fmt.Sprintf("addr=%s port=%d name=%s proto=%s", i.Laddr.IP, i.Laddr.Port, psName, inetType[i.Type]))
+			ports := data.OpenPorts{
+				Address:  i.Laddr.IP,
+				Port:     int(i.Laddr.Port),
+				Name:     psName,
+				Protocol: inetType[i.Type],
+			}
+			p = append(p, ports)
 		}
 	}
 	d.OpenPorts = p

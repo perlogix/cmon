@@ -9,13 +9,13 @@ import (
 )
 
 // CPUvulns detects if CPUs are vulnerable
-func CPUvulns(d *data.DiscoverJSON) {
-	if runtime.GOOS == "linx" {
+func CPUVulnerabilities(d *data.DiscoverJSON) {
+	if runtime.GOOS == "linux" {
 		out, err := exec.Command("grep", "-r", "Vulnerable", "/sys/devices/system/cpu/vulnerabilities").Output()
 		if err != nil {
 			return
 		}
 
-		d.CPUvulns = strings.Split(strings.TrimSuffix(string(out), "\n"), "\n")
+		d.CPUVulnerabilities = strings.Split(strings.TrimSpace(string(out)), "\n")
 	}
 }

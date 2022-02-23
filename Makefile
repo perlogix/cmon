@@ -13,19 +13,19 @@ default: build
 
 build:
 	GOOS=$(GOOS) CGO_ENABLED=0 go build -a -installsuffix cgo -o $(MAIN_PACKAGE) -ldflags $(LDFLAGS) .
-	upx $(MAIN_PACKAGE)
 
 osx:
 	CGO_ENABLED=0 $(GO_OSX) go build -a -installsuffix cgo -o $(MAIN_PACKAGE) -ldflags $(LDFLAGS) .
-	upx $(MAIN_PACKAGE)
 
 linux:
 	CGO_ENABLED=0 $(GO_LINUX) go build -a -installsuffix cgo -o $(MAIN_PACKAGE) -ldflags $(LDFLAGS) .
-	upx $(MAIN_PACKAGE)
 
 windows:
 	CGO_ENABLED=0 $(GO_WIN) go build -a -installsuffix cgo -o $(MAIN_PACKAGE).exe -ldflags $(LDFLAGS) .
-	upx $(MAIN_PACKAGE)
+
+release:
+	upx $(MAIN_PACKAGE) || true
+	upx $(MAIN_PACKAGE).exe || true
 
 clean:
 	find . -name *_gen.go -type f -delete

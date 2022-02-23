@@ -4,7 +4,6 @@ import (
 	"flag"
 	"fmt"
 
-	"github.com/denisbrodbeck/machineid"
 	"github.com/spf13/viper"
 )
 
@@ -15,7 +14,6 @@ var (
 	builtOn    string
 	commitHash string
 	version    string
-	id, _      = machineid.ProtectedID("cmon")
 )
 
 func init() {
@@ -42,20 +40,19 @@ func init() {
 
 	// Default settings if no config file is supplied
 	v.SetDefault("daemon", *daemonFlag)
-	v.SetDefault("host", "localhost")
-	v.SetDefault("port", "9200")
-	v.SetDefault("environment", "dev")
+	v.SetDefault("api_host", "localhost")
+	v.SetDefault("api_port", "9200")
+	v.SetDefault("environment", "")
 	v.SetDefault("interval", "1200")
-	v.SetDefault("username", "")
-	v.SetDefault("password", "")
-	v.SetDefault("https", "false")
-	v.SetDefault("insecure_ssl", "false")
+	v.SetDefault("api_username", "")
+	v.SetDefault("api_token", "")
+	v.SetDefault("api_https", "false")
+	v.SetDefault("api_insecure_ssl", "false")
 	v.SetDefault("public", "false")
 	v.SetDefault("asset_type", "")
-	v.SetDefault("scheme", "http")
-	v.SetDefault("hostid", id)
 	v.SetDefault("oscap_profile", "xccdf_org.ssgproject.content_profile_cis")
 	v.SetDefault("oscap_xccdf_xml", "/usr/share/scap-security-guide/ssg-ubuntu1804-ds.xml")
+	v.SetDefault("tags", "")
 
 	v.SetConfigName("cmon")
 	v.AddConfigPath("/etc/perlogix/cmon")

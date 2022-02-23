@@ -12,10 +12,10 @@ import (
 	"github.com/perlogix/cmon/config"
 	"github.com/perlogix/cmon/containers"
 	"github.com/perlogix/cmon/data"
-	"github.com/perlogix/cmon/db"
 	"github.com/perlogix/cmon/network"
 	"github.com/perlogix/cmon/packages"
 	"github.com/perlogix/cmon/security"
+	"github.com/perlogix/cmon/shipper"
 	"github.com/perlogix/cmon/system"
 )
 
@@ -32,7 +32,7 @@ func main() {
 			d  data.DiscoverJSON
 			wg sync.WaitGroup
 		)
-		wg.Add(36)
+		wg.Add(40)
 		go func() {
 			defer wg.Done()
 			system.Stats(&d)
@@ -60,6 +60,10 @@ func main() {
 		go func() {
 			defer wg.Done()
 			network.NTPServers(&d)
+		}()
+		go func() {
+			defer wg.Done()
+			network.NTPRunning(&d)
 		}()
 		go func() {
 			defer wg.Done()
@@ -123,6 +127,10 @@ func main() {
 		}()
 		go func() {
 			defer wg.Done()
+			security.CPUVulnerabilities(&d)
+		}()
+		go func() {
+			defer wg.Done()
 			containers.DockerServer(&d)
 		}()
 		go func() {
@@ -167,6 +175,10 @@ func main() {
 		}()
 		go func() {
 			defer wg.Done()
+			system.DmesgErrors(&d)
+		}()
+		go func() {
+			defer wg.Done()
 			system.ChassisType(&d)
 		}()
 		go func() {
@@ -176,6 +188,10 @@ func main() {
 		go func() {
 			defer wg.Done()
 			system.SystemdTimers(&d)
+		}()
+		go func() {
+			defer wg.Done()
+			d.HostID = system.GetHostID()
 		}()
 		wg.Wait()
 
@@ -191,7 +207,7 @@ func main() {
 			return
 		}
 
-		db.Elastic(&d)
+		shipper.Ship(&d)
 
 		time.Sleep(time.Duration(config.Int("interval")) * time.Second)
 	}

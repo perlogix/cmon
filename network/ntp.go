@@ -31,9 +31,6 @@ func NTPServers(d *data.DiscoverJSON) {
 
 		var ntpSlice []string
 
-		// timedatectl show-timesync -p ServerName --value
-		// timedatectl show-timesync -p FallbackNTPServers --value
-
 		for _, line := range strings.Split(strings.TrimSuffix(string(ntpOut), "\n"), "\n") {
 			s := strings.TrimSpace(line)
 			if s != "" {
@@ -41,24 +38,31 @@ func NTPServers(d *data.DiscoverJSON) {
 			}
 		}
 
+		if ntpSlice == nil {
+			timectl, _ := exec.Command("timedatectl", "show-timesync", "-p", "ServerName", "--value").Output()
+			ntpSlice = strings.Split(strings.TrimSuffix(string(timectl), "\n"), "\n")
+		}
+
 		d.NTPServers = ntpSlice
 	}
 
 }
 
-// NTPRunning detects if NTPD is running
+// NTPRunning detects if NTP is running
 func NTPRunning(d *data.DiscoverJSON) {
-	if runtime.GOOS == "linx" {
-		out, err := exec.Command("pidof", "ntpd").Output()
-		if err != nil {
-			return
-		}
+	if runtime.GOOS == "linux" {
+		pidof, _ := exec.Command("pidof", "ntpd").Output()
 
-		// timedatectl show -p NTP --value | grep yes
+		timectl, _ := exec.Command("timedatectl", "show", "-p", "NTP", "--value").Output()
 
-		if string(out) != "" {
+		if string(pidof) != "" {
 			d.NTPRunning = true
 			return
 		}
+
+		if strings.Contains(strings.TrimSpace(string(timectl)), "yes") {
+			d.NTPRunning = true
+		}
+
 	}
 }
