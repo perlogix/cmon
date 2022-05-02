@@ -48,6 +48,7 @@ func Stats(d *data.DiscoverJSON) {
 	d.Virtualization = isVirt(h.VirtualizationRole)
 	d.Virtualizationsystem = h.VirtualizationSystem
 	d.Os = h.OS
+	d.KernelArch = h.KernelArch
 	d.Uptime = h.Uptime / days
 	d.Environment = config.Str("environment")
 	d.Public = config.Bool("public")

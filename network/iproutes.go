@@ -1,18 +1,18 @@
 package network
 
 import (
-	"os/exec"
 	"runtime"
 	"strings"
 
 	"github.com/perlogix/cmon/data"
+	"github.com/perlogix/cmon/util"
 )
 
 // IPRoutes fetches the IP routes on NIX systems
 func IPRoutes(d *data.DiscoverJSON) {
-
 	if runtime.GOOS == "linux" {
-		iproute, err := exec.Command("ip", "route").Output()
+
+		iproute, err := util.Cmd(`ip route`)
 		if err != nil {
 			return
 		}
@@ -25,18 +25,8 @@ func IPRoutes(d *data.DiscoverJSON) {
 	}
 
 	if runtime.GOOS == "darwin" {
-		net := exec.Command("netstat", "-rn")
-		netGrep := exec.Command("grep", "-v", "Internet\\|Routing\\|Destination\\|^$")
-		netOut, err := net.StdoutPipe()
-		if err != nil {
-			return
-		}
-		err = net.Start()
-		if err != nil {
-			return
-		}
-		netGrep.Stdin = netOut
-		netsOut, err := netGrep.Output()
+
+		netsOut, err := util.Cmd(`netstat -rn | grep -v 'Internet\|Routing\|Destination\|^$'`)
 		if err != nil {
 			return
 		}

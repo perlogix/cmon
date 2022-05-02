@@ -9,28 +9,28 @@ import (
 	"github.com/perlogix/cmon/util"
 )
 
-// SystemdTimers captures all cron like jobs within Systemd
-func SystemdTimers(d *data.DiscoverJSON) {
+// Journalctl gets important logs
+func Journalctl(d *data.DiscoverJSON) {
 	if runtime.GOOS == "linux" {
 
-		systemctlOut, err := util.Cmd(`systemctl list-timers --all --no-pager | grep -v 'NEXT\|listed'`)
+		journalctlOut, err := util.Cmd(`journalctl -p "emerg".."err" --no-pager -b | grep -vi 'kernel\|Logs\|ssh\|no entries'`)
 		if err != nil {
 			return
 		}
 
 		var (
 			outSlice  []string
-			outString = strings.Split(string(systemctlOut), "\n")
+			outString = strings.Split(string(journalctlOut), "\n")
 		)
 
 		for _, s := range outString {
 			if s != "" {
 				space := regexp.MustCompile(`\s+`)
 				s := space.ReplaceAllString(s, " ")
-				s = strings.TrimSpace(s)
 				outSlice = append(outSlice, s)
 			}
 		}
-		d.SystemdTimers = outSlice
+
+		d.Journalctl = outSlice
 	}
 }

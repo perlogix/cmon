@@ -1,25 +1,27 @@
 package system
 
 import (
-	"os/exec"
 	"runtime"
 	"strings"
 
 	"github.com/perlogix/cmon/data"
+	"github.com/perlogix/cmon/util"
 )
 
 // TimeZone runs Linux command date to fetch timezone
 func TimeZone(d *data.DiscoverJSON) {
-	if runtime.GOOS != "windows" {
-		timezone, err := exec.Command("date", "+%Z").Output()
-		if err != nil {
-			return
-		}
+	if runtime.GOOS == "windows" {
+		return
+	}
 
-		timezoneTrim := strings.TrimSpace(string(timezone))
+	dateOut, err := util.Cmd(`date +%Z`)
+	if err != nil {
+		return
+	}
 
-		if timezoneTrim != "" {
-			d.Timezone = timezoneTrim
-		}
+	timezoneTrim := strings.TrimSpace(string(dateOut))
+
+	if timezoneTrim != "" {
+		d.Timezone = timezoneTrim
 	}
 }

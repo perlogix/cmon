@@ -1,36 +1,24 @@
 package system
 
 import (
-	"os/exec"
 	"runtime"
 	"strings"
 
 	"github.com/perlogix/cmon/data"
+	"github.com/perlogix/cmon/util"
 )
 
 // Cron fetches all crontabs
 func Cron(d *data.DiscoverJSON) {
 	if runtime.GOOS == "linux" {
-		cat := exec.Command("cat", "/var/spool/cron/*/*", "/etc/crontab", "/etc/anacrontab")
-		catGrep := exec.Command("grep", "-v", "^#\\|^[A-Z]\\|^$")
-		catGOut, err := cat.StdoutPipe()
-		if err != nil {
-			return
-		}
-		err = cat.Start()
-		if err != nil {
-			return
-		}
-		catGrep.Stdin = catGOut
-		catOut, err := catGrep.Output()
+
+		cronOut, err := util.Cmd(`cat "/var/spool/cron/*/*" /etc/crontab /etc/anacrontab 2>/dev/null | grep -v '^#\|^[A-Z]\|^$'`)
 		if err != nil {
 			return
 		}
 
-		findSlice := strings.Split(strings.Replace(strings.TrimSpace(string(catOut)), "\t", " ", -1), "\n")
+		findSlice := strings.Split(strings.Replace(strings.TrimSpace(string(cronOut)), "\t", " ", -1), "\n")
 
-		if findSlice != nil {
-			d.Crontabs = findSlice
-		}
+		d.Crontabs = findSlice
 	}
 }

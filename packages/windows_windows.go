@@ -98,6 +98,7 @@ func getWindowsApplications(directory string) ([]*packages.WindowsApplication, e
 
 func WindowsPackages(d *data.DiscoverJSON) {
 	if runtime.GOOS == "windows" {
+
 		pkgs, err := GetWindowsApplications()
 		if err != nil {
 			return

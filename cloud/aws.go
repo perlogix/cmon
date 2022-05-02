@@ -28,19 +28,22 @@ func awsClient(route string) string {
 
 // AWS grabs meta-data from AWS instance
 func AWS(d *data.DiscoverJSON) {
-	if runtime.GOOS != "darwin" {
-		awsResponse, err := c.Get("http://169.254.169.254/latest/")
-		if err != nil {
-			return
-		}
-		if awsResponse != nil && awsResponse.StatusCode == 200 {
-			d.Ec2AmiID = awsClient("ami-id")
-			d.Ec2InstanceID = awsClient("instance-id")
-			d.Ec2InstanceType = awsClient("instance-type")
-			d.Ec2AvailabilityZone = awsClient("placement/availability-zone")
-			d.Ec2Profile = awsClient("profile")
-			d.Ec2PublicIP4 = awsClient("public-ipv4")
-			d.Ec2SecurityGroups = strings.Split(strings.TrimSpace(awsClient("security-groups")), "\n")
-		}
+	if runtime.GOOS == "darwin" {
+		return
+	}
+
+	awsResponse, err := c.Get("http://169.254.169.254/latest/")
+	if err != nil {
+		return
+	}
+
+	if awsResponse != nil && awsResponse.StatusCode == 200 {
+		d.Ec2AmiID = awsClient("ami-id")
+		d.Ec2InstanceID = awsClient("instance-id")
+		d.Ec2InstanceType = awsClient("instance-type")
+		d.Ec2AvailabilityZone = awsClient("placement/availability-zone")
+		d.Ec2Profile = awsClient("profile")
+		d.Ec2PublicIP4 = awsClient("public-ipv4")
+		d.Ec2SecurityGroups = strings.Split(strings.TrimSpace(awsClient("security-groups")), "\n")
 	}
 }

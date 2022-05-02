@@ -2,23 +2,23 @@ package security
 
 import (
 	"encoding/json"
-	"os/exec"
 	"runtime"
 
 	"github.com/aquasecurity/trivy/pkg/types"
 	"github.com/perlogix/cmon/data"
+	"github.com/perlogix/cmon/util"
 )
 
 // TrivyScan scans the root filesystem for vulnerabilities
 func TrivyScan(d *data.DiscoverJSON) {
 	if runtime.GOOS == "linux" {
 
-		trivy, _ := exec.Command("trivy", "-q", "fs", "-f", "json", "--offline-scan", "--no-progress", "--skip-policy-update", "--skip-update", "--security-checks", "vuln", "/").Output()
+		trivyOut, _ := util.Cmd(`trivy -q fs -f json --offline-scan --no-progress --skip-policy-update --skip-update --security-checks vuln /`)
 
 		var trivData data.Trivy
 		var trivReport types.Report
 
-		err := json.Unmarshal(trivy, &trivReport)
+		err := json.Unmarshal(trivyOut, &trivReport)
 		if err != nil {
 			return
 		}

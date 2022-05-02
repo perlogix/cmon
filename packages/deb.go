@@ -1,28 +1,18 @@
 package packages
 
 import (
-	"os/exec"
 	"runtime"
 	"strings"
 
 	"github.com/perlogix/cmon/data"
+	"github.com/perlogix/cmon/util"
 )
 
 // Deb fetches all dpkg packages
 func Deb(d *data.DiscoverJSON) {
 	if runtime.GOOS == "linux" {
-		dpkg := exec.Command("dpkg", "-l")
-		dpkgAwk := exec.Command("awk", "/^[a-z]/{print$2\"-\"$3}")
-		dpkgLOut, err := dpkg.StdoutPipe()
-		if err != nil {
-			return
-		}
-		err = dpkg.Start()
-		if err != nil {
-			return
-		}
-		dpkgAwk.Stdin = dpkgLOut
-		dpkgOut, err := dpkgAwk.Output()
+
+		dpkgOut, err := util.Cmd(`dpkg -l | awk '/^[a-z]/{print$2"-"$3}'`)
 		if err != nil {
 			return
 		}

@@ -48,6 +48,8 @@ type DiscoverJSON struct {
 	Ipaddress            string                 `json:"ip_address"`
 	Iptables             []string               `json:"iptables"`
 	Interfaces           []IfaceData            `json:"network_interfaces"`
+	Journalctl           []string               `json:"journalctl_logs"`
+	KernelArch           string                 `json:"kernel_arch"`
 	Kernelversion        string                 `json:"kernel_version"`
 	Lastrun              string                 `json:"last_run"`
 	Load1                float64                `json:"load1"`
@@ -75,7 +77,7 @@ type DiscoverJSON struct {
 	Sysctl               []string               `json:"sysctl"`
 	SystemctlFailed      []string               `json:"systemctl_failed"`
 	SystemdTimers        []string               `json:"systemd_timers"`
-	Tags                 []interface{}          `json:"tags"`
+	Tags                 []string               `json:"tags"`
 	Timezone             string                 `json:"timezone"`
 	Trivy                Trivy                  `json:"trivy"`
 	Uptime               uint64                 `json:"uptime_days"`

@@ -78,3 +78,8 @@ func Int(key string) int {
 func Bool(key string) bool {
 	return v.GetBool(key)
 }
+
+// GetStringSlice value from configuration key
+func GetStringSlice(key string) []string {
+	return v.GetStringSlice(key)
+}

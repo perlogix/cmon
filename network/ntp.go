@@ -1,30 +1,18 @@
 package network
 
 import (
-	"os/exec"
 	"runtime"
 	"strings"
 
 	"github.com/perlogix/cmon/data"
+	"github.com/perlogix/cmon/util"
 )
 
 // NTPServers gets NTP servers listed in /etc/ntp.conf
 func NTPServers(d *data.DiscoverJSON) {
 	if runtime.GOOS == "linux" {
-		ntpGrep := exec.Command("grep", "^server", "/etc/ntp.conf")
-		ntpAwk := exec.Command("awk", "{print$2}")
-		ntpGrepOut, err := ntpGrep.StdoutPipe()
-		if err != nil {
-			return
-		}
 
-		err = ntpGrep.Start()
-		if err != nil {
-			return
-		}
-
-		ntpAwk.Stdin = ntpGrepOut
-		ntpOut, err := ntpAwk.Output()
+		ntpOut, err := util.Cmd(`grep ^server /etc/ntp.conf | awk '{ print $2 }'`)
 		if err != nil {
 			return
 		}
@@ -39,7 +27,11 @@ func NTPServers(d *data.DiscoverJSON) {
 		}
 
 		if ntpSlice == nil {
-			timectl, _ := exec.Command("timedatectl", "show-timesync", "-p", "ServerName", "--value").Output()
+			timectl, err := util.Cmd(`timedatectl show-timesync -p ServerName --value`)
+			if err != nil {
+				return
+			}
+
 			ntpSlice = strings.Split(strings.TrimSuffix(string(timectl), "\n"), "\n")
 		}
 
@@ -51,14 +43,15 @@ func NTPServers(d *data.DiscoverJSON) {
 // NTPRunning detects if NTP is running
 func NTPRunning(d *data.DiscoverJSON) {
 	if runtime.GOOS == "linux" {
-		pidof, _ := exec.Command("pidof", "ntpd").Output()
 
-		timectl, _ := exec.Command("timedatectl", "show", "-p", "NTP", "--value").Output()
+		pidof, _ := util.Cmd(`pidof ntpd`)
 
 		if string(pidof) != "" {
 			d.NTPRunning = true
 			return
 		}
+
+		timectl, _ := util.Cmd(`timedatectl show -p NTP --value`)
 
 		if strings.Contains(strings.TrimSpace(string(timectl)), "yes") {
 			d.NTPRunning = true
