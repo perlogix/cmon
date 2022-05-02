@@ -24,15 +24,14 @@ func DockerContainers(d *data.DiscoverJSON) {
 	}
 
 	for _, e := range cts {
-		ctr := data.DockerContainersInfo{
+		d.DockerContainers = append(d.DockerContainers, data.DockerContainersInfo{
 			Name:    strings.Split(e.Names[0], "/")[1],
 			Image:   e.Image,
 			Command: e.Command,
 			Ports:   e.Ports,
 			State:   e.State,
 			Status:  e.Status,
-		}
-		d.DockerContainers = append(d.DockerContainers, ctr)
+		})
 	}
 }
 
@@ -68,11 +67,10 @@ func DockerImages(d *data.DiscoverJSON) {
 		return
 	}
 	for _, v := range images {
-		imgs := data.DockerImagesInfo{
+		d.DockerImages = append(d.DockerImages, data.DockerImagesInfo{
 			Name:    strings.Join(v.RepoTags, " "),
 			Size:    units.HumanSize(float64(v.Size)),
 			Created: time.Unix(v.Created, 0).Format(time.RFC3339),
-		}
-		d.DockerImages = append(d.DockerImages, imgs)
+		})
 	}
 }

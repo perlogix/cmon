@@ -4,6 +4,7 @@ GOOS := $(shell uname -s | tr '[:upper:]' '[:lower:]')
 COMMIT:=$(shell git log -n 1 --pretty=format:"%H" 2>/dev/null | head -c 10)
 PACKAGES:=$(shell go list ./... | grep -v /vendor/)
 GO_LINUX := GOOS=linux GOARCH=amd64
+GO_ARM := GOOS=linux GOARCH=arm64
 GO_OSX := GOOS=darwin GOARCH=amd64
 GO_WIN := GOOS=windows GOARCH=amd64
 VER := 1.1
@@ -19,6 +20,9 @@ osx:
 
 linux:
 	CGO_ENABLED=0 $(GO_LINUX) go build -a -installsuffix cgo -o $(MAIN_PACKAGE) -ldflags $(LDFLAGS) .
+
+arm:
+	CGO_ENABLED=0 $(GO_ARM) go build -a -installsuffix cgo -o $(MAIN_PACKAGE) -ldflags $(LDFLAGS) .
 
 windows:
 	CGO_ENABLED=0 $(GO_WIN) go build -a -installsuffix cgo -o $(MAIN_PACKAGE).exe -ldflags $(LDFLAGS) .

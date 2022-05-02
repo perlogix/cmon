@@ -2,6 +2,7 @@ package system
 
 import (
 	"os/exec"
+	"regexp"
 	"runtime"
 	"strings"
 
@@ -27,6 +28,18 @@ func SystemctlFailed(d *data.DiscoverJSON) {
 			return
 		}
 
-		d.SystemctlFailed = strings.TrimSpace(string(systemctlOut))
+		var (
+			outSlice  []string
+			outString = strings.Split(string(systemctlOut), "\n")
+		)
+		for _, s := range outString {
+			if s != "" {
+				space := regexp.MustCompile(`\s+`)
+				s := space.ReplaceAllString(s, " ")
+				outSlice = append(outSlice, s)
+			}
+		}
+
+		d.SystemctlFailed = outSlice
 	}
 }

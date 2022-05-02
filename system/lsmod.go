@@ -9,30 +9,24 @@ import (
 	"github.com/perlogix/cmon/data"
 )
 
+// TODO: lsmod | grep -v Module | awk '{ print $1 }' | sort
+
 // Lsmod lists the currently loaded kernel modules
 func Lsmod(d *data.DiscoverJSON) {
 	if runtime.GOOS != "linux" {
 		return
 	}
-	c1 := exec.Command("lsmod")
-	c2 := exec.Command("grep", "-v", "Module")
-	stdout1, err := c1.StdoutPipe()
-	if nil != err {
-		return
-	}
-	err = c1.Start()
-	if nil != err {
-		return
-	}
-	c2.Stdin = stdout1
-	stdout, err := c2.Output()
+
+	cmd, err := exec.Command("sh", "-c", "lsmod | grep -v Module | awk '{ print $1 }' | sort").Output()
 	if err != nil {
 		return
 	}
+
 	var (
 		outSlice  []string
-		outString = strings.Split(string(stdout), "\n")
+		outString = strings.Split(string(cmd), "\n")
 	)
+
 	for _, s := range outString {
 		if s != "" {
 			space := regexp.MustCompile(`\s+`)
@@ -40,5 +34,6 @@ func Lsmod(d *data.DiscoverJSON) {
 			outSlice = append(outSlice, s)
 		}
 	}
+
 	d.Lsmod = outSlice
 }

@@ -191,7 +191,7 @@ func main() {
 		}()
 		go func() {
 			defer wg.Done()
-			d.HostID = system.GetHostID()
+			d.ID = system.GetHostID()
 		}()
 		wg.Wait()
 

@@ -3,7 +3,6 @@ package data
 import (
 	"time"
 
-	ftypes "github.com/aquasecurity/fanal/types"
 	"github.com/aquasecurity/trivy/pkg/types"
 	docker "github.com/docker/docker/api/types"
 )
@@ -15,13 +14,13 @@ type DiscoverJSON struct {
 	ChassisType          string                 `json:"chassis_type"`
 	Cloud                string                 `json:"cloud"`
 	CPUCount             int                    `json:"cpu_count"`
-	CPUPct               int                    `json:"cpu_pct"`
 	CPUVulnerabilities   []string               `json:"cpu_vulnerabilities"`
 	ClamAVDefs           string                 `json:"clamav_defs"`
 	Crontabs             []string               `json:"crontabs"`
 	Diskfree             uint64                 `json:"diskfree_gb"`
 	Disktotal            uint64                 `json:"disktotal_gb"`
 	Diskused             uint64                 `json:"diskused_gb"`
+	Diskpct              int                    `json:"diskused_pct"`
 	DNSNameserver        []string               `json:"dns_nameserver"`
 	DmesgErrors          []string               `json:"dmesg_errors"`
 	DockerContainers     []DockerContainersInfo `json:"docker_containers"`
@@ -44,7 +43,7 @@ type DiscoverJSON struct {
 	FailedLogins         []string               `json:"failed_logins"`
 	Gem                  []string               `json:"gem"`
 	Hostname             string                 `json:"hostname"`
-	HostID               string                 `json:"host_id"`
+	ID                   string                 `json:"id"`
 	IPRoute              []string               `json:"ip_route"`
 	Ipaddress            string                 `json:"ip_address"`
 	Iptables             []string               `json:"iptables"`
@@ -58,6 +57,7 @@ type DiscoverJSON struct {
 	Memoryfree           uint64                 `json:"memoryfree_gb"`
 	Memorytotal          uint64                 `json:"memorytotal_gb"`
 	Memoryused           uint64                 `json:"memoryused_gb"`
+	Memoryusagepct       int                    `json:"memoryused_pct"`
 	NTPServers           []string               `json:"ntp_servers"`
 	NTPRunning           bool                   `json:"ntp_running"`
 	OpenPorts            []OpenPorts            `json:"open_ports"`
@@ -73,7 +73,7 @@ type DiscoverJSON struct {
 	Public               bool                   `json:"public"`
 	Snaps                []string               `json:"snaps"`
 	Sysctl               []string               `json:"sysctl"`
-	SystemctlFailed      string                 `json:"systemctl_failed"`
+	SystemctlFailed      []string               `json:"systemctl_failed"`
 	SystemdTimers        []string               `json:"systemd_timers"`
 	Tags                 []interface{}          `json:"tags"`
 	Timezone             string                 `json:"timezone"`
@@ -137,21 +137,13 @@ type OScapResult struct {
 
 // Trivy contains Trivy results
 type Trivy struct {
-	VulnToal     int `json:"vulnerabilities_total"`
-	VulnLow      int `json:"vulnerabilities_low"`
-	VulnMed      int `json:"vulnerabilities_medium"`
-	VulnHigh     int `json:"vulnerabilities_high"`
-	VulnCrit     int `json:"vulnerabilities_critical"`
-	VulnUnknown  int `json:"vulnerabilities_unknown"`
-	TrivyResults []TrivyResult
-}
-
-// TrivyResult type imported from Trivy go project
-type TrivyResult struct {
-	Target          string                        `json:"target"`
-	Type            string                        `json:"type"`
-	Packages        []ftypes.Package              `json:"packages"`
-	Vulnerabilities []types.DetectedVulnerability `json:"vulnerabilities"`
+	VulnToal     int           `json:"vulnerabilities_total"`
+	VulnLow      int           `json:"vulnerabilities_low"`
+	VulnMed      int           `json:"vulnerabilities_medium"`
+	VulnHigh     int           `json:"vulnerabilities_high"`
+	VulnCrit     int           `json:"vulnerabilities_critical"`
+	VulnUnknown  int           `json:"vulnerabilities_unknown"`
+	TrivyResults types.Results `json:"trivy_results"`
 }
 
 // IfaceData type is the Kernel Network Interface table
