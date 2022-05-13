@@ -13,6 +13,7 @@ func DomainName(d *data.DiscoverJSON) {
 	if err != nil {
 		return
 	}
+
 	if strings.ContainsAny(hostname, ".") {
 		d.Domain = strings.TrimSuffix(hostname, ".")
 	}

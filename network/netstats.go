@@ -11,16 +11,14 @@ import (
 
 // IfaceStats fetches the Kernel Network Interface Table
 func IfaceStats(d *data.DiscoverJSON) {
+	ifSlice := []data.IfaceData{}
+
 	if runtime.GOOS == "windows" {
+		d.Interfaces = ifSlice
 		return
 	}
 
-	netsOut, err := util.Cmd(`netstat -i | grep -v 'Iface\|Kern'`)
-	if err != nil {
-		return
-	}
-
-	var ifSlice = []data.IfaceData{}
+	netsOut, _ := util.Cmd(`netstat -i | grep -v 'Iface\|Kern'`)
 
 	for _, line := range strings.Split(strings.TrimSuffix(string(netsOut), "\n"), "\n") {
 
@@ -49,5 +47,6 @@ func IfaceStats(d *data.DiscoverJSON) {
 			Flag:      fields[10],
 		})
 	}
+
 	d.Interfaces = ifSlice
 }

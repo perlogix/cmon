@@ -1,8 +1,6 @@
 package system
 
 import (
-	"fmt"
-
 	"github.com/denisbrodbeck/machineid"
 )
 
@@ -10,8 +8,7 @@ import (
 func GetHostID() string {
 	id, err := machineid.ProtectedID("cmon")
 	if err != nil {
-		fmt.Println(err)
-		// Put UUID v4 code here
+		return ""
 	}
 	return id
 }

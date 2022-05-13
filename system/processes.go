@@ -9,8 +9,11 @@ import (
 func Processes(d *data.DiscoverJSON) {
 	processes, err := process.Processes()
 	if err != nil {
+		d.Processes = []data.Processes{}
 		return
 	}
+
+	procs := data.Processes{}
 
 	for _, proc := range processes {
 		pid := proc.Pid
@@ -30,12 +33,11 @@ func Processes(d *data.DiscoverJSON) {
 			username = "unknown"
 		}
 
-		procs := data.Processes{}
-
 		procs.Name = name
 		procs.Pid = int(pid)
 		procs.Ppid = int(ppid)
 		procs.User = username
-		d.Processes = append(d.Processes, procs)
 	}
+
+	d.Processes = append(d.Processes, procs)
 }

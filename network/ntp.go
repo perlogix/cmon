@@ -10,14 +10,15 @@ import (
 
 // NTPServers gets NTP servers listed in /etc/ntp.conf
 func NTPServers(d *data.DiscoverJSON) {
+	ntpSlice := []string{}
+
 	if runtime.GOOS == "linux" {
 
 		ntpOut, err := util.Cmd(`grep ^server /etc/ntp.conf | awk '{ print $2 }'`)
 		if err != nil {
+			d.NTPServers = ntpSlice
 			return
 		}
-
-		var ntpSlice []string
 
 		for _, line := range strings.Split(strings.TrimSuffix(string(ntpOut), "\n"), "\n") {
 			s := strings.TrimSpace(line)
@@ -29,15 +30,15 @@ func NTPServers(d *data.DiscoverJSON) {
 		if ntpSlice == nil {
 			timectl, err := util.Cmd(`timedatectl show-timesync -p ServerName --value`)
 			if err != nil {
+				d.NTPServers = ntpSlice
 				return
 			}
 
 			ntpSlice = strings.Split(strings.TrimSuffix(string(timectl), "\n"), "\n")
 		}
-
-		d.NTPServers = ntpSlice
 	}
 
+	d.NTPServers = ntpSlice
 }
 
 // NTPRunning detects if NTP is running

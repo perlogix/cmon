@@ -10,21 +10,23 @@ import (
 
 // Sysctl collects system sysctl kernel parameters
 func Sysctl(d *data.DiscoverJSON) {
+
+	outSlice := []string{}
+
 	if runtime.GOOS == "windows" {
+		d.Sysctl = outSlice
 		return
 	}
 
 	sysctlOut, err := util.Cmd(`sysctl -a`)
 	if err != nil {
+		d.Sysctl = outSlice
 		return
 	}
 
 	outString := strings.Split(string(sysctlOut), "\n")
 
-	var (
-		outSlice  []string
-		separator string
-	)
+	var separator string
 
 	if runtime.GOOS == "darwin" {
 		separator = ":"

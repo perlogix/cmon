@@ -50,8 +50,8 @@ func init() {
 	v.SetDefault("api_insecure_ssl", "false")
 	v.SetDefault("public", "false")
 	v.SetDefault("asset_type", "")
-	v.SetDefault("oscap_profile", "xccdf_org.ssgproject.content_profile_cis")
-	v.SetDefault("oscap_xccdf_xml", "/usr/share/scap-security-guide/ssg-ubuntu1804-ds.xml")
+	v.SetDefault("oscap_profile", "xccdf_org.ssgproject.content_profile_standard")
+	v.SetDefault("oscap_xccdf_xml", "/usr/share/xml/scap/ssg/content/ssg-ubuntu2004-ds.xml")
 	v.SetDefault("tags", "")
 
 	v.SetConfigName("cmon")

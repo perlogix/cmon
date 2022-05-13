@@ -10,31 +10,27 @@ import (
 
 // IPRoutes fetches the IP routes on NIX systems
 func IPRoutes(d *data.DiscoverJSON) {
-	if runtime.GOOS == "linux" {
+	iprteSlice := []string{}
 
+	if runtime.GOOS == "linux" {
 		iproute, err := util.Cmd(`ip route`)
 		if err != nil {
+			d.IPRoute = iprteSlice
 			return
 		}
 
-		iprteSlice := strings.Split(strings.TrimSpace(string(iproute)), "\n")
-
-		if iprteSlice != nil {
-			d.IPRoute = iprteSlice
-		}
+		iprteSlice = append(iprteSlice, strings.Split(strings.TrimSpace(string(iproute)), "\n")...)
 	}
 
 	if runtime.GOOS == "darwin" {
-
 		netsOut, err := util.Cmd(`netstat -rn | grep -v 'Internet\|Routing\|Destination\|^$'`)
 		if err != nil {
+			d.IPRoute = iprteSlice
 			return
 		}
 
-		netsSlice := strings.Split(strings.TrimSpace(string(netsOut)), "\n")
-
-		if netsSlice != nil {
-			d.IPRoute = netsSlice
-		}
+		iprteSlice = append(iprteSlice, strings.Split(strings.TrimSpace(string(netsOut)), "\n")...)
 	}
+
+	d.IPRoute = iprteSlice
 }

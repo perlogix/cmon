@@ -14,14 +14,9 @@ func TimeZone(d *data.DiscoverJSON) {
 		return
 	}
 
-	dateOut, err := util.Cmd(`date +%Z`)
-	if err != nil {
-		return
-	}
+	dateOut, _ := util.Cmd(`date '+%Z'`)
 
 	timezoneTrim := strings.TrimSpace(string(dateOut))
 
-	if timezoneTrim != "" {
-		d.Timezone = timezoneTrim
-	}
+	d.Timezone = timezoneTrim
 }

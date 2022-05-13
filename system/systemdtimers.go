@@ -11,17 +11,17 @@ import (
 
 // SystemdTimers captures all cron like jobs within Systemd
 func SystemdTimers(d *data.DiscoverJSON) {
+	outSlice := []string{}
+
 	if runtime.GOOS == "linux" {
 
 		systemctlOut, err := util.Cmd(`systemctl list-timers --all --no-pager | grep -v 'NEXT\|listed'`)
 		if err != nil {
+			d.SystemdTimers = outSlice
 			return
 		}
 
-		var (
-			outSlice  []string
-			outString = strings.Split(string(systemctlOut), "\n")
-		)
+		outString := strings.Split(string(systemctlOut), "\n")
 
 		for _, s := range outString {
 			if s != "" {
@@ -31,6 +31,7 @@ func SystemdTimers(d *data.DiscoverJSON) {
 				outSlice = append(outSlice, s)
 			}
 		}
-		d.SystemdTimers = outSlice
 	}
+
+	d.SystemdTimers = outSlice
 }

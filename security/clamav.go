@@ -1,7 +1,6 @@
 package security
 
 import (
-	"runtime"
 	"strings"
 
 	"github.com/perlogix/cmon/data"
@@ -10,13 +9,10 @@ import (
 
 // ClamAVDefs shows ClamAV version and signatures version followed by the date of the signatures
 func ClamAVDefs(d *data.DiscoverJSON) {
-	if runtime.GOOS == "linux" {
-
-		clamscan, err := util.Cmd(`clamscan --version`)
-		if err != nil {
-			return
-		}
-
-		d.ClamAVDefs = strings.TrimSuffix(string(clamscan), "\n")
+	clamscan, err := util.Cmd(`clamscan --version`)
+	if err != nil {
+		return
 	}
+
+	d.ClamAVDefs = strings.TrimSuffix(string(clamscan), "\n")
 }

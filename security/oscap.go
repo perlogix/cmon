@@ -17,8 +17,9 @@ func parse(s io.Reader) data.OScapOutput {
 	scanner := bufio.NewScanner(s)
 
 	processedOutput := data.OScapOutput{
-		Status: true,
-		Failed: []data.OScapResult{},
+		Status:   true,
+		Warnings: []string{},
+		Failed:   []data.OScapResult{},
 	}
 
 	res := data.OScapResult{}
@@ -94,10 +95,18 @@ func isFailed(s string) bool {
 
 // OScap runs OpenScap Ubuntu 18.04 CIS benchmarks
 func OScap(d *data.DiscoverJSON) {
+
+	parsedOut := data.OScapOutput{
+		Status:   true,
+		Warnings: []string{},
+		Failed:   []data.OScapResult{},
+	}
+
 	if runtime.GOOS == "linux" {
 
 		_, err := os.Stat(config.Str("oscap_xccdf_xml"))
 		if os.IsNotExist(err) {
+			d.OpenScap = parsedOut
 			return
 		}
 
@@ -105,16 +114,18 @@ func OScap(d *data.DiscoverJSON) {
 
 		output, err := oscap.StdoutPipe()
 		if err != nil {
+			d.OpenScap = parsedOut
 			return
 		}
 
 		err = oscap.Start()
 		if err != nil {
+			d.OpenScap = parsedOut
 			return
 		}
 
-		o := parse(output)
-
-		d.OpenScap = o
+		parsedOut = parse(output)
 	}
+
+	d.OpenScap = parsedOut
 }

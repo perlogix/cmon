@@ -1,6 +1,7 @@
 package network
 
 import (
+	"runtime"
 	"strings"
 
 	"github.com/perlogix/cmon/data"
@@ -9,14 +10,16 @@ import (
 
 // DNS fetches all the DNS servers in resolv.conf
 func DNS(d *data.DiscoverJSON) {
+	dnsSlice := []string{}
 
-	dnsOut, err := util.Cmd(`grep nameserver /etc/resolv.conf | awk '{ print $2 }'`)
-	if err != nil {
+	if runtime.GOOS == "windows" {
+		d.DNSNameserver = dnsSlice
 		return
 	}
 
-	dnsSlice := strings.Split(strings.TrimSpace(string(dnsOut)), "\n")
-	if dnsSlice != nil {
-		d.DNSNameserver = dnsSlice
-	}
+	dnsOut, _ := util.Cmd(`grep nameserver /etc/resolv.conf | awk '{ print $2 }'`)
+
+	dnsSlice = append(dnsSlice, strings.Split(strings.TrimSpace(string(dnsOut)), "\n")...)
+
+	d.DNSNameserver = dnsSlice
 }

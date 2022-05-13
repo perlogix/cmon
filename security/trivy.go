@@ -11,15 +11,19 @@ import (
 
 // TrivyScan scans the root filesystem for vulnerabilities
 func TrivyScan(d *data.DiscoverJSON) {
+	trivData := data.Trivy{
+		TrivyResults: types.Results{},
+	}
+
 	if runtime.GOOS == "linux" {
 
-		trivyOut, _ := util.Cmd(`trivy -q fs -f json --offline-scan --no-progress --skip-policy-update --skip-update --security-checks vuln /`)
+		trivyOut, _ := util.Cmd(`trivy -q fs -f json --offline-scan --no-progress --skip-policy-update --security-checks vuln /`)
 
-		var trivData data.Trivy
-		var trivReport types.Report
+		trivReport := types.Report{}
 
 		err := json.Unmarshal(trivyOut, &trivReport)
 		if err != nil {
+			d.Trivy = trivData
 			return
 		}
 
@@ -42,7 +46,7 @@ func TrivyScan(d *data.DiscoverJSON) {
 		}
 
 		trivData.TrivyResults = trivReport.Results
-
-		d.Trivy = trivData
 	}
+
+	d.Trivy = trivData
 }

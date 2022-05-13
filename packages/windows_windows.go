@@ -97,10 +97,14 @@ func getWindowsApplications(directory string) ([]*packages.WindowsApplication, e
 }
 
 func WindowsPackages(d *data.DiscoverJSON) {
+
+	packages := []data.WindowsPackages{}
+
 	if runtime.GOOS == "windows" {
 
 		pkgs, err := GetWindowsApplications()
 		if err != nil {
+			d.WindowsPackages = packages
 			return
 		}
 
@@ -111,7 +115,9 @@ func WindowsPackages(d *data.DiscoverJSON) {
 			wp.DisplayVersion = e.DisplayVersion
 			wp.InstallDate = e.InstallDate
 			wp.Publisher = e.Publisher
-			d.WindowsPackages = append(d.WindowsPackages, wp)
+			packages = append(packages, wp)
 		}
 	}
+
+	d.WindowsPackages = packages
 }

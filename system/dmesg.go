@@ -10,15 +10,14 @@ import (
 
 // DmesgErrors detects err, emerg, crit, alert messages
 func DmesgErrors(d *data.DiscoverJSON) {
+	dmesgSlice := []string{}
+
 	if runtime.GOOS == "linux" {
 
-		dmesgOut, err := util.Cmd(`dmesg -HP --level=err,emerg,crit,alert`)
-		if err != nil {
-			return
-		}
+		dmesgOut, _ := util.Cmd(`dmesg -HP --level=err,emerg,crit,alert`)
 
-		dmesgSlice := strings.Split(strings.TrimSpace(string(dmesgOut)), "\n")
-
-		d.DmesgErrors = dmesgSlice
+		dmesgSlice = append(dmesgSlice, strings.Split(strings.TrimSpace(string(dmesgOut)), "\n")...)
 	}
+
+	d.DmesgErrors = dmesgSlice
 }

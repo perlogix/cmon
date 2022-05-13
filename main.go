@@ -32,7 +32,7 @@ func main() {
 			d  data.DiscoverJSON
 			wg sync.WaitGroup
 		)
-		wg.Add(41)
+		wg.Add(43)
 		go func() {
 			defer wg.Done()
 			system.Stats(&d)
@@ -192,6 +192,14 @@ func main() {
 		go func() {
 			defer wg.Done()
 			system.SystemdTimers(&d)
+		}()
+		go func() {
+			defer wg.Done()
+			system.SystemctlFailed(&d)
+		}()
+		go func() {
+			defer wg.Done()
+			system.Journalctl(&d)
 		}()
 		go func() {
 			defer wg.Done()

@@ -10,17 +10,14 @@ import (
 
 // Deb fetches all dpkg packages
 func Deb(d *data.DiscoverJSON) {
+	dpkgSlice := []string{}
+
 	if runtime.GOOS == "linux" {
+		dpkgOut, _ := util.Cmd(`dpkg -l | awk '/^[a-z]/{print$2"-"$3}'`)
 
-		dpkgOut, err := util.Cmd(`dpkg -l | awk '/^[a-z]/{print$2"-"$3}'`)
-		if err != nil {
-			return
-		}
+		dpkgSlice = append(dpkgSlice, strings.Split(strings.TrimSpace(string(dpkgOut)), "\n")...)
 
-		dpkgSlice := strings.Split(strings.TrimSpace(string(dpkgOut)), "\n")
-
-		if dpkgSlice != nil {
-			d.Packages = dpkgSlice
-		}
 	}
+
+	d.Packages = dpkgSlice
 }

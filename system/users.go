@@ -10,33 +10,32 @@ import (
 
 // UsersLoggedIn fetches all users logged into Linux or OS X
 func UsersLoggedIn(d *data.DiscoverJSON) {
+	wSlice := []string{}
+
 	if runtime.GOOS == "windows" {
+		d.UsersLoggedin = wSlice
 		return
 	}
 
-	wOut, err := util.Cmd(`w -h | awk '{ print $1"-"$2}'`)
-	if err != nil {
-		return
-	}
+	wOut, _ := util.Cmd(`w -h | awk '{ print $1"-"$2}'`)
 
-	wSlice := strings.Split(strings.TrimSpace(string(wOut)), "\n")
+	wSlice = append(wSlice, strings.Split(strings.TrimSpace(string(wOut)), "\n")...)
 
 	d.UsersLoggedin = wSlice
 }
 
 // Users fetches all users on the system from /etc/passwd on NIX systems
 func Users(d *data.DiscoverJSON) {
+	usersSlice := []string{}
+
 	if runtime.GOOS == "windows" {
-		return
-	}
-
-	passwdOut, err := util.Cmd(`grep -v ^# /etc/passwd`)
-	if err != nil {
-		return
-	}
-
-	usersSlice := strings.Split(strings.TrimSpace(string(passwdOut)), "\n")
-	if usersSlice != nil {
 		d.Users = usersSlice
+		return
 	}
+
+	passwdOut, _ := util.Cmd(`grep -v ^# /etc/passwd`)
+
+	usersSlice = append(usersSlice, strings.Split(strings.TrimSpace(string(passwdOut)), "\n")...)
+
+	d.Users = usersSlice
 }

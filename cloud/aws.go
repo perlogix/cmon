@@ -3,7 +3,6 @@ package cloud
 import (
 	"io/ioutil"
 	"net/http"
-	"runtime"
 	"strings"
 	"time"
 
@@ -28,14 +27,9 @@ func awsClient(route string) string {
 
 // AWS grabs meta-data from AWS instance
 func AWS(d *data.DiscoverJSON) {
-	if runtime.GOOS == "darwin" {
-		return
-	}
+	securityGroups := []string{}
 
-	awsResponse, err := c.Get("http://169.254.169.254/latest/")
-	if err != nil {
-		return
-	}
+	awsResponse, _ := c.Get("http://169.254.169.254/latest/")
 
 	if awsResponse != nil && awsResponse.StatusCode == 200 {
 		d.Ec2AmiID = awsClient("ami-id")
@@ -44,6 +38,10 @@ func AWS(d *data.DiscoverJSON) {
 		d.Ec2AvailabilityZone = awsClient("placement/availability-zone")
 		d.Ec2Profile = awsClient("profile")
 		d.Ec2PublicIP4 = awsClient("public-ipv4")
-		d.Ec2SecurityGroups = strings.Split(strings.TrimSpace(awsClient("security-groups")), "\n")
+		securityGroups = append(securityGroups, strings.Split(strings.TrimSpace(awsClient("security-groups")), "\n")...)
+		d.Ec2SecurityGroups = securityGroups
+		return
 	}
+
+	d.Ec2SecurityGroups = securityGroups
 }

@@ -10,15 +10,14 @@ import (
 
 // Rpm fetches all RPM packages installed on the system
 func Rpm(d *data.DiscoverJSON) {
+	rpmSlice := []string{}
+
 	if runtime.GOOS == "linux" {
 
-		rpmOut, err := util.Cmd(`rpm -qa | sort`)
-		if err != nil {
-			return
-		}
+		rpmOut, _ := util.Cmd(`rpm -qa | sort`)
 
-		rpmSlice := strings.Split(strings.TrimSpace(string(rpmOut)), "\n")
-
-		d.Packages = rpmSlice
+		rpmSlice = append(rpmSlice, strings.Split(strings.TrimSpace(string(rpmOut)), "\n")...)
 	}
+
+	d.Packages = rpmSlice
 }

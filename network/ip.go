@@ -17,5 +17,6 @@ func IP(d *data.DiscoverJSON) {
 	if err != nil {
 		return
 	}
+
 	d.Ipaddress = strings.Split(conn.LocalAddr().(*net.UDPAddr).String(), ":")[0]
 }

@@ -14,11 +14,15 @@ func Conns(d *data.DiscoverJSON) {
 		1: "tcp",
 		2: "udp",
 	}
-	var p []data.OpenPorts
+
+	p := []data.OpenPorts{}
+
 	c, err := net.Connections("inet")
 	if err != nil {
+		d.OpenPorts = p
 		return
 	}
+
 	for _, i := range c {
 		if i.Status == "LISTEN" {
 			var psName string
@@ -37,5 +41,6 @@ func Conns(d *data.DiscoverJSON) {
 			p = append(p, ports)
 		}
 	}
+
 	d.OpenPorts = p
 }

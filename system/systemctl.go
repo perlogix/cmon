@@ -11,17 +11,18 @@ import (
 
 // SystemctlFailed collects failed systemd units
 func SystemctlFailed(d *data.DiscoverJSON) {
+	outSlice := []string{}
+
 	if runtime.GOOS == "linux" {
 
 		systemctlOut, err := util.Cmd(`systemctl --failed --no-page | grep -v '^  UNIT\|listed'`)
 		if err != nil {
+			d.SystemctlFailed = outSlice
 			return
 		}
 
-		var (
-			outSlice  []string
-			outString = strings.Split(string(systemctlOut), "\n")
-		)
+		outString := strings.Split(string(systemctlOut), "\n")
+
 		for _, s := range outString {
 			if s != "" {
 				space := regexp.MustCompile(`\s+`)
@@ -29,7 +30,7 @@ func SystemctlFailed(d *data.DiscoverJSON) {
 				outSlice = append(outSlice, s)
 			}
 		}
-
-		d.SystemctlFailed = outSlice
 	}
+
+	d.SystemctlFailed = outSlice
 }
