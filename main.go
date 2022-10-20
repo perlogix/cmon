@@ -210,7 +210,7 @@ func main() {
 		if !config.Bool("daemon") {
 			j, err := json.Marshal(d)
 			if err != nil {
-				log.Printf("Error: %s\n", err)
+				log.Println("Error: ", err)
 			}
 			j = bytes.ReplaceAll(j, []byte("\\u003c"), []byte("<"))
 			j = bytes.ReplaceAll(j, []byte("\\u003e"), []byte(">"))

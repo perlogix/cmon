@@ -30,7 +30,7 @@ func init() {
  Built On:       %s
  Commit Hash:    %s
 
- Example:        cmon -d -c ./cmon.yaml
+ Example:        cmon -d -c ./cmon.yml
 	
  Documentation:  https://github.com/perlogix/cmon/blob/master/README.md
 `, version, builtOn, commitHash)
@@ -40,13 +40,11 @@ func init() {
 
 	// Default settings if no config file is supplied
 	v.SetDefault("daemon", *daemonFlag)
-	v.SetDefault("api_host", "localhost")
-	v.SetDefault("api_port", "9200")
 	v.SetDefault("environment", "")
 	v.SetDefault("interval", "1200")
 	v.SetDefault("api_username", "")
+	v.SetDefault("api_url", "https://127.0.0.1/v1/add-host")
 	v.SetDefault("api_token", "")
-	v.SetDefault("api_https", "false")
 	v.SetDefault("api_insecure_ssl", "false")
 	v.SetDefault("public", "false")
 	v.SetDefault("asset_type", "")
