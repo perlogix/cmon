@@ -3,14 +3,13 @@ module github.com/perlogix/cmon
 go 1.16
 
 require (
-	github.com/Microsoft/go-winio v0.5.0 // indirect
 	github.com/StackExchange/wmi v1.2.1 // indirect
 	github.com/aquasecurity/fanal v0.0.0-20210808124815-d8353428bfae
 	github.com/aquasecurity/go-dep-parser v0.0.0-20210802141821-9c3e354a42b8 // indirect
 	github.com/aquasecurity/trivy v0.19.2
 	github.com/aquasecurity/trivy-db v0.0.0-20210615172119-4c76bb580b27 // indirect
 	github.com/caarlos0/env/v6 v6.6.2 // indirect
-	github.com/containerd/containerd v1.5.5 // indirect
+	github.com/containerd/containerd v1.5.18 // indirect
 	github.com/denisbrodbeck/machineid v1.0.1
 	github.com/docker/docker v20.10.8+incompatible
 	github.com/docker/go-units v0.4.0
@@ -26,7 +25,6 @@ require (
 	go.uber.org/multierr v1.7.0 // indirect
 	go.uber.org/zap v1.18.1 // indirect
 	golang.org/x/net v0.0.0-20210805182204-aaa1db679c0d // indirect
-	golang.org/x/sys v0.0.0-20210806184541-e5e7981a1069 // indirect
 	google.golang.org/genproto v0.0.0-20210805201207-89edb61ffb67 // indirect
 	google.golang.org/grpc v1.39.1 // indirect
 )
